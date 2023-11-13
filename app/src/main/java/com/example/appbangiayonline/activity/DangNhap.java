@@ -1,14 +1,16 @@
-package com.example.appbangiayonline;
+package com.example.appbangiayonline.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class Welcome extends AppCompatActivity {
+import com.example.appbangiayonline.R;
+
+public class DangNhap extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome);
+        setContentView(R.layout.activity_dang_nhap);
     }
 }
