@@ -13,26 +13,22 @@
         android:theme="@style/Theme.AppBanGiayOnline"
         tools:targetApi="31">
         <activity
-<<<<<<< HEAD
-            android:name=".ThongKeActivity"
+            android:name=".activity.ThongKeActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".QuanLyHoaDonActivity"
-=======
+            android:name=".activity.QuanLyHoaDonActivity"
+            android:exported="false"/>
+        <activity
             android:name=".activity.DangKi"
             android:exported="false" />
         <activity
             android:name=".activity.DangNhap"
             android:exported="false" />
         <activity
-            android:name=".activity.MainActivity"
-            android:exported="false" />
-        <activity
             android:name=".activity.Welcome"
->>>>>>> nhanh_Quan
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

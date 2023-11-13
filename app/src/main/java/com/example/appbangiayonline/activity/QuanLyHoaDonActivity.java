@@ -1,8 +1,10 @@
-package com.example.appbangiayonline;
+package com.example.appbangiayonline.activity;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.appbangiayonline.R;
 
 public class QuanLyHoaDonActivity extends AppCompatActivity {
 
