@@ -1,14 +1,14 @@
-package com.example.layout;
+package com.example.appbangiayonline;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class ManHinhChao extends AppCompatActivity {
+public class DangKy extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_man_hinh_chao);
+        setContentView(R.layout.activity_dang_ky);
     }
 }
