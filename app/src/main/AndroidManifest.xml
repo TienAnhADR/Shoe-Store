@@ -7,12 +7,13 @@
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="Shoses Sport Store"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppBanGiayOnline"
         tools:targetApi="31">
         <activity
+<<<<<<< HEAD
             android:name=".ThongKeActivity"
             android:exported="false" />
         <activity
@@ -20,6 +21,18 @@
             android:exported="false" />
         <activity
             android:name=".QuanLyHoaDonActivity"
+=======
+            android:name=".activity.DangKi"
+            android:exported="false" />
+        <activity
+            android:name=".activity.DangNhap"
+            android:exported="false" />
+        <activity
+            android:name=".activity.MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.Welcome"
+>>>>>>> nhanh_Quan
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

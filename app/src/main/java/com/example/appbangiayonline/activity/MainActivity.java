@@ -1,8 +1,10 @@
-package com.example.appbangiayonline;
+package com.example.appbangiayonline.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.appbangiayonline.R;
 
 public class MainActivity extends AppCompatActivity {
 
