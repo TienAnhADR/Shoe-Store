@@ -1,10 +1,10 @@
 package com.example.appbangiayonline.model;
 
 public class NhanVien {
-    private int manv;
-    private String hoten, taikhoan, matkhau, sdt, email, chucvu;
+    private int manv, chucvu;
+    private String hoten, taikhoan, matkhau, sdt, email;
 
-    public NhanVien(int manv, String hoten, String taikhoan, String matkhau, String sdt, String email, String chucvu) {
+    public NhanVien(int manv, String hoten, String taikhoan, String matkhau, String sdt, String email, int chucvu) {
         this.manv = manv;
         this.hoten = hoten;
         this.taikhoan = taikhoan;
@@ -20,6 +20,14 @@ public class NhanVien {
 
     public void setManv(int manv) {
         this.manv = manv;
+    }
+
+    public int getChucvu() {
+        return chucvu;
+    }
+
+    public void setChucvu(int chucvu) {
+        this.chucvu = chucvu;
     }
 
     public String getHoten() {
@@ -60,13 +68,5 @@ public class NhanVien {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getChucvu() {
-        return chucvu;
-    }
-
-    public void setChucvu(String chucvu) {
-        this.chucvu = chucvu;
     }
 }
