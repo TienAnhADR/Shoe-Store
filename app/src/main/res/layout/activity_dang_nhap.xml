@@ -1,60 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
-    android:background="@drawable/dangnhap"
-    tools:context=".DangNhap">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Login"
-        android:textStyle="bold"
-        android:textSize="45dp"
-        android:layout_marginLeft="40dp"
-        android:layout_margin="70sp"
-        android:textColor="#C78181"/>
+    tools:context=".activity.DangNhap">
+    <!--kiếm ảnh tùy ý rồi sửa nhé-->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/welcome" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:hint="Username:"
-        android:padding="20dp"
-        android:layout_margin="30dp"
-        android:textStyle="bold"
-        android:textSize="20dp"
-        android:textColorHint="@color/black"
-        android:background="@drawable/edittext_dangnhap"/>
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:hint="Password:"
-        android:padding="20dp"
-        android:layout_margin="30dp"
-        android:textStyle="bold"
-        android:textSize="20dp"
-        android:textColorHint="@color/black"
-        android:background="@drawable/edittext_dangnhap"/>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Login"
-        android:textStyle="bold"
-        android:textSize="30sp"
-        android:layout_margin="30dp"
-        android:layout_gravity="center"
-        android:textColor="@color/white"
-        android:backgroundTint="#ADFFB1B1"/>
     <TextView
+        android:id="@+id/text_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign up"
-        android:textStyle="bold"
-        android:textSize="23sp"
-        android:layout_gravity="center"
-        android:textColor="@color/black"/>
-</LinearLayout>
+        android:layout_marginLeft="30sp"
+        android:layout_marginTop="60sp"
+        android:layout_marginRight="30sp"
+        android:layout_marginBottom="40sp"
+        android:text="Login"
+        android:textColor="@color/white"
+        android:textSize="50sp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_title"
+        android:layout_margin="30sp"
+        android:hint="Username">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_taikhoan_dangnhap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_input_text_login"
+            android:padding="10sp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layout_user"
+        android:layout_marginLeft="30sp"
+        android:layout_marginRight="30sp"
+        android:hint="Password">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_matkhau_dangnhap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_input_text_login"
+            android:padding="10sp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btn_dangnhap_dangnhap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layout_password"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60sp"
+        android:background="@drawable/custom_button_login"
+        android:text="Login"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txt_dangki_dangnhap"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn_dangnhap_dangnhap"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50sp"
+        android:text="Sign Up"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>
+
