@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_search"
+        android:title="Search"
+        android:icon="@drawable/baseline_search_24"
+        app:showAsAction="always"
+        app:actionViewClass="androidx.appcompat.widget.SearchView" />
+
+    <item android:id="@+id/mQLSanPham"
+        android:title="Sản phẩm"
+        android:icon="@drawable/baseline_home_24"/>
+    <item android:id="@+id/mQLHoaDon"
+        android:title="Hóa đơn"
+        android:icon="@drawable/baseline_filter_none_24"/>
+    <item android:id="@+id/mGioHang"
+        android:title="Giỏ hàng"
+        android:icon="@drawable/baseline_picture_as_pdf_24"/>
+    <item android:id="@+id/mQLNhanVien"
+        android:title="Quản lý nhân viên"
+        android:icon="@drawable/baseline_people_24"/>
+    <item android:id="@+id/mQLKhachHang"
+        android:title="Quản lý khách hàng"
+        android:icon="@drawable/baseline_people_24"/>
+    <item android:id="@+id/mThongKe"
+        android:title="Thống kê"
+        android:icon="@drawable/baseline_people_24"/>
+
+    <item android:title="Người dùng">
+        <menu>
+            <item android:id="@+id/mDoiMK"
+                android:title="Đổi mật khẩu"
+                android:icon="@drawable/baseline_key_24"/>
+            <item android:id="@+id/mDangXuat"
+                android:title="Đăng xuất"
+                android:icon="@drawable/baseline_logout_24"/>
+        </menu>
+    </item>
+</menu>
