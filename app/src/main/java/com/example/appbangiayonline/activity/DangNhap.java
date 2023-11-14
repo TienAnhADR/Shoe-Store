@@ -1,8 +1,11 @@
 package com.example.appbangiayonline.activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -30,16 +33,37 @@ public class DangNhap extends AppCompatActivity {
         TextInputEditText input_matkhau = findViewById(R.id.input_matkhau_dangnhap);
 
         btn_login.setOnClickListener(view -> {
+
             String taikhoan = input_taikhoan.getText().toString().trim();
             String matkhau = input_matkhau.getText().toString().trim();
             int check = dao.dang_nhap(taikhoan, matkhau);
 
-            if (check == 1 || check == 2 || check == 0) {
+            if (taikhoan.equals("") || matkhau.equals("")) {
+                Toast.makeText(this, "Thông tin tài khoản mật khẩu trống!", Toast.LENGTH_SHORT).show();
+
+            } else if (check == 1 || check == 2 || check == 0) {
+
+                SharedPreferences.Editor sharedPreferences = getSharedPreferences("admin", MODE_PRIVATE).edit();
                 Intent intent = new Intent(DangNhap.this, MainActivity.class);
-                intent.putExtra("thongtin", check);
+                sharedPreferences.putInt("setting", check);
                 startActivity(intent);
+
+            } else {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.create();
+                builder.setTitle("Thông tin tài khoản mật khẩu không đúng");
+                builder.setMessage("Bạn có muốn đăng kí tài khoản");
+                builder.setIcon(R.drawable.baseline_error_outline_24);
+                builder.setPositiveButton("Có", (dialogInterface, i) -> {
+                    Intent intent = new Intent(DangNhap.this, DangKi.class);
+                    startActivity(intent);
+                });
+                builder.setNegativeButton("Không", (dialogInterface, i) -> {
+                });
+                builder.show();
             }
         });
+
         txt_signup.setOnClickListener(view -> {
             Intent intent = new Intent(DangNhap.this, DangKi.class);
             startActivity(intent);
