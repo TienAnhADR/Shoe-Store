@@ -12,21 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppBanGiayOnline"
         tools:targetApi="31">
-        <activity
 
-            android:name=".DangKy"
-            android:exported="false" />
-        <activity
-            android:name=".DangNhap"
-            android:exported="false" />
-        <activity
-            android:name=".ManHinhChao"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
 
-            android:name=".activity.ThongKeActivity"
-            android:exported="false" />
         <activity
             android:name=".activity.MainActivity"
             android:exported="false" />
