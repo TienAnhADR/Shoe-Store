@@ -12,38 +12,26 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppBanGiayOnline"
         tools:targetApi="31">
-
-
         <activity
-<<<<<<< HEAD
-            android:name=".activity.MainActivity$ThongKeActivity"
+            android:name=".activity.Detail_CTSanPham"
             android:exported="false" />
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.ThongKeActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.MainActivity$QuanLyHoaDonActivity"
-            android:exported="false"/>
-            <activity
-=======
-            android:name=".activity.MainActivity"
+            android:name=".activity.Welcome"
             android:exported="false" />
         <activity
             android:name=".activity.QuanLyHoaDonActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
->>>>>>> master
             android:name=".activity.DangKi"
             android:exported="false" />
         <activity
             android:name=".activity.DangNhap"
-            android:exported="false" />
+            android:exported="false" /> <!-- doi ơ day tu welcome doi sang main -->
         <activity
-            android:name=".activity.Welcome"
-<<<<<<< HEAD
-=======
-
->>>>>>> master
+            android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
