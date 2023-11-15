@@ -68,16 +68,7 @@ public class SizeAdapter extends RecyclerView.Adapter<SizeAdapter.Viewholder> {
         return sizeCountMap.getOrDefault(kichco, 0);
     }
 
-    private int getColorFromSize(int kichco) {
-        try {
-            // Chỉ sử dụng một tên resource cố định thay vì tạo động từ kích cỡ
-            int colorResId = context.getResources().getIdentifier("color_example", "color", context.getPackageName());
-            return ContextCompat.getColor(context, colorResId);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Color.BLACK;
-        }
-    }
+
 
     @Override
     public int getItemCount() {
