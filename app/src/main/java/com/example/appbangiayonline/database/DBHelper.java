@@ -35,6 +35,18 @@ public class DBHelper extends SQLiteOpenHelper {
                 "sdt text," +
                 "email text," +
                 "chucvu integer)";//1 la admin , 0 la nhanvien
+        //san pham
+        String tbl_sanpham = "create table sanpham(masanpham integer primary key autoincrement," +
+                "tensanpham text )";
+        sqLiteDatabase.execSQL(tbl_sanpham);
+        //chi tiet sanpham
+        String tbl_ctsanpham = "create table ctsanpham(mactsanpham integer primary key autoincrement," +
+                "masanpham integer references sanpham(masanpham)," +
+                "mausac text," +
+                "kichco integer," +
+                "gia integer," +
+                "soluong integer)";
+        sqLiteDatabase.execSQL(tbl_ctsanpham);
         //--------------------------
         //chèn dữ liệu
         //khach hang
@@ -63,6 +75,8 @@ public class DBHelper extends SQLiteOpenHelper {
         if (i != i1) {
             sqLiteDatabase.execSQL("drop table khachhang");
             sqLiteDatabase.execSQL("drop table nhanvien");
+            sqLiteDatabase.execSQL("drop table sanpham");
+            sqLiteDatabase.execSQL("drop table ctsanpham");
             onCreate(sqLiteDatabase);
         }
     }
