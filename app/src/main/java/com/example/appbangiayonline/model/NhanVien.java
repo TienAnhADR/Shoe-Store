@@ -14,6 +14,14 @@ public class NhanVien {
         this.chucvu = chucvu;
     }
 
+    public NhanVien(int manv, int chucvu, String hoten, String sdt, String email) {
+        this.manv = manv;
+        this.chucvu = chucvu;
+        this.hoten = hoten;
+        this.sdt = sdt;
+        this.email = email;
+    }
+
     public int getManv() {
         return manv;
     }
@@ -69,6 +77,9 @@ public class NhanVien {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
+
 }
 
 
