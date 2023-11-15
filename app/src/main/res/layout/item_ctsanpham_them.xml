@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:id="@+id/tenmausac_ctsanpham_A"
+        android:hint="Ten mau sac: "/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:id="@+id/kicco_ctsanpham_A"
+        android:hint="So kich co: "/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:id="@+id/giasanpham_ctsanpham_A"
+        android:textStyle="bold"
+        android:hint="Gia: "/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:id="@+id/soluongsanpham_ctsanpham_A"
+        android:hint="So luong: "/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Them"
+        android:textColor="@color/white"
+        android:layout_gravity="center"
+        android:background="@color/black"
+        android:id="@+id/them_ctsanpham_A"/>
+</LinearLayout>
