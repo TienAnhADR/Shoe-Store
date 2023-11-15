@@ -21,9 +21,6 @@
         <activity
             android:name=".activity.Welcome"
             android:exported="false" />
-        <activity
-            android:name=".activity.MainActivity"
-            android:exported="false" />
 
         <activity
             android:name=".activity.DangKi"
@@ -32,7 +29,7 @@
             android:name=".activity.DangNhap"
             android:exported="false" /> <!-- doi ơ day tu welcome doi sang main -->
         <activity
-            android:name=".activity.MainActivity_Fragment"
+            android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
