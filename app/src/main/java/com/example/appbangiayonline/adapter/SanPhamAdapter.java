@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appbangiayonline.R;
-import com.example.appbangiayonline.activity.Detail_CTSanPham;
+import com.example.appbangiayonline.activity.ManHinh_CTSanPham;
 import com.example.appbangiayonline.model.SanPham;
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.Viewhold
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
-                Intent intent = new Intent(((Activity)context), Detail_CTSanPham.class);
+                Intent intent = new Intent(((Activity)context), ManHinh_CTSanPham.class);
                 bundle.putString("tensanpham", sp.getTensanpham());
                 intent.putExtras(bundle);
                 ((Activity)context).startActivity(intent);

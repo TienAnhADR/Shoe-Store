@@ -6,4 +6,12 @@
     </style>
 
     <style name="Theme.AppBanGiayOnline" parent="Base.Theme.AppBanGiayOnline" />
+    <style name="DialoAnomation">
+        <item name="android:windowEnterAnimation">
+            @anim/slide_in__bottom
+        </item>
+        <item name="android:windowExitAnimation">
+            @anim/slide_out_bttom
+        </item>
+    </style>
 </resources>
