@@ -69,4 +69,8 @@ public class NhanVien {
     public void setEmail(String email) {
         this.email = email;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> master

@@ -1,14 +1,20 @@
 package com.example.appbangiayonline.activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.appbangiayonline.R;
+import com.example.appbangiayonline.dao.DangNhap_DangKi_Dao;
+import com.google.android.material.textfield.TextInputEditText;
 
 import org.w3c.dom.Text;
 
@@ -18,17 +24,50 @@ public class DangNhap extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dang_nhap);
+
         Button btn_login = findViewById(R.id.btn_dangnhap_dangnhap);
         TextView txt_signup = findViewById(R.id.txt_dangki_dangnhap);
+        DangNhap_DangKi_Dao dao = new DangNhap_DangKi_Dao(this);
+
+        TextInputEditText input_taikhoan = findViewById(R.id.input_taikhoan_dangnhap);
+        TextInputEditText input_matkhau = findViewById(R.id.input_matkhau_dangnhap);
 
         btn_login.setOnClickListener(view -> {
-            Intent intent = new Intent(DangNhap.this, MainActivity.class);
-            startActivity(intent);
+
+            String taikhoan = input_taikhoan.getText().toString().trim();
+            String matkhau = input_matkhau.getText().toString().trim();
+            int check = dao.dang_nhap(taikhoan, matkhau);
+
+            if (taikhoan.equals("") || matkhau.equals("")) {
+                Toast.makeText(this, "Thông tin tài khoản mật khẩu trống!", Toast.LENGTH_SHORT).show();
+
+            } else if (check == 1 || check == 2 || check == 0) {
+
+                SharedPreferences.Editor sharedPreferences = getSharedPreferences("admin", MODE_PRIVATE).edit();
+                Intent intent = new Intent(DangNhap.this, MainActivity.class);
+                sharedPreferences.putInt("setting", check);
+                startActivity(intent);
+
+            } else {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.create();
+                builder.setTitle("Thông tin tài khoản mật khẩu không đúng");
+                builder.setMessage("Bạn có muốn đăng kí tài khoản");
+                builder.setIcon(R.drawable.baseline_error_outline_24);
+                builder.setPositiveButton("Có", (dialogInterface, i) -> {
+                    Intent intent = new Intent(DangNhap.this, DangKi.class);
+                    startActivity(intent);
+                });
+                builder.setNegativeButton("Không", (dialogInterface, i) -> {
+                });
+                builder.show();
+            }
         });
+
         txt_signup.setOnClickListener(view -> {
             Intent intent = new Intent(DangNhap.this, DangKi.class);
             startActivity(intent);
         });
-        
+
     }
 }
