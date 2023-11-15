@@ -13,6 +13,9 @@
         android:theme="@style/Theme.AppBanGiayOnline"
         tools:targetApi="31">
         <activity
+            android:name=".activity.ManHinh_CTSanPham"
+            android:exported="false" />
+        <activity
             android:name=".activity.Detail_CTSanPham"
             android:exported="false" />
         <activity

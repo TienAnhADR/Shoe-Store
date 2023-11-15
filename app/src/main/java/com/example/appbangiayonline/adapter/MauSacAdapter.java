@@ -48,7 +48,6 @@ public class MauSacAdapter extends RecyclerView.Adapter<MauSacAdapter.Viewholder
 
         if (count == 0) {
             holder.mau.setText(tenmau);
-//            holder.mau.setBackgroundColor(getColorFromName(tenmau));
         } else {
             holder.mau.setVisibility(View.INVISIBLE);
             ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(0, 0);
@@ -64,14 +63,7 @@ public class MauSacAdapter extends RecyclerView.Adapter<MauSacAdapter.Viewholder
             }
         });
     }
-    private int getColorFromName(String tenmau) {
-        try {
-            return Color.parseColor(tenmau);
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-            return Color.BLACK;
-        }
-    }
+
     @Override
     public int getItemCount() {
         return list.size();

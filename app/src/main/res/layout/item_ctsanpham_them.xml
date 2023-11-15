@@ -16,12 +16,14 @@
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:inputType="number"
         android:id="@+id/kicco_ctsanpham_A"
         android:hint="So kich co: "/>
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15sp"
+        android:inputType="number"
         android:id="@+id/giasanpham_ctsanpham_A"
         android:textStyle="bold"
         android:hint="Gia: "/>
@@ -30,6 +32,7 @@
         android:layout_height="wrap_content"
         android:textSize="15sp"
         android:textStyle="bold"
+        android:inputType="number"
         android:id="@+id/soluongsanpham_ctsanpham_A"
         android:hint="So luong: "/>
     <Button
