@@ -14,6 +14,14 @@ public class KhachHang {
         this.diachi = diachi;
     }
 
+    public KhachHang(int makh, String hoten, String sdt, String email, String diachi) {
+        this.makh = makh;
+        this.hoten = hoten;
+        this.sdt = sdt;
+        this.email = email;
+        this.diachi = diachi;
+    }
+
     public int getMakh() {
         return makh;
     }

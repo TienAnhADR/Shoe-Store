@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="20sp"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="Thêm nhân viên"
+        android:textAllCaps="true"
+        android:textColor="#552424"
+        android:textSize="30sp"/>
+    <EditText
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:background="@drawable/edittext_dangnhap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edtTenNhanVien_new"
+        android:hint="Nhập họ và tên"/>
+    <EditText
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:background="@drawable/edittext_dangnhap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edtTen_User_NhanVien_new"
+        android:hint="Nhập tên đăng nhập"/>
+    <EditText
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:background="@drawable/edittext_dangnhap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edtPassNhanVien_new"
+        android:hint="Nhập mật khẩu"/>
+    <EditText
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:background="@drawable/edittext_dangnhap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edtSDT_NV_new"
+        android:hint="Nhập số điện thoại"/>
+    <EditText
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:background="@drawable/edittext_dangnhap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/edtEmail_NV_new"
+        android:hint="Nhập email"/>
+</LinearLayout>
