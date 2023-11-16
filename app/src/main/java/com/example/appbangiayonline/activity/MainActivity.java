@@ -19,9 +19,14 @@ import android.widget.FrameLayout;
 import com.example.appbangiayonline.R;
 import com.example.appbangiayonline.fragmentTA.FragmentKhachHang;
 import com.example.appbangiayonline.fragmentTA.FragmentNhanVien;
+
+import com.example.appbangiayonline.tab.tab_Adapter;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import com.example.appbangiayonline.fragmentTA.FragmentSanPham;
 import com.example.appbangiayonline.fragmentTA.FragmentThongTin;
 import com.example.appbangiayonline.fragmentTA.Fragment_Main;
+
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
