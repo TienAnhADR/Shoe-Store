@@ -17,38 +17,54 @@
             android:background="#7903A9F4"
             android:fitsSystemWindows="true" />
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/pager2"
+
+        <FrameLayout
+            android:id="@+id/flameLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/tablayout"
+            android:layout_above="@id/change_tab"
             android:layout_below="@id/toolbar" />
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tablayout"
-            android:background="#7903A9F4"
+        <LinearLayout
+            android:id="@+id/change_tab"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true">
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
 
-            <com.google.android.material.tabs.TabItem
+            <Button
+                android:id="@+id/btn_home_fg"
                 android:layout_width="wrap_content"
-                android:icon="@drawable/home_tab"
                 android:layout_height="wrap_content"
-                android:text="Home" />
+                android:layout_weight="1"
+                android:background="#2CCDFF"
+                android:drawableTop="@drawable/home"
+                android:padding="5sp"
+                android:text="Home"
+                android:textColor="@color/white" />
 
-            <com.google.android.material.tabs.TabItem
+            <Button
+                android:id="@+id/btn_shoes_fg"
                 android:layout_width="wrap_content"
-                android:icon="@drawable/shoe"
                 android:layout_height="wrap_content"
-                android:text="Shoes" />
+                android:layout_weight="1"
+                android:background="#2CCDFF"
+                android:drawableTop="@drawable/shoes"
+                android:padding="5sp"
+                android:text="Shoes"
+                android:textColor="@color/white" />
 
-            <com.google.android.material.tabs.TabItem
+            <Button
+                android:id="@+id/btn_user_fg"
                 android:layout_width="wrap_content"
-                android:icon="@drawable/person_tab"
                 android:layout_height="wrap_content"
-                android:text="Profile" />
-        </com.google.android.material.tabs.TabLayout>
+                android:layout_weight="1"
+                android:background="#2CCDFF"
+                android:drawableTop="@drawable/user"
+                android:padding="5sp"
+                android:text="User"
+                android:textColor="@color/white" />
+        </LinearLayout>
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
