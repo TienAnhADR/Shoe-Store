@@ -32,9 +32,7 @@ import com.example.appbangiayonline.adapter.CTSanPhamAdapter;
 import com.example.appbangiayonline.adapter.MauSacAdapter;
 import com.example.appbangiayonline.adapter.SizeAdapter;
 import com.example.appbangiayonline.dao.CTSanPhamDao;
-import com.example.appbangiayonline.dao.SanPhamDao;
 import com.example.appbangiayonline.model.CTSanPham;
-import com.example.appbangiayonline.model.SanPham;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -43,7 +41,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
     String tenchung;
     //nhan bundel
     TextView nhanten;
-    TextView muangay;
+    TextView giohang;
 
     CTSanPhamDao dao;
     ArrayList<CTSanPham> list;
@@ -77,31 +75,21 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_man_hinh_ctsan_pham);
-        muangay = findViewById(R.id.muangay_sanpham);
-
-        SanPhamDao sanPhamDao = new SanPhamDao(this);
+        giohang = findViewById(R.id.giohang_sanpham);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-
         if (bundle != null) {
-            ArrayList<SanPham> list = sanPhamDao.getListSanPham();
-            //tenchung = bundle.getString("tensanpham");
+            tenchung = bundle.getString("tensanpham");
             nhanten = findViewById(R.id.tensanpham_sanpham);
-            // nhanten.setText(tenchung);
-            nhanten.setText(list.get(bundle.getInt("vitri", 0)).getTensanpham());
+            nhanten.setText(tenchung);
         }
 
-        muangay.setOnClickListener(new View.OnClickListener() {
+        giohang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showCTSanPham();
             }
-        });
-        //gio hang
-        TextView giohang = findViewById(R.id.giohang_sanpham);
-        giohang.setOnClickListener(view -> {
-
         });
     }
 
@@ -110,17 +98,14 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
 
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_muangay);
-
-        //  ImageView quaylai = dialog.findViewById(R.id.quaylai);
-//        quaylai.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                dialog.dismiss();
-//            }
-//        });
-//        //
-
-
+        ImageView quaylai = dialog.findViewById(R.id.quaylai);
+        quaylai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        //
         rckichco = dialog.findViewById(R.id.kichco_detail);
         rcmau = dialog.findViewById(R.id.mausac_detail);
         rcctsanpham = dialog.findViewById(R.id.rcctsanpham_detail);
