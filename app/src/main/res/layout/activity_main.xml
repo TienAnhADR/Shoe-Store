@@ -53,6 +53,16 @@
                 android:padding="5sp"
                 android:text="Shoes"
                 android:textColor="@color/white" />
+            <Button
+                android:id="@+id/btn_cart_fg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#2CCDFF"
+                android:drawableTop="@drawable/baseline_shopping_cart_24"
+                android:padding="5sp"
+                android:text="Cart"
+                android:textColor="@color/white" />
 
             <Button
                 android:id="@+id/btn_user_fg"

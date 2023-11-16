@@ -92,7 +92,7 @@ public class Shoes_tab extends Fragment {
 
     //up date sp
     public void update_Sp() {
-
+//._.
     }
 
     //click item edit

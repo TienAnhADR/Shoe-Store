@@ -48,8 +48,22 @@ public class DBHelper extends SQLiteOpenHelper {
                 "gia integer," +
                 "soluong integer)";
         sqLiteDatabase.execSQL(tbl_ctsanpham);
+        String tbl_giohang = "create table giohang(" +
+                "magiohang integer primary key autoincrement," +
+                "masanpham integer references sanpham(masanpham)," +
+                "makhachhang integer references khachhang(makhachhang)," +
+                "mausac text," +
+                "kichco integer," +
+                "gia integer," +
+                "soluong integer)";
         //--------------------------
         //chèn dữ liệu
+        //giohang
+        String insert_giohang = "insert into giohang(masanpham,makhachhang,mausac,kichco,gia,soluong)" +
+                "values " +
+                "(1,1,'Màu xanh',34,50000,15)," +
+                "(2,2,'Màu tím',35,14000,11)," +
+                "(3,3,'Màu vàng',35,50000,11)";
         //sp
         String ins_sp = "insert into sanpham(tensanpham) values" +
                 "('Loại 1')," +
@@ -61,10 +75,13 @@ public class DBHelper extends SQLiteOpenHelper {
                 "(1,'Màu xanh',34,50000,15)," +
                 "(2,'Màu tím',35,14000,11)," +
                 "(3,'Màu vàng',30,11000,10)," +
+                "(4,'Màu xanh',33,5000,11)," +
                 "(1,'Màu hồng',30,17000,11)," +
                 "(2,'Màu xanh',31,20000,12)," +
-                "(3,'Màu vàng',35,50000,11)";
+                "(3,'Màu vàng',35,50000,11)," +
+                "(4,'Màu tím',33,45000,12)";
         sqLiteDatabase.execSQL(ct_sp);
+
         //khach hang
         String insert_khachhang = "insert into khachhang" +
                 "(hoten,taikhoan,matkhau,sdt,email,diachi) " +
@@ -82,8 +99,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
         sqLiteDatabase.execSQL(tbl_khachhang);
         sqLiteDatabase.execSQL(tbl_nhanvien);
+        sqLiteDatabase.execSQL(tbl_giohang);
         sqLiteDatabase.execSQL(insert_khachhang);
         sqLiteDatabase.execSQL(insert_nhanvien);
+        sqLiteDatabase.execSQL(insert_giohang);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.example.appbangiayonline.activity;
 
-import androidx.annotation.BinderThread;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,13 +12,13 @@ import androidx.fragment.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.example.appbangiayonline.R;
 import com.example.appbangiayonline.fragmentTA.FragmentKhachHang;
 import com.example.appbangiayonline.fragmentTA.FragmentNhanVien;
-import com.example.appbangiayonline.fragmentTA.FragmentSanPham;
 import com.example.appbangiayonline.fragmentTA.FragmentThongTin;
 import com.example.appbangiayonline.fragmentTA.Fragment_Main;
 import com.example.appbangiayonline.tab.Shoes_tab;
@@ -60,10 +59,6 @@ public class MainActivity extends AppCompatActivity {
 
                 } else if (R.id.mQLHoaDon == id) {
 
-
-                } else if (R.id.mGioHang == id) {
-
-
                 } else if (R.id.mThongKe == id) {
 
                 } else if (R.id.mDoiMK == id) {
@@ -83,6 +78,11 @@ public class MainActivity extends AppCompatActivity {
         Button btn_home = findViewById(R.id.btn_home_fg);
         Button btn_shoe = findViewById(R.id.btn_shoes_fg);
         Button btn_user = findViewById(R.id.btn_user_fg);
+        Button cart = findViewById(R.id.btn_cart_fg);
+        cart.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, Activity_GioHang.class);
+            startActivity(intent);
+        });
         btn_home.setOnClickListener(view -> {
             change_Fragment(new Fragment_Main(), "Trang chủ");
         });

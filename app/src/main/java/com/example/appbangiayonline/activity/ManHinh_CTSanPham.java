@@ -98,6 +98,11 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                 showCTSanPham();
             }
         });
+        //gio hang
+        TextView giohang = findViewById(R.id.giohang_sanpham);
+        giohang.setOnClickListener(view -> {
+
+        });
     }
 
     private void showCTSanPham() {
