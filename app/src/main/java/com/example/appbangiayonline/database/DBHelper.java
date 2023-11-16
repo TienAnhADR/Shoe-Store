@@ -40,11 +40,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 "tensanpham text )";
         sqLiteDatabase.execSQL(tbl_sanpham);
 
-        String ins_sp = "insert into sanpham(tensanpham) values" +
-                "('Loại 1')," +
-                "('Loại 2')," +
-                "('Loại 3')";
-        sqLiteDatabase.execSQL(ins_sp);
         //chi tiet sanpham
         String tbl_ctsanpham = "create table ctsanpham(mactsanpham integer primary key autoincrement," +
                 "masanpham integer references sanpham(masanpham)," +
@@ -55,6 +50,21 @@ public class DBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(tbl_ctsanpham);
         //--------------------------
         //chèn dữ liệu
+        //sp
+        String ins_sp = "insert into sanpham(tensanpham) values" +
+                "('Loại 1')," +
+                "('Loại 2')," +
+                "('Loại 3')," +
+                "('Loại 4')";
+        sqLiteDatabase.execSQL(ins_sp);
+        String ct_sp = "insert into ctsanpham(masanpham,mausac,kichco,gia,soluong) values" +
+                "(1,'Màu xanh',34,50000,15)," +
+                "(2,'Màu tím',35,14000,11)," +
+                "(3,'Màu vàng',30,11000,10)," +
+                "(1,'Màu hồng',30,17000,11)," +
+                "(2,'Màu xanh',31,20000,12)," +
+                "(3,'Màu vàng',35,50000,11)";
+        sqLiteDatabase.execSQL(ct_sp);
         //khach hang
         String insert_khachhang = "insert into khachhang" +
                 "(hoten,taikhoan,matkhau,sdt,email,diachi) " +

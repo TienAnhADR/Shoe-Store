@@ -1,6 +1,7 @@
 package com.example.appbangiayonline.tab;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appbangiayonline.R;
+import com.example.appbangiayonline.activity.ManHinh_CTSanPham;
 import com.example.appbangiayonline.adapter.SanPhamAdapter;
 import com.example.appbangiayonline.dao.SanPhamDao;
 import com.example.appbangiayonline.model.SanPham;
@@ -28,6 +30,7 @@ public class Shoes_tab extends Fragment {
     SanPhamDao dao;
     ArrayList<SanPham> list;
     SanPhamAdapter adapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -38,7 +41,7 @@ public class Shoes_tab extends Fragment {
         list = new ArrayList<>();
         dao = new SanPhamDao(getContext());
         list = dao.getListSanPham();
-        adapter = new SanPhamAdapter(getContext(), list);
+        adapter = new SanPhamAdapter(getContext(), this, list);
         rc_sanpham.setAdapter(adapter);
         fl.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,41 +51,56 @@ public class Shoes_tab extends Fragment {
         });
         return view;
     }
-    private void ThemSanPham(){
+
+    private void ThemSanPham() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = getLayoutInflater();
         View view = inflater.inflate(R.layout.them_sanpham, null);
         builder.setView(view);
-        builder.setTitle("Ban co muon xoa khong ?");
+        builder.setTitle("Thêm sản phẩm");
         EditText txtten = view.findViewById(R.id.tensanpham_shoes_tab_them);
         builder.setPositiveButton("Them", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 String ten = txtten.getText().toString();
-                if(!TextUtils.isEmpty(ten)){
+                if (!TextUtils.isEmpty(ten)) {
                     SanPham sanPham = new SanPham();
                     sanPham.setTensanpham(ten);
                     boolean kt = dao.ThemSanPham(sanPham);
-                    if(kt){
+                    if (kt) {
                         list.clear();
                         list.addAll(dao.getListSanPham());
                         adapter.notifyDataSetChanged();
                         Toast.makeText(getContext(), "Them san pham thanh cong", Toast.LENGTH_SHORT).show();
-                    }else{
+                    } else {
                         Toast.makeText(getContext(), "Them san pham that bai", Toast.LENGTH_SHORT).show();
                     }
-                }else{
+                } else {
                     Toast.makeText(getContext(), "Chua nhap ten", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        builder.setNegativeButton("Huy", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("Huỷ", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
+//hủy tự đóng ko cần thêm dismiss
             }
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    //up date sp
+    public void update_Sp() {
+
+    }
+
+    //click item edit
+    public void click_item(int i) {
+        Bundle bundle = new Bundle();
+        Intent intent = new Intent(requireActivity(), ManHinh_CTSanPham.class);
+        bundle.putInt("vitri", i);
+        intent.putExtras(bundle);
+        requireActivity().startActivity(intent);
     }
 }
