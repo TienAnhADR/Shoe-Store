@@ -39,6 +39,12 @@ public class DBHelper extends SQLiteOpenHelper {
         String tbl_sanpham = "create table sanpham(masanpham integer primary key autoincrement," +
                 "tensanpham text )";
         sqLiteDatabase.execSQL(tbl_sanpham);
+
+        String ins_sp = "insert into sanpham(tensanpham) values" +
+                "('Loại 1')," +
+                "('Loại 2')," +
+                "('Loại 3')";
+        sqLiteDatabase.execSQL(ins_sp);
         //chi tiet sanpham
         String tbl_ctsanpham = "create table ctsanpham(mactsanpham integer primary key autoincrement," +
                 "masanpham integer references sanpham(masanpham)," +

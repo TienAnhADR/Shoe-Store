@@ -86,7 +86,9 @@ public class MainActivity extends AppCompatActivity {
             change_Fragment(new Fragment_Main(), "Trang chủ");
         });
         btn_shoe.setOnClickListener(view -> {
-            change_Fragment(new FragmentSanPham(), "Sản phẩm");
+            //change_Fragment(new FragmentSanPham(), "Sản phẩm");
+            Intent intent = new Intent(MainActivity.this, ManHinh_CTSanPham.class);
+            startActivity(intent);
         });
         btn_user.setOnClickListener(view -> {
             change_Fragment(new FragmentThongTin(), "Thông tin khách hàng");
