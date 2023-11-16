@@ -1,5 +1,6 @@
 package com.example.appbangiayonline.activity;
 
+import androidx.annotation.BinderThread;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,71 +9,39 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.TableLayout;
 
 import com.example.appbangiayonline.R;
 import com.example.appbangiayonline.fragmentTA.FragmentKhachHang;
 import com.example.appbangiayonline.fragmentTA.FragmentNhanVien;
-import com.example.appbangiayonline.tab.Shoes_tab;
-import com.example.appbangiayonline.tab.tab_Adapter;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.appbangiayonline.fragmentTA.FragmentSanPham;
+import com.example.appbangiayonline.fragmentTA.FragmentThongTin;
+import com.example.appbangiayonline.fragmentTA.Fragment_Main;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
+        FrameLayout frameLayout = findViewById(R.id.flameLayout);
 
         NavigationView navigationView = findViewById(R.id.navigationV);
         drawerLayout = findViewById(R.id.drawerLayout);
-        // TextView txtUserName = findViewById(R.id.txtUserNameNVGTON);
         setSupportActionBar(toolbar);
-        //  setSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.baseline_menu_24);
-
-        TabLayout tabLayout = findViewById(R.id.tablayout);
-        ViewPager2 pager2 = findViewById(R.id.pager2);
-
-        tab_Adapter tab_adapter = new tab_Adapter(getSupportFragmentManager(), getLifecycle());
-        pager2.setAdapter(tab_adapter);
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                pager2.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-        pager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                tabLayout.getTabAt(position).select();
-            }
-        });
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -104,13 +73,31 @@ public class MainActivity extends AppCompatActivity {
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                 }
-                FragmentManager manager = getSupportFragmentManager();
-                manager.beginTransaction().replace(R.id.pager2, fragment).commit();
-                drawerLayout.closeDrawer(GravityCompat.START);
-                toolbar.setTitle(item.getTitle());
+                change_Fragment(fragment, item.getTitle().toString());
                 return false;
             }
         });
+
+        //changeTab
+        Button btn_home = findViewById(R.id.btn_home_fg);
+        Button btn_shoe = findViewById(R.id.btn_shoes_fg);
+        Button btn_user = findViewById(R.id.btn_user_fg);
+        btn_home.setOnClickListener(view -> {
+            change_Fragment(new Fragment_Main(), "Trang chủ");
+        });
+        btn_shoe.setOnClickListener(view -> {
+            change_Fragment(new FragmentSanPham(), "Sản phẩm");
+        });
+        btn_user.setOnClickListener(view -> {
+            change_Fragment(new FragmentThongTin(), "Thông tin khách hàng");
+        });
+    }
+
+    void change_Fragment(Fragment fragment, String title) {
+        FragmentManager manager = getSupportFragmentManager();
+        manager.beginTransaction().replace(R.id.flameLayout, fragment).commit();
+        drawerLayout.closeDrawer(GravityCompat.START);
+        toolbar.setTitle(title);
     }
 
     @Override
