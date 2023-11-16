@@ -43,15 +43,17 @@ public class NhanVien_KhachHang_Dao {
         }
         return list;
     }
-    public int newNhanVien(String hoTen,String userName,String pass,String sdt,String email){
+    public int newKhachHang(String hoTen,String userName,String pass,String sdt,String email,String diachi){
         SQLiteDatabase sql = helper.getWritableDatabase();
-        Cursor cursor = sql.rawQuery("SELECT * FROM nhanvien WHERE nhanvien.taikhoan='" + userName + "'", null);
+        Cursor cursor = sql.rawQuery("SELECT * FROM khachhang WHERE khachhang.taikhoan='" + userName + "'", null);
         if (cursor.getCount() > 0) {
             return 0;
-        } else if (isEmailValid(email)) {
+        } else if (!isEmailValid(email)) {
             Toast.makeText(context, "Email sai định dạng!", Toast.LENGTH_SHORT).show();
-        } else if (isNumberValid(sdt)) {
+            return -10;
+        } else if (!isNumberValid(sdt)) {
             Toast.makeText(context, "Số điện thoại sai định dạng!", Toast.LENGTH_SHORT).show();
+            return -10;
         } else {
             ContentValues contentValues = new ContentValues();
             contentValues.put("hoten", hoTen);
@@ -59,11 +61,37 @@ public class NhanVien_KhachHang_Dao {
             contentValues.put("matkhau", pass);
             contentValues.put("sdt", sdt);
             contentValues.put("email", email);
+            contentValues.put("diachi",diachi);
             sql.insert("khachhang", null, contentValues);
             sql.close();
             return 1;
         }
-        return -10;
+
+    }
+    public int newNhanVien(String hoTen,String userName,String pass,String sdt,String email){
+        SQLiteDatabase sql = helper.getWritableDatabase();
+        Cursor cursor = sql.rawQuery("SELECT * FROM nhanvien WHERE nhanvien.taikhoan='" + userName + "'", null);
+        if (cursor.getCount() > 0) {
+            return 0;
+        } else if (!isEmailValid(email)) {
+            Toast.makeText(context, "Email sai định dạng!", Toast.LENGTH_SHORT).show();
+            return -10;
+        } else if (!isNumberValid(sdt)) {
+            Toast.makeText(context, "Số điện thoại sai định dạng!", Toast.LENGTH_SHORT).show();
+            return -10;
+        } else {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("hoten", hoTen);
+            contentValues.put("taikhoan", userName);
+            contentValues.put("matkhau", pass);
+            contentValues.put("sdt", sdt);
+            contentValues.put("email", email);
+            contentValues.put("chucvu",0);
+            sql.insert("nhanvien", null, contentValues);
+            sql.close();
+            return 1;
+        }
+
     }
 
     public boolean isEmailValid(String email) {

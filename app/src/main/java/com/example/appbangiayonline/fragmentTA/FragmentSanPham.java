@@ -71,8 +71,8 @@ public class FragmentSanPham extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_san_pham, container, false);
-        FloatingActionButton fl = view.findViewById(R.id.fl_shoes_tab);
-        RecyclerView rc_sanpham = view.findViewById(R.id.rc_shoes_tab);
+        FloatingActionButton fl = view.findViewById(R.id.fl_shoes_tab2);
+        RecyclerView rc_sanpham = view.findViewById(R.id.rc_shoes_tab2);
         rc_sanpham.setLayoutManager(new GridLayoutManager(getContext(), 2));
         list = new ArrayList<>();
         dao = new SanPhamDao(getContext());

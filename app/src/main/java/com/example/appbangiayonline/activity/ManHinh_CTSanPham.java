@@ -91,7 +91,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         quaylai_rc_sanpham.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ManHinh_CTSanPham.this, FragmentSanPham.class));
+                startActivity(new Intent(ManHinh_CTSanPham.this, MainActivity.class));
             }
         });
         Intent intent = getIntent();
