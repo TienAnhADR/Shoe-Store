@@ -20,38 +20,45 @@ public class CTSanPhamDao {
     public CTSanPhamDao(Context context) {
         dbHelper = new DBHelper(context);
     }
-    public ArrayList<CTSanPham> getListCTSanPham(String tensanpham){
+
+    public ArrayList<CTSanPham> getListCTSanPham(String tensanpham) {
         ArrayList<CTSanPham> list = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        try{
+        try {
             Cursor cursor = db.rawQuery("select ctsp.mactsanpham, sp.tensanpham, ctsp.mausac, ctsp.kichco, ctsp.gia, ctsp.soluong from sanpham sp, ctsanpham ctsp where ctsp.masanpham = sp.masanpham and sp.tensanpham = ?", new String[]{tensanpham});
-            while (cursor.moveToNext()){
-                list.add(new CTSanPham(cursor.getInt(0), cursor.getString(1),cursor.getString(2), cursor.getInt(3), cursor.getInt(4), cursor.getInt(5) ));
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                while (cursor.moveToNext()) {
+                    list.add(new CTSanPham(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getInt(4), cursor.getInt(5)));
+                }
             }
+
             cursor.close();
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.i(TAG, "loi", e);
         }
         return list;
     }
-    public  ArrayList<CTSanPham> getListDSMauSize(String tensanpham){
+
+    public ArrayList<CTSanPham> getListDSMauSize(String tensanpham) {
         ArrayList<CTSanPham> list = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        try{
-            Cursor cursor = db.rawQuery("select sp.tensanpham, ctsp.mausac, ctsp.kichco, ctsp.gia, ctsp.soluong from sanpham sp, ctsanpham ctsp where sp.masanpham = ctsp.masanpham and sp.tensanpham = ?",new String[]{tensanpham});
-            while (cursor.moveToNext()){
-                list.add(new CTSanPham(cursor.getString(0), cursor.getString(1), cursor.getInt(2), cursor.getInt(3),cursor.getInt(4) ));
+        try {
+            Cursor cursor = db.rawQuery("select sp.tensanpham, ctsp.mausac, ctsp.kichco, ctsp.gia, ctsp.soluong from sanpham sp, ctsanpham ctsp where sp.masanpham = ctsp.masanpham and sp.tensanpham = ?", new String[]{tensanpham});
+            while (cursor.moveToNext()) {
+                list.add(new CTSanPham(cursor.getString(0), cursor.getString(1), cursor.getInt(2), cursor.getInt(3), cursor.getInt(4)));
             }
             cursor.close();
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.i(TAG, "loi", e);
         }
         return list;
     }
-    public boolean ThemCTSanPham(String tensanpham, String tenmausac, int kichco, int gia, int soluong){
+
+    public boolean ThemCTSanPham(String tensanpham, String tenmausac, int kichco, int gia, int soluong) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor cursor = db.rawQuery("select masanpham from sanpham where tensanpham = ?", new String[]{tensanpham});
-        if(cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             int masanpham = cursor.getInt(0);
             ContentValues values = new ContentValues();
             values.put("masanpham", masanpham);
@@ -65,19 +72,21 @@ public class CTSanPhamDao {
         cursor.close();
         return false;
     }
-    public CTSanPham getItemCTSanPham(String mausac, int kichco){
+
+    public CTSanPham getItemCTSanPham(String mausac, int kichco) {
         CTSanPham ctSanPham = null;
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        try{
-            Cursor cursor = db.rawQuery("select ctsp.mactsanpham, sp.tensanpham, ctsp.mausac, ctsp.kichco, ctsp.gia, ctsp.soluong from sanpham sp, ctsanpham ctsp where sp.masanpham = ctsp.masanpham and mausac = ? AND kichco = ?",new String[]{mausac, String.valueOf(kichco)});
-            while (cursor.moveToNext()){
+        try {
+            Cursor cursor = db.rawQuery("select ctsp.mactsanpham, sp.tensanpham, ctsp.mausac, ctsp.kichco, ctsp.gia, ctsp.soluong from sanpham sp, ctsanpham ctsp where sp.masanpham = ctsp.masanpham and mausac = ? AND kichco = ?", new String[]{mausac, String.valueOf(kichco)});
+            while (cursor.moveToNext()) {
                 ctSanPham = new CTSanPham(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getInt(4), cursor.getInt(5));
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.i(TAG, "loi", e);
         }
         return ctSanPham;
     }
+
     public boolean kiemTraTonTaiTrongMactsp(int mactsanpham, String tenmausac, int kichco, int gia, int soluong) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM ctsanpham WHERE mactsanpham = ? AND mausac = ? AND kichco = ? and gia = ? and soluong =?",

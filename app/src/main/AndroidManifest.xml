@@ -16,9 +16,6 @@
             android:name=".activity.ManHinh_CTSanPham"
             android:exported="false" />
         <activity
-            android:name=".activity.Detail_CTSanPham"
-            android:exported="false" />
-        <activity
             android:name=".activity.ThongKeActivity"
             android:exported="false" />
         <activity
