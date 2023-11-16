@@ -26,7 +26,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.example.appbangiayonline.fragmentTA.FragmentSanPham;
 import com.example.appbangiayonline.fragmentTA.FragmentThongTin;
 import com.example.appbangiayonline.fragmentTA.Fragment_Main;
-
+import com.example.appbangiayonline.tab.Shoes_tab;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -91,9 +91,8 @@ public class MainActivity extends AppCompatActivity {
             change_Fragment(new Fragment_Main(), "Trang chủ");
         });
         btn_shoe.setOnClickListener(view -> {
-            //change_Fragment(new FragmentSanPham(), "Sản phẩm");
-            Intent intent = new Intent(MainActivity.this, ManHinh_CTSanPham.class);
-            startActivity(intent);
+            change_Fragment(new Shoes_tab(), "Sản phẩm");
+
         });
         btn_user.setOnClickListener(view -> {
             change_Fragment(new FragmentThongTin(), "Thông tin khách hàng");
