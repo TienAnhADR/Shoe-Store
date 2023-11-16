@@ -32,16 +32,21 @@ import com.example.appbangiayonline.adapter.CTSanPhamAdapter;
 import com.example.appbangiayonline.adapter.MauSacAdapter;
 import com.example.appbangiayonline.adapter.SizeAdapter;
 import com.example.appbangiayonline.dao.CTSanPhamDao;
+import com.example.appbangiayonline.fragmentTA.FragmentSanPham;
 import com.example.appbangiayonline.model.CTSanPham;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickMauSize{
+public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickMauSize {
     String tenchung;
     //nhan bundel
     TextView nhanten;
+    //nut giohang, muangay
     TextView giohang;
+    TextView muaNgay;
+    //icon quay lai
+    ImageView quaylai_rc_sanpham;
 
     CTSanPhamDao dao;
     ArrayList<CTSanPham> list;
@@ -52,7 +57,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
     RecyclerView rcmau;
     RecyclerView rckichco;
     RecyclerView rcctsanpham;
-//    String tentrung = null;
+    //    String tentrung = null;
     CTSanPham ctSanPham;
 
     // Biến lưu trữ dữ liệu được chọn từ RecyclerViews
@@ -66,21 +71,29 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
     TextView nhansiluong;
     //them giohang
     Button themGH;
+
     //lưu dữ được nhiều lần chọn
     private String selectedMauSac;
     private int selectedKichCo;
     //GOi Gio Hang het ra de su dung
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_man_hinh_ctsan_pham);
+        // nut sanpham
         giohang = findViewById(R.id.giohang_sanpham);
+        muaNgay = findViewById(R.id.muangay_sanpham);
 
+        quaylai_rc_sanpham = findViewById(R.id.quaylai_rc_sanpham);
 
-
+        quaylai_rc_sanpham.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ManHinh_CTSanPham.this, FragmentSanPham.class));
+            }
+        });
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
@@ -89,14 +102,15 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
             nhanten.setText(tenchung);
         }
 
-        giohang.setOnClickListener(new View.OnClickListener() {
+        muaNgay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showCTSanPham();
             }
         });
     }
-    private void showCTSanPham(){
+
+    private void showCTSanPham() {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_muangay);
@@ -151,7 +165,6 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         list = dao.getListCTSanPham(tansanpham);
         adapter = new CTSanPhamAdapter(ManHinh_CTSanPham.this, list);
         rcctsanpham.setAdapter(adapter);
-        // Khi dữ liệu đã được lấy xong, gọi phương thức onDataLoaded()
     }
 
     private void loadDSKichCo(String tansanpham) {
@@ -166,7 +179,6 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
             }
         });
         rckichco.setAdapter(kichCoAdapter);
-        // Khi dữ liệu đã được lấy xong, gọi phương thức onDataLoaded()
     }
 
     private void loadDSMau(String tansanpham) {
@@ -259,7 +271,8 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         } else {
         }
     }
-    private void themsanpham(String tensanpham){
+
+    private void themsanpham(String tensanpham) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
         View view = inflater.inflate(R.layout.item_ctsanpham_them, null);
@@ -274,34 +287,39 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
 
         Button btnadd = view.findViewById(R.id.them_ctsanpham_A);
 
+        AlertDialog alertDialog = builder.create();
 
         btnadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String tenmau = txttenmau.getText().toString();
-                int size = Integer.parseInt(txtkichco.getText().toString());
-                int soluongg = Integer.parseInt(txtsoluong.getText().toString());
-                int giaa = Integer.parseInt(txtgia.getText().toString());
-                if (tenmau.equals("")) {
-                    Toast.makeText(ManHinh_CTSanPham.this, "Chua nhap du thong tin", Toast.LENGTH_SHORT).show();
-                } else {
-                    boolean row = dao.ThemCTSanPham(tensanpham,tenmau ,size, giaa, soluongg );
-                    if(row){
-                        list.clear();
-                        list.addAll(dao.getListCTSanPham(tensanpham));
-                        adapter.notifyDataSetChanged();
-                        mauSacAdapter.notifyDataSetChanged();
-                        kichCoAdapter.notifyDataSetChanged();
-//                            alertDialog.dismiss();
-                        Toast.makeText(getApplicationContext() , "Them thanh cong", Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(ManHinh_CTSanPham.this, "That bai", Toast.LENGTH_SHORT).show();
+                if (!TextUtils.isEmpty(txttenmau.getText().toString()) && !TextUtils.isEmpty(txtkichco.getText().toString()) && !TextUtils.isEmpty(txtgia.getText().toString()) && !TextUtils.isEmpty(txtsoluong.getText().toString())) {
+                    try {
+                        String mau = txttenmau.getText().toString();
+                        int size = Integer.parseInt(txtkichco.getText().toString());
+                        int soluongg = Integer.parseInt(txtsoluong.getText().toString());
+                        int giaa = Integer.parseInt(txtgia.getText().toString());
+                        boolean row = dao.ThemCTSanPham(tensanpham, mau, giaa, soluongg, size);
+                        if (row) {
+                            list.clear();
+                            list.addAll(dao.getListCTSanPham(tensanpham));
+                            adapter.notifyDataSetChanged();
+                            mauSacAdapter.notifyDataSetChanged();
+                            kichCoAdapter.notifyDataSetChanged();
+                            Toast.makeText(ManHinh_CTSanPham.this, "Them thanh cong", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(ManHinh_CTSanPham.this, "That bai", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (NumberFormatException e) {
+                        Log.i(TAG, "Phai la so", e);
                     }
-                 }
 
+                } else {
+                    Toast.makeText(ManHinh_CTSanPham.this, "Chua dien het thong tin", Toast.LENGTH_SHORT).show();
+                }
+
+//
             }
         });
-        AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
 }
