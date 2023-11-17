@@ -367,50 +367,21 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
             khachHang = dao_nv_kh.getThongTinKhachHang(username);
             int makh = khachHang.getMakh();
             if (makh != 0) {
-//                showConfirmationDialog();
-
                 boolean kt = daohd.ThemHoaDon(makh, tongSoLuongSP, tongGiaSP);
                 if (kt) {
                     listhd.clear();
                     listhd.addAll(daohd.getDSHoaDon());
                     adapterhd.notifyDataSetChanged();
-//                    showConfirmationDialog();
                     Toast.makeText(getApplicationContext(), "Dat hang thanh cong", Toast.LENGTH_SHORT).show();
                 } else {
-//                    showConfirmationDialog();
                     Toast.makeText(getApplicationContext(), "Dat hang that bai", Toast.LENGTH_SHORT).show();
                 }
             }else{
-//                showConfirmationDialog();
                 Toast.makeText(this, "Khong ton tai", Toast.LENGTH_SHORT).show();
             }
         } else {
-//            showConfirmationDialog();
             Toast.makeText(getApplicationContext(), "Khong ton tai", Toast.LENGTH_SHORT).show();
         }
-
-    }
-    private void showConfirmationDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Xác nhận");
-
-        // Cài đặt nội dung và các nút xác nhận, hủy
-
-        builder.setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Thực hiện hành động khi người dùng xác nhận
-            }
-        });
-
-        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // Thực hiện hành động khi người dùng hủy
-            }
-        });
-
-        builder.show();
     }
 }
 
