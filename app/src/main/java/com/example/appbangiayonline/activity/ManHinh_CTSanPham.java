@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ import com.example.appbangiayonline.adapter.MauSacAdapter;
 import com.example.appbangiayonline.adapter.SizeAdapter;
 import com.example.appbangiayonline.dao.CTSanPhamDao;
 import com.example.appbangiayonline.model.CTSanPham;
+import com.example.appbangiayonline.model.SanPham;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -78,7 +80,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         giohang = findViewById(R.id.giohang_sanpham);
 
 
-        quaylai_rc_sanpham = findViewById(R.id.quaylai_rc_sanpham);
+      ImageView quaylai_rc_sanpham = findViewById(R.id.quaylai_rc_sanpham);
 
         quaylai_rc_sanpham.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +92,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
-            tenchung = bundle.getString("tensanpham");
+         tenchung = bundle.getString("tensanpham");
             nhanten = findViewById(R.id.tensanpham_sanpham);
             nhanten.setText(tenchung);
         }
@@ -105,9 +107,9 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
 
     private void showCTSanPham() {
         final Dialog dialog = new Dialog(this);
-
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_muangay);
+
         ImageView quaylai = dialog.findViewById(R.id.quaylai);
         quaylai.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,11 +150,11 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
             }
         });
         //
-        dialog.show();
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialoAnomation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
+        dialog.show();
     }
 
     private void load(String tansanpham) {

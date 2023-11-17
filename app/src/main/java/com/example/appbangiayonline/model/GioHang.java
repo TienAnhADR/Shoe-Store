@@ -1,10 +1,27 @@
 package com.example.appbangiayonline.model;
 
 public class GioHang {
-    private int magiohang,masanpham,makhachhang;
+    private int magiohang, masanpham, makhachhang;
     private String tensp, mausac;
-    private int kichco, giasp,soluong;
+    private int kichco, giasp, soluong;
+    //-----------
+    private int sl_mua;
 
+    public int getSl_mua() {
+        return sl_mua;
+    }
+
+    public void setSl_mua(int sl_mua) {
+        this.sl_mua = sl_mua;
+    }
+
+    public GioHang(int magiohang, int giasp, int sl_mua) {
+        this.magiohang = magiohang;
+        this.giasp = giasp;
+        this.sl_mua = sl_mua;
+    }
+
+    //--------------------
     public GioHang(int magiohang, int masanpham, int makhachhang, String tensp, String mausac, int kichco, int giasp, int soluong) {
         this.magiohang = magiohang;
         this.masanpham = masanpham;
