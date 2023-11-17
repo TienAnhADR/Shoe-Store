@@ -14,9 +14,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 
 import com.example.appbangiayonline.R;
 import com.example.appbangiayonline.fragmentTA.FragmentHoaDon;
@@ -27,13 +25,14 @@ import com.example.appbangiayonline.fragmentTA.FragmentNhanVien;
 
 //import com.example.appbangiayonline.tab.tab_Adapter;
 
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 
 import com.example.appbangiayonline.fragmentTA.FragmentSanPham;
 
 import com.example.appbangiayonline.fragmentTA.FragmentThongTin;
 import com.example.appbangiayonline.fragmentTA.Fragment_Main;
-import com.example.appbangiayonline.tab.Shoes_tab;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -110,7 +109,11 @@ public class MainActivity extends AppCompatActivity {
 
             change_Fragment(new FragmentSanPham(), "Sản phẩm");
 
+
+            change_Fragment(new FragmentSanPham(), "Sản phẩm");
+
             change_Fragment(new Shoes_tab(), "Sản phẩm");
+
 
 
         });

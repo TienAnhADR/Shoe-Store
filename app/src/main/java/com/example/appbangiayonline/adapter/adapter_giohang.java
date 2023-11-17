@@ -57,27 +57,36 @@ public class adapter_giohang extends RecyclerView.Adapter<adapter_giohang.rcv_ho
 
     @Override
     public void onBindViewHolder(@NonNull rcv_holder holder, int position) {
-        holder.tensp_item.setText(list.get(position).getTensp());
-        holder.mausac_item.setText("Màu: " + list.get(position).getMausac());
-        holder.giasp_item.setText(list.get(position).getGiasp() + "");
-        holder.sl_sp_item.setText(sl + "");
-        holder.kichco_item.setText("Size: " + list.get(position).getKichco());
+        GioHang gioHang = list.get(position);
+        gioHang.setSl_mua(1);
+        //sl mua lúc đầu là 1
+
+        holder.tensp_item.setText(gioHang.getTensp());
+        holder.mausac_item.setText("Màu: " + gioHang.getMausac());
+        holder.giasp_item.setText(gioHang.getGiasp() + "");
+        holder.sl_sp_item.setText(gioHang.getSl_mua() + "");
+        holder.kichco_item.setText("Size: " + gioHang.getKichco());
+
         holder.giam_item.setOnClickListener(view -> {
-            if (sl > 1) {
-                sl--;
-                holder.sl_sp_item.setText(sl + "");
+            if (gioHang.getSl_mua() > 1) {
+                gioHang.setSl_mua(gioHang.getSl_mua() - 1);
+                holder.sl_sp_item.setText(gioHang.getSl_mua() + "");
+                context.reload_tongtien();
             }
         });
+
         holder.tang_item.setOnClickListener(view -> {
-            sl++;
-            holder.sl_sp_item.setText(sl + "");
+            gioHang.setSl_mua(gioHang.getSl_mua() + 1);
+            holder.sl_sp_item.setText(gioHang.getSl_mua() + "");
+          context.reload_tongtien();
         });
+
         holder.chck_item.setOnClickListener(view -> {
             if (holder.chck_item.isChecked()) {
-                context.add_chck(list.get(position).getMagiohang());
+                context.add_chck(gioHang.getMagiohang());
             }
             if (!holder.chck_item.isChecked()) {
-                context.rm_chck(list.get(position).getMagiohang());
+                context.rm_chck(gioHang.getMagiohang());
             }
         });
     }

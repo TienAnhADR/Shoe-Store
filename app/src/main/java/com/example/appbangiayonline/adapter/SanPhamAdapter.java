@@ -1,31 +1,26 @@
 package com.example.appbangiayonline.adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appbangiayonline.R;
-import com.example.appbangiayonline.activity.ManHinh_CTSanPham;
+import com.example.appbangiayonline.fragmentTA.FragmentSanPham;
 import com.example.appbangiayonline.model.SanPham;
-import com.example.appbangiayonline.tab.Shoes_tab;
 
 import java.util.ArrayList;
 
 public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.Viewholder> {
     private Context context;
-    private Shoes_tab fragment;
+    private FragmentSanPham fragment;
     private final ArrayList<SanPham> list;
 
-    public SanPhamAdapter(Context context, Shoes_tab fragment, ArrayList<SanPham> list) {
+    public SanPhamAdapter(Context context, FragmentSanPham fragment, ArrayList<SanPham> list) {
         this.context = context;
         this.fragment = fragment;
         this.list = list;
@@ -46,8 +41,6 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.Viewhold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                //sao put posison?
-
 //                Bundle bundle = new Bundle();
 //                Intent intent = new Intent(context, ManHinh_CTSanPham.class);
 //                bundle.putString("tensanpham", sp.getTensanpham());
@@ -61,7 +54,7 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.Viewhold
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                fragment.update_Sp();
+               fragment.update_Sp();
                 return false;
             }
         });
