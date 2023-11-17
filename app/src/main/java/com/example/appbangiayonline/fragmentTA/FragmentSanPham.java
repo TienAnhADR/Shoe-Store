@@ -59,33 +59,45 @@ public class FragmentSanPham extends Fragment {
     ArrayList<SanPham> list;
     SanPhamAdapter adapter;
     @Override
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view1 = inflater.inflate(R.layout.fragment_san_pham, container, false);
+        FloatingActionButton fl = view1.findViewById(R.id.fl_shoes_tab);
+        RecyclerView rc_sanpham = view1.findViewById(R.id.rc_shoes_tab);
+
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_san_pham, container, false);
         FloatingActionButton fl = view.findViewById(R.id.fl_shoes_tab2);
         RecyclerView rc_sanpham = view.findViewById(R.id.rc_shoes_tab2);
+
         rc_sanpham.setLayoutManager(new GridLayoutManager(getContext(), 2));
         list = new ArrayList<>();
         dao = new SanPhamDao(getContext());
         list = dao.getListSanPham();
         adapter = new SanPhamAdapter(getContext(), list);
         rc_sanpham.setAdapter(adapter);
+
         fl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ThemSanPham();
             }
         });
-        return view;
+
+        return view1;
     }
     private void ThemSanPham(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = getLayoutInflater();
-        View view = inflater.inflate(R.layout.them_sanpham, null);
-        builder.setView(view);
-        builder.setTitle("Ban co muon xoa khong ?");
-        EditText txtten = view.findViewById(R.id.tensanpham_shoes_tab_them);
-        builder.setPositiveButton("Them", new DialogInterface.OnClickListener() {
+        View dialogView = inflater.inflate(R.layout.them_sanpham, null);
+        builder.setView(dialogView);
+        builder.setTitle("Thêm Sản Phẩm");
+
+        EditText txtten = dialogView.findViewById(R.id.tensanpham_shoes_tab_them);
+
+        builder.setPositiveButton("Thêm", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 String ten = txtten.getText().toString();
@@ -97,22 +109,25 @@ public class FragmentSanPham extends Fragment {
                         list.clear();
                         list.addAll(dao.getListSanPham());
                         adapter.notifyDataSetChanged();
-                        Toast.makeText(getContext(), "Them san pham thanh cong", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Thêm sản phẩm thành công", Toast.LENGTH_SHORT).show();
                     }else{
-                        Toast.makeText(getContext(), "Them san pham that bai", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Thêm sản phẩm thất bại", Toast.LENGTH_SHORT).show();
                     }
                 }else{
-                    Toast.makeText(getContext(), "Chua nhap ten", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Chưa nhập tên", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        builder.setNegativeButton("Huy", new DialogInterface.OnClickListener() {
+
+        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
             }
         });
+
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+
 }

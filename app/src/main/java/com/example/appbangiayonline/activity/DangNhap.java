@@ -3,6 +3,7 @@ package com.example.appbangiayonline.activity;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -43,9 +44,13 @@ public class DangNhap extends AppCompatActivity {
 
             } else if (check == 1 || check == 2 || check == 0) {
 
-                SharedPreferences.Editor sharedPreferences = getSharedPreferences("admin", MODE_PRIVATE).edit();
+                SharedPreferences.Editor sharedPreferences = getSharedPreferences("admin",Context.MODE_PRIVATE).edit();
                 Intent intent = new Intent(DangNhap.this, MainActivity.class);
+                sharedPreferences.putString("taikhoan", taikhoan);
                 sharedPreferences.putInt("setting", check);
+
+                // Yến cmt sua cho nó lưu thông tin
+               sharedPreferences.apply();
                 startActivity(intent);
 
             } else {
