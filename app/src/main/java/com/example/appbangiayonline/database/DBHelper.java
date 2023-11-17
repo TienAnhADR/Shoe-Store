@@ -53,6 +53,15 @@ public class DBHelper extends SQLiteOpenHelper {
                 "gia integer," +
                 "soluong integer)";
         sqLiteDatabase.execSQL(tbl_ctsanpham);
+        //hoadon
+        String tbl_hoadon = "create table hoadon(mahd integer primary key autoincrement," +
+                "manv integer references nhanvien(manv)," +
+                "makh integer references khachhang(makh)," +
+                "tongsl integer," +
+                "tongtien integer," +
+                "trangthai integer)";// 0 thanhtoan 1 xacnhan
+        //0 chuaxacnhan 1 daxacnhan
+        sqLiteDatabase.execSQL(tbl_hoadon);
         //--------------------------
         //chèn dữ liệu
         //khach hang
@@ -83,6 +92,7 @@ public class DBHelper extends SQLiteOpenHelper {
             sqLiteDatabase.execSQL("drop table nhanvien");
             sqLiteDatabase.execSQL("drop table sanpham");
             sqLiteDatabase.execSQL("drop table ctsanpham");
+            sqLiteDatabase.execSQL("drop table hoadon");
             onCreate(sqLiteDatabase);
         }
     }

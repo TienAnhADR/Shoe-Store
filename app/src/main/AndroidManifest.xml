@@ -26,10 +26,10 @@
             android:name=".activity.DangKi"
             android:exported="false" />
         <activity
-            android:name=".activity.DangNhap"
+            android:name=".activity.MainActivity"
             android:exported="false" /> <!-- doi ơ day tu welcome doi sang main -->
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.DangNhap"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

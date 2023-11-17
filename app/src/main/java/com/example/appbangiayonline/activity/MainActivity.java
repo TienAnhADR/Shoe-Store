@@ -17,10 +17,10 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.example.appbangiayonline.R;
+import com.example.appbangiayonline.fragmentTA.FragmentHoaDon;
 import com.example.appbangiayonline.fragmentTA.FragmentKhachHang;
 import com.example.appbangiayonline.fragmentTA.FragmentNhanVien;
 
-import com.example.appbangiayonline.tab.tab_Adapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.example.appbangiayonline.fragmentTA.FragmentSanPham;
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                     fragment = new FragmentKhachHang();
 
                 } else if (R.id.mQLHoaDon == id) {
-
+                    fragment = new FragmentHoaDon();
 
                 } else if (R.id.mGioHang == id) {
 
@@ -91,9 +91,7 @@ public class MainActivity extends AppCompatActivity {
             change_Fragment(new Fragment_Main(), "Trang chủ");
         });
         btn_shoe.setOnClickListener(view -> {
-            //change_Fragment(new FragmentSanPham(), "Sản phẩm");
-            Intent intent = new Intent(MainActivity.this, ManHinh_CTSanPham.class);
-            startActivity(intent);
+            change_Fragment(new FragmentSanPham(), "Sản phẩm");
         });
         btn_user.setOnClickListener(view -> {
             change_Fragment(new FragmentThongTin(), "Thông tin khách hàng");

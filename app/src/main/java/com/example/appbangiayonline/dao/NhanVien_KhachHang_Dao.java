@@ -1,9 +1,12 @@
 package com.example.appbangiayonline.dao;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.appbangiayonline.database.DBHelper;
@@ -99,5 +102,20 @@ public class NhanVien_KhachHang_Dao {
             }while (cursor.moveToNext());
         }
         return list;
+    }
+    //Lay makh khachhang với đk trùng taikhoan khach hàng truyền vào(Lien quan đến hoaDon)
+    public KhachHang getThongTinKhachHang(String taikhoan){
+        KhachHang khachHang = null;
+        SQLiteDatabase db = helper.getReadableDatabase();
+        try{
+            Cursor cursor = db.rawQuery("select makh from khachhang where taikhoan = ?", new String[]{taikhoan});
+            while (cursor.moveToNext()){
+                khachHang = new KhachHang(cursor.getInt(0));
+            }
+            cursor.close();
+        }catch (Exception e){
+            Log.i(TAG, "loi", e);
+        }
+        return khachHang;
     }
 }
