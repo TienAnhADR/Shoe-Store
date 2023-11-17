@@ -11,7 +11,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/rc_shoes_tab"/>
+            android:id="@+id/rc_shoes_tab2"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
@@ -19,7 +19,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_margin="20sp"
-            android:id="@+id/fl_shoes_tab"/>
+            android:id="@+id/fl_shoes_tab2"/>
     </RelativeLayout>
 
 </FrameLayout>

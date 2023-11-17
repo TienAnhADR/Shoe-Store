@@ -24,19 +24,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 
 public class FragmentSanPham extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     public FragmentSanPham() {
         // Required empty public constructor
     }
+
 
     /**
      * Use this factory method to create a new instance of
@@ -68,10 +59,18 @@ public class FragmentSanPham extends Fragment {
     ArrayList<SanPham> list;
     SanPhamAdapter adapter;
     @Override
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view1 = inflater.inflate(R.layout.fragment_san_pham, container, false);
         FloatingActionButton fl = view1.findViewById(R.id.fl_shoes_tab);
         RecyclerView rc_sanpham = view1.findViewById(R.id.rc_shoes_tab);
+
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_san_pham, container, false);
+        FloatingActionButton fl = view.findViewById(R.id.fl_shoes_tab2);
+        RecyclerView rc_sanpham = view.findViewById(R.id.rc_shoes_tab2);
 
         rc_sanpham.setLayoutManager(new GridLayoutManager(getContext(), 2));
         list = new ArrayList<>();
@@ -89,7 +88,6 @@ public class FragmentSanPham extends Fragment {
 
         return view1;
     }
-
     private void ThemSanPham(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = getLayoutInflater();

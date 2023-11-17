@@ -10,20 +10,24 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appbangiayonline.R;
 import com.example.appbangiayonline.activity.ManHinh_CTSanPham;
 import com.example.appbangiayonline.model.SanPham;
+import com.example.appbangiayonline.tab.Shoes_tab;
 
 import java.util.ArrayList;
 
 public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.Viewholder> {
     private Context context;
+    private Shoes_tab fragment;
     private final ArrayList<SanPham> list;
 
-    public SanPhamAdapter(Context context, ArrayList<SanPham> list) {
+    public SanPhamAdapter(Context context, Shoes_tab fragment, ArrayList<SanPham> list) {
         this.context = context;
+        this.fragment = fragment;
         this.list = list;
     }
 
@@ -42,11 +46,23 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.Viewhold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                Intent intent = new Intent(((Activity)context), ManHinh_CTSanPham.class);
-                bundle.putString("tensanpham", sp.getTensanpham());
-                intent.putExtras(bundle);
-                ((Activity)context).startActivity(intent);
+//                //sao put posison?
+
+//                Bundle bundle = new Bundle();
+//                Intent intent = new Intent(context, ManHinh_CTSanPham.class);
+//                bundle.putString("tensanpham", sp.getTensanpham());
+//                intent.putExtras(bundle);
+//                bundle.putInt("pos", position);
+//                context.startActivity(intent);
+
+                fragment.click_item(position);
+            }
+        });
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                fragment.update_Sp();
+                return false;
             }
         });
     }
@@ -58,6 +74,7 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.Viewhold
 
     public class Viewholder extends RecyclerView.ViewHolder {
         TextView ma, ten;
+
         public Viewholder(@NonNull View itemView) {
             super(itemView);
             ma = itemView.findViewById(R.id.masanpham_shoes_tab);
