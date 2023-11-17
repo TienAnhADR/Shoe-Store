@@ -29,7 +29,7 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.Viewhold
     @NonNull
     @Override
     public SanPhamAdapter.Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new Viewholder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_shoes_tab, parent, false));
+        return new Viewholder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_sanpham, parent, false));
     }
 
     @Override

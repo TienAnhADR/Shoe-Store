@@ -9,16 +9,25 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Button;
 
 import com.example.appbangiayonline.R;
+import com.example.appbangiayonline.fragmentTA.FragmentHoaDon;
 import com.example.appbangiayonline.fragmentTA.FragmentKhachHang;
 import com.example.appbangiayonline.fragmentTA.FragmentNhanVien;
 
+
+
 //import com.example.appbangiayonline.tab.tab_Adapter;
+
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 
 import com.example.appbangiayonline.fragmentTA.FragmentSanPham;
 
@@ -39,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.navigationV);
         drawerLayout = findViewById(R.id.drawerLayout);
         setSupportActionBar(toolbar);
+        SharedPreferences sharedPreferences = getSharedPreferences("admin", Context.MODE_PRIVATE);
+        String username = sharedPreferences.getString("taikhoan", "a");
+        String b = username;
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -59,6 +71,12 @@ public class MainActivity extends AppCompatActivity {
                     fragment = new FragmentKhachHang();
 
                 } else if (R.id.mQLHoaDon == id) {
+
+                    fragment = new FragmentHoaDon();
+
+                } else if (R.id.mGioHang == id) {
+
+
 
                 } else if (R.id.mThongKe == id) {
 
@@ -88,7 +106,15 @@ public class MainActivity extends AppCompatActivity {
             change_Fragment(new Fragment_Main(), "Trang chủ");
         });
         btn_shoe.setOnClickListener(view -> {
+
             change_Fragment(new FragmentSanPham(), "Sản phẩm");
+
+
+            change_Fragment(new FragmentSanPham(), "Sản phẩm");
+
+            change_Fragment(new Shoes_tab(), "Sản phẩm");
+
+
 
         });
         btn_user.setOnClickListener(view -> {
