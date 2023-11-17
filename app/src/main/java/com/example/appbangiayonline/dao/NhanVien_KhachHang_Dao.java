@@ -104,18 +104,38 @@ public class NhanVien_KhachHang_Dao {
         return list;
     }
     //Lay makh khachhang với đk trùng taikhoan khach hàng truyền vào(Lien quan đến hoaDon)
-    public KhachHang getThongTinKhachHang(String taikhoan){
+//    public KhachHang getThongTinKhachHang(String taikhoan){
+//        KhachHang khachHang = null;
+//        SQLiteDatabase db = helper.getReadableDatabase();
+//        try{
+//            Cursor cursor = db.rawQuery("SELECT makh, taikhoan FROM khachhang where taikhoan = ?", new String[]{taikhoan});
+//            while (cursor.moveToNext()){
+//                khachHang = new KhachHang(cursor.getInt(0));
+//            }
+//            cursor.close();
+//        }catch (Exception e){
+//            Log.i(TAG, "loi", e);
+//        }
+//        return khachHang;
+
+//    }
+    //     "(hoten,taikhoan,matkhau,sdt,email,diachi) " +
+    public KhachHang getThongTinKhachHang(String taikhoan) {
         KhachHang khachHang = null;
         SQLiteDatabase db = helper.getReadableDatabase();
-        try{
-            Cursor cursor = db.rawQuery("select makh from khachhang where taikhoan = ?", new String[]{taikhoan});
-            while (cursor.moveToNext()){
-                khachHang = new KhachHang(cursor.getInt(0));
+        try {
+            Cursor cursor = db.rawQuery("SELECT makh,hoten, taikhoan, matkhau, sdt,email, diachi FROM khachhang WHERE taikhoan = ?", new String[]{taikhoan});
+            while (cursor.moveToNext()) {
+
+                khachHang = new KhachHang(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6) );
             }
             cursor.close();
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.i(TAG, "loi", e);
         }
         return khachHang;
     }
+
+
 }
+
