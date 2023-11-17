@@ -77,6 +77,16 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         setContentView(R.layout.activity_man_hinh_ctsan_pham);
         giohang = findViewById(R.id.giohang_sanpham);
 
+
+        quaylai_rc_sanpham = findViewById(R.id.quaylai_rc_sanpham);
+
+        quaylai_rc_sanpham.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ManHinh_CTSanPham.this, MainActivity.class));
+            }
+        });
+
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         if (bundle != null) {

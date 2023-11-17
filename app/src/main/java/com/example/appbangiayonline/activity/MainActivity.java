@@ -19,6 +19,12 @@ import android.widget.FrameLayout;
 import com.example.appbangiayonline.R;
 import com.example.appbangiayonline.fragmentTA.FragmentKhachHang;
 import com.example.appbangiayonline.fragmentTA.FragmentNhanVien;
+
+//import com.example.appbangiayonline.tab.tab_Adapter;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import com.example.appbangiayonline.fragmentTA.FragmentSanPham;
+
 import com.example.appbangiayonline.fragmentTA.FragmentThongTin;
 import com.example.appbangiayonline.fragmentTA.Fragment_Main;
 import com.example.appbangiayonline.tab.Shoes_tab;
@@ -41,14 +47,14 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.baseline_menu_24);
-
+        change_Fragment(new FragmentSanPham(), "Sản phẩm");
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment fragment = new FragmentKhachHang();
+                Fragment fragment = new FragmentSanPham();
                 int id = item.getItemId();
                 if (R.id.mQLSanPham == id) {
-
+                    fragment =new FragmentSanPham();
 
                 } else if (R.id.mQLNhanVien == id) {
                     fragment = new FragmentNhanVien();
