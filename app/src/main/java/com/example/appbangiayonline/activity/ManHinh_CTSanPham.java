@@ -363,6 +363,16 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         alertDialog.show();
     }
 
+<<<<<<< HEAD
+    private void XacNhanMuaNgay(int tongSoLuongSP, int tongGiaSP) {
+        daohd = new HoaDonDao(this);
+        listhd = daohd.getDSHoaDon();
+        adapterhd = new HoaDonAdapter(this, listhd);
+        dao_nv_kh = new NhanVien_KhachHang_Dao(this);
+        SharedPreferences sharedPreferences = getSharedPreferences("admin",Context.MODE_PRIVATE);
+        String username = sharedPreferences.getString("taikhoan", "a");
+
+=======
 
     private void XacNhanMuaNgay(int tongSoLuongSP, int tongGiaSP) {
         daohd = new HoaDonDao(this);
@@ -372,6 +382,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         SharedPreferences sharedPreferences = getSharedPreferences("admin",Context.MODE_PRIVATE);
         String username = sharedPreferences.getString("taikhoan", "a");
 
+>>>>>>> origin/nhanh_Yen
         if (!TextUtils.isEmpty(username)) {
             KhachHang khachHang = new KhachHang();
             khachHang = dao_nv_kh.getThongTinKhachHang(username);
