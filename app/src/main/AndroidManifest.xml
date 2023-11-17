@@ -21,7 +21,9 @@
         <activity
             android:name=".activity.Welcome"
             android:exported="false" />
-
+        <activity
+            android:name=".activity.Activity_GioHang"
+            android:exported="false" />
         <activity
             android:name=".activity.DangKi"
             android:exported="false" />
