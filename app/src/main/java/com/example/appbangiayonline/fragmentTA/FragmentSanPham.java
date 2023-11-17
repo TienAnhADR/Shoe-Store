@@ -36,10 +36,10 @@ public class FragmentSanPham extends Fragment {
 
     @Override
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view1 = inflater.inflate(R.layout.fragment_san_pham, container, false);
-        FloatingActionButton fl = view1.findViewById(R.id.fl_shoes_tab);
-        RecyclerView rc_sanpham = view1.findViewById(R.id.rc_shoes_tab);
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+//        View view1 = inflater.inflate(R.layout.fragment_san_pham, container, false);
+//        FloatingActionButton fl = view1.findViewById(R.id.fl_shoes_tab2);
+//        RecyclerView rc_sanpham = view1.findViewById(R.id.rc_shoes_tab2);
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,7 +62,7 @@ public class FragmentSanPham extends Fragment {
             }
         });
 
-        return view1;
+        return view;
     }
 
     private void ThemSanPham() {
@@ -87,15 +87,15 @@ public class FragmentSanPham extends Fragment {
                         list.addAll(dao.getListSanPham());
                         adapter.notifyDataSetChanged();
 
-                        Toast.makeText(getContext(), "Them san pham thanh cong", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getContext(), "Them san pham that bai", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(getContext(), "Chua nhap ten", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//                        Toast.makeText(getContext(), "Them san pham thanh cong", Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        Toast.makeText(getContext(), "Them san pham that bai", Toast.LENGTH_SHORT).show();
+//                    }
+//                } else {
+//                    Toast.makeText(getContext(), "Chua nhap ten", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
 
                         Toast.makeText(getContext(), "Thêm sản phẩm thành công", Toast.LENGTH_SHORT).show();
                     }else{

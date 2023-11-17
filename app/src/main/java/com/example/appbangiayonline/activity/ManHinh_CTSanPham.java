@@ -333,11 +333,11 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
 
         Button btnadd = view.findViewById(R.id.them_ctsanpham_A);
 
+        AlertDialog alertDialog = builder.create();
 
         btnadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (!TextUtils.isEmpty(txttenmau.getText().toString()) && !TextUtils.isEmpty(txtkichco.getText().toString()) && !TextUtils.isEmpty(txtgia.getText().toString()) && !TextUtils.isEmpty(txtsoluong.getText().toString())) {
                     try {
                         String mau = txttenmau.getText().toString();
@@ -362,14 +362,6 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                         Log.i(TAG, "Phai la so", e);
                     }
 
-
-                String tenmau = txttenmau.getText().toString();
-                int size = Integer.parseInt(txtkichco.getText().toString());
-                int soluongg = Integer.parseInt(txtsoluong.getText().toString());
-                int giaa = Integer.parseInt(txtgia.getText().toString());
-                if (tenmau.equals("")) {
-                    Toast.makeText(ManHinh_CTSanPham.this, "Chua nhap du thong tin", Toast.LENGTH_SHORT).show();
-
                 } else {
                     Toast.makeText(ManHinh_CTSanPham.this, "Them thanh cong", Toast.LENGTH_SHORT).show();
                 }
@@ -389,14 +381,14 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
 
 
 
-    private void XacNhanMuaNgay(int tongSoLuongSP, int tongGiaSP) {
-        daohd = new HoaDonDao(this);
-        listhd = daohd.getDSHoaDon();
-        adapterhd = new HoaDonAdapter(this, listhd);
-        dao_nv_kh = new NhanVien_KhachHang_Dao(this);
-        SharedPreferences sharedPreferences = getSharedPreferences("admin",Context.MODE_PRIVATE);
-        String username = sharedPreferences.getString("taikhoan", "a");
-
+//    private void XacNhanMuaNgay(int tongSoLuongSP, int tongGiaSP) {
+//        daohd = new HoaDonDao(this);
+//        listhd = daohd.getDSHoaDon();
+//        adapterhd = new HoaDonAdapter(this, listhd);
+//        dao_nv_kh = new NhanVien_KhachHang_Dao(this);
+//        SharedPreferences sharedPreferences = getSharedPreferences("admin",Context.MODE_PRIVATE);
+//        String username = sharedPreferences.getString("taikhoan", "a");
+//
 
         if (!TextUtils.isEmpty(username)) {
             KhachHang khachHang = new KhachHang();
@@ -446,10 +438,10 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
             }
         });
 
-        builder.show();
-
-            }
-        });
+//        builder.show();
+//
+//            }
+//        });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
 

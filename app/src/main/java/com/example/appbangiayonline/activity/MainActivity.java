@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
                     fragment = new FragmentHoaDon();
 
-                } else if (R.id.mGioHang == id) {
+                } else if (R.id.mDoiMK == id) {
 
 
 
@@ -110,9 +110,9 @@ public class MainActivity extends AppCompatActivity {
             change_Fragment(new FragmentSanPham(), "Sản phẩm");
 
 
-            change_Fragment(new FragmentSanPham(), "Sản phẩm");
+//            change_Fragment(new FragmentSanPham(), "Sản phẩm");
 
-            change_Fragment(new Shoes_tab(), "Sản phẩm");
+//            change_Fragment(new Shoes_tab(), "Sản phẩm");
 
 
 
