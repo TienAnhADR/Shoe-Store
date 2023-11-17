@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -158,7 +159,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         btnxacnhanhoadon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                XacNhanMuaNgay(tongSoLuongSP, tongGiaSP);
+                XacNhanMuaNgay(tongSoLuongSP, tongGiaSP);
             }
         });
 
@@ -355,41 +356,42 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         alertDialog.show();
     }
 
-//    private void XacNhanMuaNgay(int tongSoLuongSP, int tongGiaSP) {
-//        daohd = new HoaDonDao(this);
-//        listhd = daohd.getDSHoaDon();
-//        adapterhd = new HoaDonAdapter(this, listhd);
-//        dao_nv_kh = new NhanVien_KhachHang_Dao(this);
-//        SharedPreferences sharedPreferences = getSharedPreferences("admin", MODE_PRIVATE);
-//        String username = sharedPreferences.getString("taikhoan", "");
-//        if (!TextUtils.isEmpty(username)) {
-//            KhachHang khachHang = new KhachHang();
-//            khachHang = dao_nv_kh.getThongTinKhachHang(username);
-//            int makh = khachHang.getMakh();
-//            if (makh != 0) {
-////                showConfirmationDialog();
-//
-//                boolean kt = daohd.ThemHoaDon(makh, tongSoLuongSP, tongGiaSP);
-//                if (kt) {
-//                    listhd.clear();
-//                    listhd.addAll(daohd.getDSHoaDon());
-//                    adapterhd.notifyDataSetChanged();
-////                    showConfirmationDialog();
-//                    Toast.makeText(getApplicationContext(), "Dat hang thanh cong", Toast.LENGTH_SHORT).show();
-//                } else {
-////                    showConfirmationDialog();
-//                    Toast.makeText(getApplicationContext(), "Dat hang that bai", Toast.LENGTH_SHORT).show();
-//                }
-//            }else{
-////                showConfirmationDialog();
-//                Toast.makeText(this, "Khong ton tai", Toast.LENGTH_SHORT).show();
-//            }
-//        } else {
-////            showConfirmationDialog();
-//            Toast.makeText(getApplicationContext(), "Khong ton tai", Toast.LENGTH_SHORT).show();
-//        }
+    private void XacNhanMuaNgay(int tongSoLuongSP, int tongGiaSP) {
+        daohd = new HoaDonDao(this);
+        listhd = daohd.getDSHoaDon();
+        adapterhd = new HoaDonAdapter(this, listhd);
+        dao_nv_kh = new NhanVien_KhachHang_Dao(this);
+        SharedPreferences sharedPreferences = getSharedPreferences("admin",Context.MODE_PRIVATE);
+        String username = sharedPreferences.getString("taikhoan", "a");
 
-//    }
+        if (!TextUtils.isEmpty(username)) {
+            KhachHang khachHang = new KhachHang();
+            khachHang = dao_nv_kh.getThongTinKhachHang(username);
+            int makh = khachHang.getMakh();
+            if (makh != 0) {
+//                showConfirmationDialog();
+
+                boolean kt = daohd.ThemHoaDon(makh, tongSoLuongSP, tongGiaSP);
+                if (kt) {
+                    listhd.clear();
+                    listhd.addAll(daohd.getDSHoaDon());
+                    adapterhd.notifyDataSetChanged();
+//                    showConfirmationDialog();
+                    Toast.makeText(getApplicationContext(), "Dat hang thanh cong", Toast.LENGTH_SHORT).show();
+                } else {
+//                    showConfirmationDialog();
+                    Toast.makeText(getApplicationContext(), "Dat hang that bai", Toast.LENGTH_SHORT).show();
+                }
+            }else{
+//                showConfirmationDialog();
+                Toast.makeText(this, "Khong ton tai", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+//            showConfirmationDialog();
+            Toast.makeText(getApplicationContext(), "Khong ton tai", Toast.LENGTH_SHORT).show();
+        }
+
+    }
     private void showConfirmationDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Xác nhận");
