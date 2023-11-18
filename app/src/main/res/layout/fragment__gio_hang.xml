@@ -72,7 +72,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="5sp"
             android:layout_toRightOf="@id/ss"
-            android:text="0"
+            android:text="0 VNĐ"
             android:textSize="16sp"
             android:textStyle="bold" />
 
