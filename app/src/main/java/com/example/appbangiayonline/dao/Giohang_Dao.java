@@ -15,14 +15,17 @@ import java.util.ArrayList;
 public class Giohang_Dao {
     Context context;
     DBHelper helper;
+    NhanVien_KhachHang_Dao dao;
 
     public Giohang_Dao(Context context) {
         this.context = context;
         helper = new DBHelper(context);
+        dao = new NhanVien_KhachHang_Dao(context);
     }
 
     public ArrayList<GioHang> getList() {
         ArrayList<GioHang> list = new ArrayList<>();
+
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor cursor = db.rawQuery("select " +
                 "giohang.magiohang,sanpham.masanpham,khachhang.makh," +
@@ -48,17 +51,18 @@ public class Giohang_Dao {
                                 cursor.getInt(7)));
             } while (cursor.moveToNext());
         }
+        SharedPreferences sharedPreferences = context.getSharedPreferences("admin", Context.MODE_PRIVATE);
 
-        SharedPreferences sharedPreferences = context.getSharedPreferences("khachhang", Context.MODE_PRIVATE);
-        int kh = sharedPreferences.getInt("id_kh", -1);
-        if (kh != -1) {
-            ArrayList<GioHang> li = new ArrayList<>();
+        if (sharedPreferences.getInt("setting", -1) == 2) {
+            String taikhoan = sharedPreferences.getString("taikhoan", "");
+            ArrayList<GioHang> gioHangs = new ArrayList<>();
+            KhachHang khachHang = dao.getThongTinKhachHang(taikhoan);
             list.forEach(e -> {
-                if (e.getMakhachhang() == kh) {
-                    li.add(e);
+                if (e.getMakhachhang() == khachHang.getMakh()) {
+                    gioHangs.add(e);
                 }
             });
-            return li;
+            return gioHangs;
         }
         return list;
     }

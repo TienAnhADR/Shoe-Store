@@ -47,11 +47,6 @@ public class DangNhap_DangKi_Dao {
         if (cursor_kh.getCount() > 0) {
             cursor_kh.moveToFirst();
             list_kh.add(new KhachHang(cursor_kh.getInt(0), cursor_kh.getString(1), cursor_kh.getString(2), cursor_kh.getString(3), cursor_kh.getString(4), cursor_kh.getString(5), cursor_kh.getString(6)));
-
-            SharedPreferences.Editor editor =  context.getSharedPreferences("khachhang", Context.MODE_PRIVATE).edit();
-            editor.putInt("id_kh", list_kh.get(0).getMakh());
-            editor.apply();
-
             return 2;
         }
         return -1;
