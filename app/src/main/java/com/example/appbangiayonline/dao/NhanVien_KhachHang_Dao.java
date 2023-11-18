@@ -110,15 +110,6 @@ public class NhanVien_KhachHang_Dao {
         }
         return false;
     }
-//    int makh, String hoten, String sdt, String email, String diachi
-//String tbl_khachhang = "create table khachhang (" +
-//        "makh integer primary key autoincrement," +
-//        "hoten text," +
-//        "taikhoan text," +
-//        "matkhau text," +
-//        "sdt text," +
-//        "email text," +
-//        "diachi text)";
     public ArrayList<KhachHang> getList_KH(){
         ArrayList<KhachHang> list = new ArrayList<>();
         SQLiteDatabase db = helper.getReadableDatabase();
@@ -132,18 +123,36 @@ public class NhanVien_KhachHang_Dao {
         return list;
     }
     //Lay makh khachhang với đk trùng taikhoan khach hàng truyền vào(Lien quan đến hoaDon)
-    public KhachHang getThongTinKhachHang(String taikhoan){
+    public KhachHang getThongTinKhachHang(String taikhoan) {
         KhachHang khachHang = null;
         SQLiteDatabase db = helper.getReadableDatabase();
+        try {
+            Cursor cursor = db.rawQuery("SELECT makh,hoten, taikhoan, matkhau, sdt,email, diachi FROM khachhang WHERE taikhoan = ?", new String[]{taikhoan});
+            while (cursor.moveToNext()) {
+
+                khachHang = new KhachHang(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6) );
+            }
+            cursor.close();
+        } catch (Exception e) {
+            Log.i(TAG, "loi", e);
+        }
+        return khachHang;
+    }
+
+    public NhanVien getThongTinNhanVien(String taikhoan){
+        NhanVien nhanVien = null;
+        SQLiteDatabase db = helper.getReadableDatabase();
         try{
-            Cursor cursor = db.rawQuery("select makh from khachhang where taikhoan = ?", new String[]{taikhoan});
+            Cursor cursor = db.rawQuery("select manv, hoten, taikhoan, matkhau, sdt, email, chucvu from nhanvien where taikhoan = ?", new String[]{taikhoan});
             while (cursor.moveToNext()){
-                khachHang = new KhachHang(cursor.getInt(0));
+                nhanVien = new NhanVien(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getInt(6));
             }
             cursor.close();
         }catch (Exception e){
             Log.i(TAG, "loi", e);
         }
-        return khachHang;
+        return nhanVien;
     }
+
 }
+

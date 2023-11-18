@@ -35,14 +35,22 @@ public class HoaDonDao {
         return list;
     }
     public boolean ThemHoaDon(int makh, int tongsl, int tongtien){
-        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("manv", 0);
+        values.put("manv", 1);
         values.put("makh", makh);
         values.put("tongsl", tongsl);
         values.put("tongtien", tongtien);
         values.put("trangthai", 0);
-        long kt = sqLiteDatabase.insert("hoadon", null, values);
+        long kt = db.insert("hoadon", null, values);
         return(kt > 0);
+    }
+    public boolean thayDoiTrangThaiHoaDon(int mahd, int manv){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values =new ContentValues();
+        values.put("trangthai", 1);
+        values.put("manv", manv);
+        long row = db.update("hoadon", values, "mahd = ?", new String[]{String.valueOf(mahd)});
+        return (row > 0);
     }
 }

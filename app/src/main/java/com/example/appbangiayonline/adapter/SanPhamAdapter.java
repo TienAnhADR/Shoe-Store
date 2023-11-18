@@ -25,6 +25,10 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.Viewhold
         this.fragment = fragment;
         this.list = list;
     }
+    public SanPhamAdapter(Context context, ArrayList<SanPham> list) {
+        this.context = context;
+        this.list = list;
+    }
 
     @NonNull
     @Override
@@ -41,14 +45,15 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.Viewhold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Bundle bundle = new Bundle();
-//                Intent intent = new Intent(context, ManHinh_CTSanPham.class);
-//                bundle.putString("tensanpham", sp.getTensanpham());
-//                intent.putExtras(bundle);
+//                //sao put posison?
+                Bundle bundle = new Bundle();
+                Intent intent = new Intent(context, ManHinh_CTSanPham.class);
+                bundle.putString("tensanpham", sp.getTensanpham());
+                intent.putExtras(bundle);
 //                bundle.putInt("pos", position);
-//                context.startActivity(intent);
-
-                fragment.click_item(position);
+                context.startActivity(intent);
+//
+//                fragment.click_item(position);
             }
         });
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {

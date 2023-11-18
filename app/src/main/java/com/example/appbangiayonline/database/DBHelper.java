@@ -70,6 +70,17 @@ public class DBHelper extends SQLiteOpenHelper {
 
         //--------------------------
         //chèn dữ liệu
+
+        //nhan vien
+        String insert_hoadon = "insert into hoadon" +
+                "(mahd,manv,makh,tongsl,tongtien,trangthai) " +
+                "values " +
+                "(1,1,1,55,66,0)," +
+                "(2,1,1,55,66,0) ," +
+                "(3,1,1,55,66,0)";
+
+        sqLiteDatabase.execSQL(insert_hoadon);
+
         //giohang
         String insert_giohang = "insert into giohang(masanpham,makhachhang,mausac,kichco,gia,soluong)" +
                 "values " +
@@ -94,7 +105,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "(4,'Màu tím',33,45000,12)";
         sqLiteDatabase.execSQL(ct_sp);
 
-        //khach hang
+         //khach hang
         String insert_khachhang = "insert into khachhang" +
                 "(hoten,taikhoan,matkhau,sdt,email,diachi) " +
                 "values " +

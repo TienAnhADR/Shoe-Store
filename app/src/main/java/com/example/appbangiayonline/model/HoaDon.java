@@ -9,10 +9,10 @@ public class HoaDon {
     private int trangthai;
 
 
-    public HoaDon(int mahoadon, String tenkh, String tennv, int tongsl, int tongTien, int trangthai) {
+    public HoaDon(int mahoadon,String tennv,  String tenkh,  int tongsl, int tongTien, int trangthai) {
         this.mahoadon = mahoadon;
-        this.tenkh = tenkh;
         this.tennv = tennv;
+        this.tenkh = tenkh;
         this.tongsl = tongsl;
         this.tongTien = tongTien;
         this.trangthai = trangthai;

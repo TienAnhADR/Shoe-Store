@@ -14,6 +14,9 @@ public class NhanVien {
         this.chucvu = chucvu;
     }
 
+    public NhanVien() {
+    }
+
     public NhanVien(int manv, int chucvu, String hoten, String sdt, String email) {
         this.manv = manv;
         this.chucvu = chucvu;

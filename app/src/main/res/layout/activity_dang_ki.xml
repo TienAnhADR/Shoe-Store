@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/dangky"
     tools:context=".activity.DangNhap">
     <!--kiếm ảnh tùy ý rồi sửa nhé-->
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/welcome" />
+      />
 
     <TextView
         android:id="@+id/text_title"
@@ -43,7 +44,7 @@
                 android:id="@+id/input_hoten_dangki"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/custom_input_text_login"
+                android:background="@drawable/edittext_dangky"
                 android:padding="10sp"
                 android:textColor="@color/black"
                 android:textSize="20sp"
@@ -63,7 +64,7 @@
                 android:id="@+id/input_taikhoan_dangki"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/custom_input_text_login"
+                android:background="@drawable/edittext_dangky"
                 android:padding="10sp"
                 android:textColor="@color/black"
                 android:textSize="20sp"
@@ -83,7 +84,7 @@
                 android:id="@+id/input_matkhau_dangki"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/custom_input_text_login"
+                android:background="@drawable/edittext_dangky"
                 android:padding="10sp"
                 android:textColor="@color/black"
                 android:textSize="20sp"
@@ -103,7 +104,7 @@
                 android:id="@+id/input_email_dangki"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/custom_input_text_login"
+                android:background="@drawable/edittext_dangky"
                 android:padding="10sp"
                 android:textColor="@color/black"
                 android:textSize="20sp"
@@ -123,7 +124,7 @@
                 android:id="@+id/input_sdt_dangki"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/custom_input_text_login"
+                android:background="@drawable/edittext_dangky"
                 android:padding="10sp"
                 android:textColor="@color/black"
                 android:textSize="20sp"
@@ -138,10 +139,10 @@
         android:layout_below="@id/container"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30sp"
-        android:background="@drawable/custom_button_login"
         android:text="Sign Up"
+        android:backgroundTint="#73000000"
         android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textSize="28sp"
         android:textStyle="bold" />
 
     <TextView
@@ -152,7 +153,7 @@
         android:layout_below="@id/btn_dangki_dangki"
         android:layout_marginTop="30sp"
         android:text="Login"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="25sp"
         android:textStyle="bold" />
 
