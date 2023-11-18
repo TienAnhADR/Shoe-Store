@@ -45,4 +45,12 @@ public class HoaDonDao {
         long kt = db.insert("hoadon", null, values);
         return(kt > 0);
     }
+    public boolean thayDoiTrangThaiHoaDon(int mahd, int manv){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values =new ContentValues();
+        values.put("trangthai", 1);
+        values.put("manv", manv);
+        long row = db.update("hoadon", values, "mahd = ?", new String[]{String.valueOf(mahd)});
+        return (row > 0);
+    }
 }

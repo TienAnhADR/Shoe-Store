@@ -42,6 +42,7 @@ import com.example.appbangiayonline.model.CTSanPham;
 import com.example.appbangiayonline.model.HoaDon;
 import com.example.appbangiayonline.model.KhachHang;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -256,7 +257,6 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                                 if (tongSoLuongSP >= 0) {
                                     tongSoLuongSP++;
                                     tongGiaSP = ctSanPham.getGia() * tongSoLuongSP;
-                                    Log.d(TAG, "Giá trị tongGiaSP: " + tongGiaSP);
                                     muangay_soluong.setText(String.valueOf(tongSoLuongSP));
                                     muangay_tongtien.setText(String.valueOf(tongGiaSP));
                                 }
@@ -268,12 +268,9 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                         imgTru.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                              // tongSoLuongSP = 1;
-//                                tongGiaSP = 0;
                                 if (tongSoLuongSP > 1) {
                                     tongSoLuongSP--;
                                     tongGiaSP = ctSanPham.getGia() * tongSoLuongSP;
-                                    Log.d(TAG, "Giá trị tongGiaSP: " + tongGiaSP);
                                     muangay_soluong.setText(String.valueOf(tongSoLuongSP));
                                     muangay_tongtien.setText(String.valueOf(tongGiaSP));
                                 }
@@ -360,28 +357,44 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         listhd = daohd.getDSHoaDon();
         adapterhd = new HoaDonAdapter(this, listhd);
         dao_nv_kh = new NhanVien_KhachHang_Dao(this);
-        SharedPreferences sharedPreferences = getSharedPreferences("admin", MODE_PRIVATE);
-        String username = sharedPreferences.getString("taikhoan", "");
-        if (!TextUtils.isEmpty(username)) {
-            KhachHang khachHang = new KhachHang();
-            khachHang = dao_nv_kh.getThongTinKhachHang(username);
-            int makh = khachHang.getMakh();
-            if (makh != 0) {
-                boolean kt = daohd.ThemHoaDon(makh, tongSoLuongSP, tongGiaSP);
-                if (kt) {
-                    listhd.clear();
-                    listhd.addAll(daohd.getDSHoaDon());
-                    adapterhd.notifyDataSetChanged();
-                    Toast.makeText(getApplicationContext(), "Dat hang thanh cong", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Dat hang that bai", Toast.LENGTH_SHORT).show();
+        if(xemConSoLuong(tongSoLuongSP)){
+            laySoLuongMoi(tongSoLuongSP);
+            //
+            SharedPreferences sharedPreferences = getSharedPreferences("admin", MODE_PRIVATE);
+            String username = sharedPreferences.getString("taikhoan", "");
+            if (!TextUtils.isEmpty(username)) {
+                KhachHang khachHang = new KhachHang();
+                khachHang = dao_nv_kh.getThongTinKhachHang(username);
+                int makh = khachHang.getMakh();
+                if (makh != 0) {
+                    boolean kt = daohd.ThemHoaDon(makh, tongSoLuongSP, tongGiaSP);
+                    if (kt) {
+                        listhd.clear();
+                        listhd.addAll(daohd.getDSHoaDon());
+                        adapterhd.notifyDataSetChanged();
+                        Toast.makeText(getApplicationContext(), "Dat hang thanh cong", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Dat hang that bai", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(this, "Khong ton tai", Toast.LENGTH_SHORT).show();
                 }
-            }else{
-                Toast.makeText(this, "Khong ton tai", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "Khong ton tai", Toast.LENGTH_SHORT).show();
             }
-        } else {
-            Toast.makeText(getApplicationContext(), "Khong ton tai", Toast.LENGTH_SHORT).show();
+        }else{
+            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Het so luong roi", Snackbar.LENGTH_SHORT);
+            snackbar.show();
+            Toast.makeText(this, "Het so luong roi", Toast.LENGTH_SHORT).show();
         }
+        //
+    }
+
+    private boolean xemConSoLuong(int tongSoLuongSP){
+        return ctSanPham.getSoluong() >= tongSoLuongSP;
+    }
+    private void laySoLuongMoi(int tongSoLuongSP){
+        ctSanPham.setSoluong(ctSanPham.getSoluong() - tongSoLuongSP);
     }
 }
 

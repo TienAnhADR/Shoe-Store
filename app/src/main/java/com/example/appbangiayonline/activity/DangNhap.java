@@ -47,8 +47,8 @@ public class DangNhap extends AppCompatActivity {
                 Intent intent = new Intent(DangNhap.this, MainActivity.class);
                 sharedPreferences.putInt("setting", check);
                 sharedPreferences.putString("taikhoan", taikhoan);
-                // Yến cmt sua cho nó lưu thông tin
-//                sharedPreferences.apply();
+                // Yến sua cho nó lưu thông tin
+                sharedPreferences.apply();
                 startActivity(intent);
 
             } else {
