@@ -3,7 +3,6 @@ package com.example.appbangiayonline.activity;
 import static android.content.ContentValues.TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.helper.widget.MotionEffect;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -26,7 +24,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,11 +37,8 @@ import com.example.appbangiayonline.dao.CTSanPhamDao;
 
 import com.example.appbangiayonline.dao.HoaDonDao;
 import com.example.appbangiayonline.dao.NhanVien_KhachHang_Dao;
-import com.example.appbangiayonline.fragmentTA.FragmentSanPham;
 
 import com.example.appbangiayonline.model.CTSanPham;
-
-import com.example.appbangiayonline.model.SanPham;
 
 import com.example.appbangiayonline.model.HoaDon;
 import com.example.appbangiayonline.model.KhachHang;
@@ -53,7 +47,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickMauSize {
     String tenchung;
@@ -82,7 +75,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
     TextView nhanmausac;
     TextView nhantensanpham;
     TextView nhangia;
-    TextView nhansiluong;
+    TextView nhansoluong;
     //them giohang
     Button themGH;
     //lưu dữ được nhiều lần chọn
@@ -106,11 +99,11 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
     HoaDonDao daohd;
     HoaDonAdapter adapterhd;
     ArrayList<HoaDon> listhd;
-    //
     ImageView quaylai_rc_sanpham;
 
     //new soluong moi
     int newslsanpham;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,11 +111,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         setContentView(R.layout.activity_man_hinh_ctsan_pham);
         giohang = findViewById(R.id.giohang_sanpham);
         muaNgay = findViewById(R.id.muangay_sanpham);
-        ImageView quaylai_rc_sanpham = findViewById(R.id.quaylai_rc_sanpham);
-
-
-
-
+        quaylai_rc_sanpham = findViewById(R.id.quaylai_rc_sanpham);
         quaylai_rc_sanpham.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -134,10 +123,12 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
-         tenchung = bundle.getString("tensanpham");
+            tenchung = bundle.getString("tensanpham");
             nhanten = findViewById(R.id.tensanpham_sanpham);
             nhanten.setText(tenchung);
         }
+        giohang.setOnClickListener(v -> showCTSanPham());
+
         //Phan quyền rồi đó
         SharedPreferences sharedPreferences = getSharedPreferences("admin", MODE_PRIVATE);
         int check = sharedPreferences.getInt("setting", 2);
@@ -158,10 +149,6 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_muangay);
-
-
-
-        dialog.dismiss();
 
         ImageView quaylai = dialog.findViewById(R.id.quaylai);
 
@@ -197,7 +184,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         nhankichco = dialog.findViewById(R.id.kiccosanphamct);
         nhanmausac = dialog.findViewById(R.id.mausacsanphamct);
         nhantensanpham = dialog.findViewById(R.id.tensanphamct);
-        nhansiluong = dialog.findViewById(R.id.soluongsanphamct);
+        nhansoluong = dialog.findViewById(R.id.soluongsanphamct);
         nhangia = dialog.findViewById(R.id.giasanphamct);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -214,7 +201,6 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
             }
         });
         //
-
 
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -270,8 +256,9 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                 nhanmausac.setText(mausac);
                 nhankichco.setText(Integer.toString(kichCo));
                 nhangia.setText(Integer.toString(ctSanPham.getGia()));
-                nhansiluong.setText(Integer.toString(ctSanPham.getSoluong()));
-                 //CHÚ Ý NÈ: đây sẽ là chỗ cho nút mua ngay
+                nhansoluong.setText(Integer.toString(ctSanPham.getSoluong()));
+                //CHÚ Ý NÈ: đây sẽ là chỗ cho nút mua ngay
+
                 //CHÚ Ý NÈ: Cong tru va sotien, soluong
 
                 boolean kt = dao.kiemTraTonTaiTrongMactsp(ctSanPham.getMactsanpham(), mausac, kichCo, ctSanPham.getGia(), ctSanPham.getSoluong());
@@ -286,7 +273,6 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                                     muangay_soluong.setText(String.valueOf(tongSoLuongSP));
                                     muangay_tongtien.setText(String.valueOf(tongGiaSP));
                                 }
-                            }
                         });
                     }
 
@@ -308,11 +294,11 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                 }
             } else {
                 nhangia.setText("0");
-                nhansiluong.setText("0");
+                nhansoluong.setText("0");
             }
         } else {
             nhangia.setText("0");
-            nhansiluong.setText("0");
+            nhansoluong.setText("0");
         }
     }
 
@@ -377,41 +363,33 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         });
         alertDialog.show();
     }
-
-
+                                                   
     private void XacNhanMuaNgay(int tongSoLuongSP, int tongGiaSP) {
         daohd = new HoaDonDao(this);
         listhd = daohd.getDSHoaDon();
         adapterhd = new HoaDonAdapter(this, listhd);
         dao_nv_kh = new NhanVien_KhachHang_Dao(this);
-
-   private void XacNhanMuaNgay(int tongSoLuongSP, int tongGiaSP) {
-       daohd = new HoaDonDao(this);
-       listhd = daohd.getDSHoaDon();
-       adapterhd = new HoaDonAdapter(this, listhd);
-       dao_nv_kh = new NhanVien_KhachHang_Dao(this);
-       SharedPreferences sharedPreferences = getSharedPreferences("admin",Context.MODE_PRIVATE);
-       String username = sharedPreferences.getString("taikhoan", "a");
-
-
-        if (!TextUtils.isEmpty(username)) {
-            KhachHang khachHang = new KhachHang();
-            khachHang = dao_nv_kh.getThongTinKhachHang(username);
-            int makh = khachHang.getMakh();
-            if (makh != 0) {
-//                showConfirmationDialog();
-
-                boolean kt = daohd.ThemHoaDon(makh, tongSoLuongSP, tongGiaSP);
-                if (kt) {
-                    listhd.clear();
-                    listhd.addAll(daohd.getDSHoaDon());
-                    adapterhd.notifyDataSetChanged();
-//                    showConfirmationDialog();
-                    Toast.makeText(getApplicationContext(), "Dat hang thanh cong", Toast.LENGTH_SHORT).show();
-                } else {
-//                    showConfirmationDialog();
-                    Toast.makeText(getApplicationContext(), "Dat hang that bai", Toast.LENGTH_SHORT).show();
-
+        if(xemConSoLuong(tongSoLuongSP)){
+            laySoLuongMoi(tongSoLuongSP);
+            //
+            SharedPreferences sharedPreferences = getSharedPreferences("admin", MODE_PRIVATE);
+            String username = sharedPreferences.getString("taikhoan", "");
+            if (!TextUtils.isEmpty(username)) {
+                KhachHang khachHang = new KhachHang();
+                khachHang = dao_nv_kh.getThongTinKhachHang(username);
+                int makh = khachHang.getMakh();
+                if (makh != 0) {
+                    boolean kt = daohd.ThemHoaDon(makh, tongSoLuongSP, tongGiaSP);
+                    if (kt) {
+                        listhd.clear();
+                        listhd.addAll(daohd.getDSHoaDon());
+                        adapterhd.notifyDataSetChanged();
+                        Toast.makeText(getApplicationContext(), "Dat hang thanh cong", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Dat hang that bai", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(this, "Khong ton tai", Toast.LENGTH_SHORT).show();
                 }
             } else {
                 Toast.makeText(getApplicationContext(), "Khong ton tai", Toast.LENGTH_SHORT).show();
@@ -423,7 +401,6 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         }
         //
     }
-
 
     private boolean xemConSoLuong(int tongSoLuongSP){
         return ctSanPham.getSoluong() >= tongSoLuongSP;

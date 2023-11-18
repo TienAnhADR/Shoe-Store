@@ -1,7 +1,6 @@
 package com.example.appbangiayonline.fragmentTA;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -18,7 +17,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.appbangiayonline.R;
-import com.example.appbangiayonline.activity.ManHinh_CTSanPham;
 import com.example.appbangiayonline.adapter.SanPhamAdapter;
 import com.example.appbangiayonline.dao.SanPhamDao;
 import com.example.appbangiayonline.model.SanPham;
@@ -27,6 +25,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 
 public class FragmentSanPham extends Fragment {
+
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -66,14 +66,9 @@ public class FragmentSanPham extends Fragment {
         }
     }
 
-    public FragmentSanPham() {
-
-    }
-
     SanPhamDao dao;
     ArrayList<SanPham> list;
     SanPhamAdapter adapter;
-
 
     FloatingActionButton fl ;
     RecyclerView rc_sanpham  ;
@@ -83,11 +78,13 @@ public class FragmentSanPham extends Fragment {
         View view1 = inflater.inflate(R.layout.fragment_san_pham, container, false);
          fl = view1.findViewById(R.id.fl_shoes_tab2);
          rc_sanpham = view1.findViewById(R.id.rc_shoes_tab2);
+
+
         rc_sanpham.setLayoutManager(new GridLayoutManager(getContext(), 2));
         list = new ArrayList<>();
         dao = new SanPhamDao(getContext());
         list = dao.getListSanPham();
-        adapter = new SanPhamAdapter(getContext(), this, list);
+        adapter = new SanPhamAdapter(getContext(), list);
         rc_sanpham.setAdapter(adapter);
 
         fl.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +94,7 @@ public class FragmentSanPham extends Fragment {
             }
         });
 
-        return view;
+        return view1;
     }
 
     private void ThemSanPham() {
@@ -130,7 +127,8 @@ public class FragmentSanPham extends Fragment {
                 }
             }
         });
-      builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+
+        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
@@ -139,16 +137,5 @@ public class FragmentSanPham extends Fragment {
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
-    }
-  public void click_item(int i) {
-
-        Bundle bundle = new Bundle();
-        Intent intent = new Intent(requireActivity(), ManHinh_CTSanPham.class);
-        bundle.putString("tensanpham", list.get(i).getTensanpham());
-        intent.putExtras(bundle);
-        requireActivity().startActivity(intent);
-    }
-
-    public void update_Sp() {
     }
 }

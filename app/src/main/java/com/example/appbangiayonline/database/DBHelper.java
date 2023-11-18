@@ -55,7 +55,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "makh integer references khachhang(makh)," +
                 "tongsl integer," +
                 "tongtien integer," +
-                "trangthai integer)";// 0 thanhtoan 1 xacnhan
+                "trangthai integer)";
         //0 chuaxacnhan 1 daxacnhan
         sqLiteDatabase.execSQL(tbl_hoadon);
 
@@ -136,6 +136,7 @@ public class DBHelper extends SQLiteOpenHelper {
             sqLiteDatabase.execSQL("drop table sanpham");
             sqLiteDatabase.execSQL("drop table ctsanpham");
             sqLiteDatabase.execSQL("drop table hoadon");
+            sqLiteDatabase.execSQL("drop table giohang");
             onCreate(sqLiteDatabase);
         }
     }
