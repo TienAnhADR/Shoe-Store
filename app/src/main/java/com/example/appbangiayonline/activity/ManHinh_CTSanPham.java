@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -35,9 +36,11 @@ import com.example.appbangiayonline.adapter.HoaDonAdapter;
 import com.example.appbangiayonline.adapter.MauSacAdapter;
 import com.example.appbangiayonline.adapter.SizeAdapter;
 import com.example.appbangiayonline.dao.CTSanPhamDao;
+
 import com.example.appbangiayonline.dao.HoaDonDao;
 import com.example.appbangiayonline.dao.NhanVien_KhachHang_Dao;
 import com.example.appbangiayonline.fragmentTA.FragmentSanPham;
+
 import com.example.appbangiayonline.model.CTSanPham;
 import com.example.appbangiayonline.model.HoaDon;
 import com.example.appbangiayonline.model.KhachHang;
@@ -51,11 +54,8 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
     String tenchung;
     //nhan bundel
     TextView nhanten;
-    //nut giohang, muangay
     TextView giohang;
     TextView muaNgay;
-    //icon quay lai
-    ImageView quaylai_rc_sanpham;
 
     CTSanPhamDao dao;
     ArrayList<CTSanPham> list;
@@ -80,7 +80,6 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
     TextView nhansiluong;
     //them giohang
     Button themGH;
-
     //lưu dữ được nhiều lần chọn
     private String selectedMauSac;
     private int selectedKichCo;
@@ -102,23 +101,28 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
     HoaDonDao daohd;
     HoaDonAdapter adapterhd;
     ArrayList<HoaDon> listhd;
+    //
+    ImageView quaylai_rc_sanpham;
+
+    //new soluong moi
+    int newslsanpham;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_man_hinh_ctsan_pham);
-        // nut sanpham
         giohang = findViewById(R.id.giohang_sanpham);
         muaNgay = findViewById(R.id.muangay_sanpham);
-
         quaylai_rc_sanpham = findViewById(R.id.quaylai_rc_sanpham);
 
-//        quaylai_rc_sanpham.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(ManHinh_CTSanPham.this, FragmentSanPham.class));
-//            }
-//        });
+        quaylai_rc_sanpham.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
@@ -126,7 +130,14 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
             nhanten = findViewById(R.id.tensanpham_sanpham);
             nhanten.setText(tenchung);
         }
-
+        //Phan quyền rồi đó
+        SharedPreferences sharedPreferences = getSharedPreferences("admin", MODE_PRIVATE);
+        int check = sharedPreferences.getInt("setting", 2);
+        if(check == 2){
+            muaNgay.setVisibility(View.VISIBLE);
+        }else{
+            muaNgay.setVisibility(View.GONE);
+        }
         muaNgay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -204,6 +215,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         list = dao.getListCTSanPham(tansanpham);
         adapter = new CTSanPhamAdapter(ManHinh_CTSanPham.this, list);
         rcctsanpham.setAdapter(adapter);
+        // Khi dữ liệu đã được lấy xong, gọi phương thức onDataLoaded()
     }
 
     private void loadDSKichCo(String tansanpham) {
@@ -218,6 +230,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
             }
         });
         rckichco.setAdapter(kichCoAdapter);
+        // Khi dữ liệu đã được lấy xong, gọi phương thức onDataLoaded()
     }
 
     private void loadDSMau(String tansanpham) {
@@ -245,7 +258,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                 nhankichco.setText(Integer.toString(kichCo));
                 nhangia.setText(Integer.toString(ctSanPham.getGia()));
                 nhansiluong.setText(Integer.toString(ctSanPham.getSoluong()));
-                //CHÚ Ý NÈ: đây sẽ là chỗ cho nút mua ngay
+                 //CHÚ Ý NÈ: đây sẽ là chỗ cho nút mua ngay
                 //CHÚ Ý NÈ: Cong tru va sotien, soluong
 
                 boolean kt = dao.kiemTraTonTaiTrongMactsp(ctSanPham.getMactsanpham(), mausac, kichCo, ctSanPham.getGia(), ctSanPham.getSoluong());
@@ -254,7 +267,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                         imgCong.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                if (tongSoLuongSP >= 0) {
+                                if (tongSoLuongSP >= 0  ) {
                                     tongSoLuongSP++;
                                     tongGiaSP = ctSanPham.getGia() * tongSoLuongSP;
                                     muangay_soluong.setText(String.valueOf(tongSoLuongSP));
@@ -268,7 +281,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                         imgTru.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                if (tongSoLuongSP > 1) {
+                                if (tongSoLuongSP > 1  ) {
                                     tongSoLuongSP--;
                                     tongGiaSP = ctSanPham.getGia() * tongSoLuongSP;
                                     muangay_soluong.setText(String.valueOf(tongSoLuongSP));
@@ -351,7 +364,6 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         });
         alertDialog.show();
     }
-
     private void XacNhanMuaNgay(int tongSoLuongSP, int tongGiaSP) {
         daohd = new HoaDonDao(this);
         listhd = daohd.getDSHoaDon();
@@ -373,6 +385,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                         listhd.addAll(daohd.getDSHoaDon());
                         adapterhd.notifyDataSetChanged();
                         Toast.makeText(getApplicationContext(), "Dat hang thanh cong", Toast.LENGTH_SHORT).show();
+                       
                     } else {
                         Toast.makeText(getApplicationContext(), "Dat hang that bai", Toast.LENGTH_SHORT).show();
                     }
@@ -395,6 +408,9 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
     }
     private void laySoLuongMoi(int tongSoLuongSP){
         ctSanPham.setSoluong(ctSanPham.getSoluong() - tongSoLuongSP);
+        newslsanpham = ctSanPham.getSoluong();
+        //load so luong moi
+
     }
 }
 

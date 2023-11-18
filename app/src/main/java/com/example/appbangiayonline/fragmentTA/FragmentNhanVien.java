@@ -1,13 +1,18 @@
 package com.example.appbangiayonline.fragmentTA;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,6 +30,8 @@ import com.example.appbangiayonline.dao.NhanVien_KhachHang_Dao;
 import com.example.appbangiayonline.model.KhachHang;
 import com.example.appbangiayonline.model.NhanVien;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,6 +51,7 @@ public class FragmentNhanVien extends Fragment {
         recyclerView = view.findViewById(R.id.recylerV_NhanVien);
         floadAdd = view.findViewById(R.id.fload_btn_Add_NhanVien);
         setAdapter();
+
         floadAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,56 +68,86 @@ public class FragmentNhanVien extends Fragment {
         NhanVienAdapter adapter = new NhanVienAdapter(getContext(),list);
         recyclerView.setAdapter(adapter);
     }
-    int check =0;
+
     public void showDialogThem(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_them_nhan_vien, null);
         builder.setView(view);
-        EditText edtTen,edtUserName,edtPass,edtSDT,edtEmail;
-        edtTen = view.findViewById(R.id.edtTenNhanVien_new);
-        edtUserName =view.findViewById(R.id.edtTen_User_NhanVien_new);
-        edtPass = view.findViewById(R.id.edtPassNhanVien_new);
-        edtSDT = view.findViewById(R.id.edtSDT_NV_new);
-        edtEmail = view.findViewById(R.id.edtEmail_NV_new);
-
-        builder.setPositiveButton("Thêm", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String hoten,taikhoan,matkhau,email,sdt;
-                hoten = edtTen.getText().toString();
-                taikhoan = edtUserName.getText().toString();
-                matkhau = edtPass.getText().toString();
-                email = edtEmail.getText().toString();
-                sdt = edtSDT.getText().toString();
-                if(edtTen.getText().toString().equals("")||edtSDT.getText().toString().equals("")||
-                        edtUserName.getText().toString().equals("")||edtEmail.getText().toString().equals("")
-                || edtPass.getText().toString().equals("")){
-
-                    Toast.makeText(getContext(), "Không để trống dữ liệu", Toast.LENGTH_SHORT).show();
-                }else {
-//                    String hoten, String taikhoan, String matkhau, String email, String sdt
-                    int check = dao.newNhanVien(hoten, taikhoan, matkhau, email, sdt);
-                    if (check == 0) {
-                        Toast.makeText(getContext(), "Tài khoản đã tồn tại!", Toast.LENGTH_SHORT).show();
-                    }
-                    if (check == 1) {
-                        Toast.makeText(getContext(), "Thêm mới thành công", Toast.LENGTH_SHORT).show();
-                        list.clear();
-                        setAdapter();
-                    }
-                }
-
-            }
-        });
-        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
+        TextInputEditText input_diachi = view.findViewById(R.id.input_diachi_Them_NV);
+        TextInputLayout inputLayout_diachi = view.findViewById(R.id.layout_diachi_Them_NV);
+//        input_diachi.setVisibility(View.VISIBLE);
+        inputLayout_diachi.setVisibility(View.GONE);
+//        EditText edtTen,edtUserName,edtPass,edtSDT,edtEmail;
+//        edtTen = view.findViewById(R.id.edtTenNhanVien_new);
+//        edtUserName =view.findViewById(R.id.edtTen_User_NhanVien_new);
+//        edtPass = view.findViewById(R.id.edtPassNhanVien_new);
+//        edtSDT = view.findViewById(R.id.edtSDT_NV_new);
+//        edtEmail = view.findViewById(R.id.edtEmail_NV_new);
+        TextInputEditText input_hoten = view.findViewById(R.id.input_hoten_Them_NV);
+        TextInputEditText input_taikhoan = view.findViewById(R.id.input_taikhoan_Them_NV);
+        TextInputEditText input_matkhau = view.findViewById(R.id.input_matkhau_Them_NV);
+        TextInputEditText input_email = view.findViewById(R.id.input_email_Them_NV);
+        TextInputEditText input_sdt = view.findViewById(R.id.input_sdt__Them_NV);
+        Button btnHuy,btnThem;
+        btnThem = view.findViewById(R.id.btnThemNV);
+        btnHuy = view.findViewById(R.id.btnHuyThemNV);
+        TextView txtTitel = view.findViewById(R.id.txtChuDeDialogThem);
+        txtTitel.setText("Thêm nhân viên");
         AlertDialog dialog = builder.create();
+
+        btnThem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String hoten,taikhoan,matkhau,email,sdt;
+                hoten = input_hoten.getText().toString();
+                taikhoan = input_taikhoan.getText().toString();
+                matkhau = input_matkhau.getText().toString();
+                email = input_email.getText().toString();
+                sdt = input_sdt.getText().toString();
+                if (isValid(hoten,taikhoan,matkhau,sdt,email)){
+                    dialog.dismiss();
+                }
+            }
+        });
+       btnHuy.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               dialog.dismiss();
+           }
+       });
+
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+        layoutParams.copyFrom(dialog.getWindow().getAttributes());
+        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT; // Width có thể thiết lập theo nhu cầu của bạn
+        layoutParams.height = WindowManager.LayoutParams.MATCH_PARENT; // Height có thể thiết lập theo nhu cầu của bạn
+        dialog.getWindow().setAttributes(layoutParams);
         dialog.show();
+    }
+
+
+    public boolean isValid(String hoten,String taikhoan, String matkhau,String sdt,String email) {
+        if(hoten.equals("")||sdt.equals("")||
+                taikhoan.equals("")||email.equals("")
+                || matkhau.equals("")){
+
+            Toast.makeText(getContext(), "Không để trống dữ liệu", Toast.LENGTH_SHORT).show();
+            return false;
+        }else {
+//                    String hoten, String taikhoan, String matkhau, String email, String sdt
+            int check = dao.newNhanVien(hoten, taikhoan, matkhau, sdt, email);
+            if (check == 0) {
+                Toast.makeText(getContext(), "Tài khoản đã tồn tại!", Toast.LENGTH_SHORT).show();
+                return false;
+            } else if (check == 1) {
+                Toast.makeText(getContext(), "Thêm mới thành công", Toast.LENGTH_SHORT).show();
+                list.clear();
+                setAdapter();
+                return true;
+            }
+        }
+        return false;
+
     }
 
 }

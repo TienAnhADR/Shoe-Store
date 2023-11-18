@@ -40,11 +40,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 "tensanpham text )";
         sqLiteDatabase.execSQL(tbl_sanpham);
 
-        String ins_sp = "insert into sanpham(tensanpham) values" +
-                "('Loại 1')," +
-                "('Loại 2')," +
-                "('Loại 3')";
-        sqLiteDatabase.execSQL(ins_sp);
         //chi tiet sanpham
         String tbl_ctsanpham = "create table ctsanpham(mactsanpham integer primary key autoincrement," +
                 "masanpham integer references sanpham(masanpham)," +
@@ -53,6 +48,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "gia integer," +
                 "soluong integer)";
         sqLiteDatabase.execSQL(tbl_ctsanpham);
+
         //hoadon
         String tbl_hoadon = "create table hoadon(mahd integer primary key autoincrement," +
                 "manv integer references nhanvien(manv)," +
@@ -62,8 +58,19 @@ public class DBHelper extends SQLiteOpenHelper {
                 "trangthai integer)";// 0 thanhtoan 1 xacnhan
         //0 chuaxacnhan 1 daxacnhan
         sqLiteDatabase.execSQL(tbl_hoadon);
+
+        String tbl_giohang = "create table giohang(" +
+                "magiohang integer primary key autoincrement," +
+                "masanpham integer references sanpham(masanpham)," +
+                "makhachhang integer references khachhang(makhachhang)," +
+                "mausac text," +
+                "kichco integer," +
+                "gia integer," +
+                "soluong integer)";
+
         //--------------------------
         //chèn dữ liệu
+
         //nhan vien
         String insert_hoadon = "insert into hoadon" +
                 "(mahd,manv,makh,tongsl,tongtien,trangthai) " +
@@ -73,7 +80,32 @@ public class DBHelper extends SQLiteOpenHelper {
                 "(3,1,1,55,66,0)";
 
         sqLiteDatabase.execSQL(insert_hoadon);
-        //khach hang
+
+        //giohang
+        String insert_giohang = "insert into giohang(masanpham,makhachhang,mausac,kichco,gia,soluong)" +
+                "values " +
+                "(1,1,'Màu xanh',34,50000,15)," +
+                "(2,2,'Màu tím',35,14000,11)," +
+                "(3,3,'Màu vàng',35,50000,11)";
+        //sp
+        String ins_sp = "insert into sanpham(tensanpham) values" +
+                "('Loại 1')," +
+                "('Loại 2')," +
+                "('Loại 3')," +
+                "('Loại 4')";
+        sqLiteDatabase.execSQL(ins_sp);
+        String ct_sp = "insert into ctsanpham(masanpham,mausac,kichco,gia,soluong) values" +
+                "(1,'Màu xanh',34,50000,15)," +
+                "(2,'Màu tím',35,14000,11)," +
+                "(3,'Màu vàng',30,11000,10)," +
+                "(4,'Màu xanh',33,5000,11)," +
+                "(1,'Màu hồng',30,17000,11)," +
+                "(2,'Màu xanh',31,20000,12)," +
+                "(3,'Màu vàng',35,50000,11)," +
+                "(4,'Màu tím',33,45000,12)";
+        sqLiteDatabase.execSQL(ct_sp);
+
+         //khach hang
         String insert_khachhang = "insert into khachhang" +
                 "(hoten,taikhoan,matkhau,sdt,email,diachi) " +
                 "values " +
@@ -90,8 +122,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
         sqLiteDatabase.execSQL(tbl_khachhang);
         sqLiteDatabase.execSQL(tbl_nhanvien);
+        sqLiteDatabase.execSQL(tbl_giohang);
         sqLiteDatabase.execSQL(insert_khachhang);
         sqLiteDatabase.execSQL(insert_nhanvien);
+        sqLiteDatabase.execSQL(insert_giohang);
     }
 
     @Override

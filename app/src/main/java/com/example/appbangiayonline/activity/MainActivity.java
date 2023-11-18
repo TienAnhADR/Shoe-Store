@@ -1,6 +1,5 @@
 package com.example.appbangiayonline.activity;
 
-import androidx.annotation.BinderThread;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,9 +9,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
@@ -21,12 +23,17 @@ import com.example.appbangiayonline.fragmentTA.FragmentHoaDon;
 import com.example.appbangiayonline.fragmentTA.FragmentKhachHang;
 import com.example.appbangiayonline.fragmentTA.FragmentNhanVien;
 
+
+
+//import com.example.appbangiayonline.tab.tab_Adapter;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.example.appbangiayonline.fragmentTA.FragmentSanPham;
+
 import com.example.appbangiayonline.fragmentTA.FragmentThongTin;
 import com.example.appbangiayonline.fragmentTA.Fragment_Main;
-
+import com.example.appbangiayonline.tab.Shoes_tab;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,23 +45,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar = findViewById(R.id.toolbar);
-        FrameLayout frameLayout = findViewById(R.id.flameLayout);
 
         NavigationView navigationView = findViewById(R.id.navigationV);
         drawerLayout = findViewById(R.id.drawerLayout);
         setSupportActionBar(toolbar);
+        SharedPreferences sharedPreferences = getSharedPreferences("admin", Context.MODE_PRIVATE);
+        String username = sharedPreferences.getString("taikhoan", "a");
+        String b = username;
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.baseline_menu_24);
-
+        change_Fragment(new FragmentSanPham(), "Sản phẩm");
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment fragment = new FragmentKhachHang();
+                Fragment fragment = new FragmentSanPham();
                 int id = item.getItemId();
                 if (R.id.mQLSanPham == id) {
-
+                    fragment =new FragmentSanPham();
 
                 } else if (R.id.mQLNhanVien == id) {
                     fragment = new FragmentNhanVien();
@@ -63,9 +72,10 @@ public class MainActivity extends AppCompatActivity {
                     fragment = new FragmentKhachHang();
 
                 } else if (R.id.mQLHoaDon == id) {
+
                     fragment = new FragmentHoaDon();
 
-                } else if (R.id.mGioHang == id) {
+//                } else if (R.id.mQLHoaDon == id) {
 
 
                 } else if (R.id.mThongKe == id) {
@@ -87,11 +97,21 @@ public class MainActivity extends AppCompatActivity {
         Button btn_home = findViewById(R.id.btn_home_fg);
         Button btn_shoe = findViewById(R.id.btn_shoes_fg);
         Button btn_user = findViewById(R.id.btn_user_fg);
+        Button cart = findViewById(R.id.btn_cart_fg);
+        cart.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, Activity_GioHang.class);
+            startActivity(intent);
+        });
         btn_home.setOnClickListener(view -> {
             change_Fragment(new Fragment_Main(), "Trang chủ");
         });
         btn_shoe.setOnClickListener(view -> {
+
             change_Fragment(new FragmentSanPham(), "Sản phẩm");
+
+            change_Fragment(new Shoes_tab(), "Sản phẩm");
+
+
         });
         btn_user.setOnClickListener(view -> {
             change_Fragment(new FragmentThongTin(), "Thông tin khách hàng");

@@ -57,11 +57,11 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.Viewholder
         if(list.get(position).getTrangthai() == 0){
             trangthai ="Xac nhan";
             holder.tennv.setVisibility(View.INVISIBLE);
-
             holder.tennv.setText(list.get(position).getTennv());
-        }else{
+         }else{
             trangthai = "Da xac nhan";
             holder.tennv.setVisibility(View.VISIBLE);
+            holder.btnxacnhan.setVisibility(View.GONE);
             holder.tennv.setText(list.get(position).getTennv());
         }
         holder.trangthai_texthd.setText(trangthai);
@@ -70,6 +70,8 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.Viewholder
         int check = sharedPreferences.getInt("setting", 2);
         if(check == 2){
             holder.btnxacnhan.setVisibility(View.GONE);
+        }else{
+            holder.btnxacnhan.setText("Xác nhận");
         }
         holder.btnxacnhan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +95,7 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.Viewholder
                                 list.addAll(dao.getDSHoaDon());
                                 notifyDataSetChanged();
                                 Toast.makeText(context, "Xac nhan thanh cong", Toast.LENGTH_SHORT).show();
+                                holder.btnxacnhan.setVisibility(View.GONE);
                             } else {
                                 Toast.makeText(context, "Xac nhan that bai", Toast.LENGTH_SHORT).show();
                             }

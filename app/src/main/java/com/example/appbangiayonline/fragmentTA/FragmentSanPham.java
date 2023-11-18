@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
@@ -25,8 +26,16 @@ import java.util.ArrayList;
 
 public class FragmentSanPham extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment FragmentSanPham.
+     */
+    // TODO: Rename and change types and number of parameters
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -38,15 +47,6 @@ public class FragmentSanPham extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentSanPham.
-     */
-    // TODO: Rename and change types and number of parameters
     public static FragmentSanPham newInstance(String param1, String param2) {
         FragmentSanPham fragment = new FragmentSanPham();
         Bundle args = new Bundle();
@@ -56,6 +56,7 @@ public class FragmentSanPham extends Fragment {
         return fragment;
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,14 +65,20 @@ public class FragmentSanPham extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+
     SanPhamDao dao;
     ArrayList<SanPham> list;
     SanPhamAdapter adapter;
+
+    FloatingActionButton fl ;
+    RecyclerView rc_sanpham  ;
     @Override
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view1 = inflater.inflate(R.layout.fragment_san_pham, container, false);
-        FloatingActionButton fl = view1.findViewById(R.id.fl_shoes_tab);
-        RecyclerView rc_sanpham = view1.findViewById(R.id.rc_shoes_tab);
+         fl = view1.findViewById(R.id.fl_shoes_tab2);
+         rc_sanpham = view1.findViewById(R.id.rc_shoes_tab2);
+
 
         rc_sanpham.setLayoutManager(new GridLayoutManager(getContext(), 2));
         list = new ArrayList<>();
@@ -90,7 +97,7 @@ public class FragmentSanPham extends Fragment {
         return view1;
     }
 
-    private void ThemSanPham(){
+    private void ThemSanPham() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.them_sanpham, null);
@@ -103,19 +110,19 @@ public class FragmentSanPham extends Fragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 String ten = txtten.getText().toString();
-                if(!TextUtils.isEmpty(ten)){
+                if (!TextUtils.isEmpty(ten)) {
                     SanPham sanPham = new SanPham();
                     sanPham.setTensanpham(ten);
                     boolean kt = dao.ThemSanPham(sanPham);
-                    if(kt){
+                    if (kt) {
                         list.clear();
                         list.addAll(dao.getListSanPham());
                         adapter.notifyDataSetChanged();
                         Toast.makeText(getContext(), "Thêm sản phẩm thành công", Toast.LENGTH_SHORT).show();
-                    }else{
+                    } else {
                         Toast.makeText(getContext(), "Thêm sản phẩm thất bại", Toast.LENGTH_SHORT).show();
                     }
-                }else{
+                } else {
                     Toast.makeText(getContext(), "Chưa nhập tên", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -131,5 +138,4 @@ public class FragmentSanPham extends Fragment {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-
 }
