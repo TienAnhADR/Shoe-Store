@@ -69,11 +69,10 @@ public class MainActivity extends AppCompatActivity {
                 } else if (R.id.mQLKhachHang == id) {
                     fragment = new FragmentKhachHang();
 
-                } else if (R.id.mQLHoaDon == id) {
-
-                    fragment = new FragmentHoaDon();
-
                 } else if (R.id.mThongKe == id) {
+
+
+//                } else if (R.id.mQLHoaDon == id) {
 
                 } else if (R.id.mDoiMK == id) {
 
@@ -102,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
         });
         btn_shoe.setOnClickListener(view -> {
             change_Fragment(new FragmentSanPham(), "Sản phẩm");
-
         });
         btn_user.setOnClickListener(view -> {
             change_Fragment(new FragmentThongTin(), "Thông tin khách hàng");

@@ -50,7 +50,6 @@ public class DangNhap extends AppCompatActivity {
                 // Yến cmt sua cho nó lưu thông tin
                 sharedPreferences.apply();
                 startActivity(intent);
-
             } else {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.create();

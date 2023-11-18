@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/dangnhap"
     tools:context=".activity.DangNhap">
     <!--kiếm ảnh tùy ý rồi sửa nhé-->
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/welcome" />
+         />
 
     <TextView
         android:id="@+id/text_title"
@@ -20,7 +21,7 @@
         android:layout_marginRight="30sp"
         android:layout_marginBottom="40sp"
         android:text="Login"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="50sp"
         android:textStyle="bold" />
 
@@ -36,7 +37,7 @@
             android:id="@+id/input_taikhoan_dangnhap"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_input_text_login"
+            android:background="@drawable/edittext_dangnhap"
             android:padding="10sp"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -56,7 +57,7 @@
             android:id="@+id/input_matkhau_dangnhap"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_input_text_login"
+            android:background="@drawable/edittext_dangnhap"
             android:padding="10sp"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -70,10 +71,10 @@
         android:layout_below="@id/layout_password"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60sp"
-        android:background="@drawable/custom_button_login"
         android:text="Login"
+        android:backgroundTint="#94AF7272"
         android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textSize="26sp"
         android:textStyle="bold" />
 
     <TextView

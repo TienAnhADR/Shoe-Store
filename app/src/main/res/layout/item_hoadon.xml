@@ -89,13 +89,20 @@
                 android:textColor="#8D8D8D"
                 android:layout_height="wrap_content"
                 android:text="Trang thai"/>
-            <Button
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/trangthai_text_hoadon"
+                android:layout_width="100dp"
+                android:textColor="#8D8D8D"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
-                android:background="@color/black"
-                android:text="Trang thai"
-                android:id="@+id/txttrangthai_Hoadon"/>
+                android:text=""/>
+
         </LinearLayout>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/black"
+            android:text="Trang thai"
+            android:id="@+id/txttrangthai_Hoadon"/>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
