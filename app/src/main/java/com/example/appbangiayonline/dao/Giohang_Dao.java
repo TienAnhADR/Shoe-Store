@@ -2,11 +2,13 @@ package com.example.appbangiayonline.dao;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.appbangiayonline.database.DBHelper;
 import com.example.appbangiayonline.model.GioHang;
+import com.example.appbangiayonline.model.KhachHang;
 
 import java.util.ArrayList;
 
@@ -30,19 +32,33 @@ public class Giohang_Dao {
                 "join giohang " +
                 "on sanpham.masanpham=giohang.masanpham " +
                 "join khachhang " +
-                "on khachhang.makh=giohang.makhachhang", null);
+                "on khachhang.makh=giohang.makhachhang ", null);
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
-                list.add(new GioHang(cursor.getInt(0),
-                        cursor.getInt(1),
-                        cursor.getInt(2),
-                        cursor.getString(3),
-                        cursor.getString(4),
-                        cursor.getInt(5),
-                        cursor.getInt(6),
-                        cursor.getInt(7)));
+                list.add(
+                        new GioHang(
+                                cursor.getInt(0),
+                                cursor.getInt(1),
+                                cursor.getInt(2),
+                                cursor.getString(3),
+                                cursor.getString(4),
+                                cursor.getInt(5),
+                                cursor.getInt(6),
+                                cursor.getInt(7)));
             } while (cursor.moveToNext());
+        }
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences("khachhang", Context.MODE_PRIVATE);
+        int kh = sharedPreferences.getInt("id_kh", -1);
+        if (kh != -1) {
+            ArrayList<GioHang> li = new ArrayList<>();
+            list.forEach(e -> {
+                if (e.getMakhachhang() == kh) {
+                    li.add(e);
+                }
+            });
+            return li;
         }
         return list;
     }

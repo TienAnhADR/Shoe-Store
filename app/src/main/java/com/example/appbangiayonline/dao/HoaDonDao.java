@@ -19,22 +19,24 @@ public class HoaDonDao {
     public HoaDonDao(Context context) {
         dbHelper = new DBHelper(context);
     }
-    public ArrayList<HoaDon> getDSHoaDon(){
+
+    public ArrayList<HoaDon> getDSHoaDon() {
         ArrayList<HoaDon> list = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        try{
+        try {
             Cursor cursor = db.rawQuery("select hd.mahd, nv.hoten, kh.hoten, hd.tongsl, hd.tongtien, hd.trangthai from hoadon hd, nhanvien nv, khachhang kh where hd.makh = kh.makh and hd.manv = nv.manv ", null);
-            while (cursor.moveToNext()){
-                list.add(new HoaDon(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3),cursor.getInt(4), cursor.getInt(5)));
+            while (cursor.moveToNext()) {
+                list.add(new HoaDon(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getInt(4), cursor.getInt(5)));
             }
             cursor.close();
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.i(TAG, "loi", e);
         }
         return list;
     }
-    public boolean ThemHoaDon(int makh, int tongsl, int tongtien){
+
+    public boolean ThemHoaDon(int makh, int tongsl, int tongtien) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("manv", 0);
@@ -43,6 +45,6 @@ public class HoaDonDao {
         values.put("tongtien", tongtien);
         values.put("trangthai", 0);
         long kt = sqLiteDatabase.insert("hoadon", null, values);
-        return(kt > 0);
+        return (kt > 0);
     }
 }

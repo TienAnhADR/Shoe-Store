@@ -35,13 +35,6 @@ public class FragmentSanPham extends Fragment {
     SanPhamAdapter adapter;
 
     @Override
-
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view1 = inflater.inflate(R.layout.fragment_san_pham, container, false);
-        FloatingActionButton fl = view1.findViewById(R.id.fl_shoes_tab);
-        RecyclerView rc_sanpham = view1.findViewById(R.id.rc_shoes_tab);
-
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_san_pham, container, false);
@@ -55,14 +48,8 @@ public class FragmentSanPham extends Fragment {
         adapter = new SanPhamAdapter(getContext(), this, list);
         rc_sanpham.setAdapter(adapter);
 
-        fl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ThemSanPham();
-            }
-        });
-
-        return view1;
+        fl.setOnClickListener(view1 -> ThemSanPham());
+        return view;
     }
 
     private void ThemSanPham() {
@@ -74,45 +61,27 @@ public class FragmentSanPham extends Fragment {
 
         EditText txtten = dialogView.findViewById(R.id.tensanpham_shoes_tab_them);
 
-        builder.setPositiveButton("Thêm", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                String ten = txtten.getText().toString();
-                if (!TextUtils.isEmpty(ten)) {
-                    SanPham sanPham = new SanPham();
-                    sanPham.setTensanpham(ten);
-                    boolean kt = dao.ThemSanPham(sanPham);
-                    if (kt) {
-                        list.clear();
-                        list.addAll(dao.getListSanPham());
-                        adapter.notifyDataSetChanged();
-
-                        Toast.makeText(getContext(), "Them san pham thanh cong", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getContext(), "Them san pham that bai", Toast.LENGTH_SHORT).show();
-                    }
+        builder.setPositiveButton("Thêm", (dialogInterface, i) -> {
+            String ten = txtten.getText().toString();
+            if (!TextUtils.isEmpty(ten)) {
+                SanPham sanPham = new SanPham();
+                sanPham.setTensanpham(ten);
+                boolean kt = dao.ThemSanPham(sanPham);
+                if (kt) {
+                    list.clear();
+                    list.addAll(dao.getListSanPham());
+                    adapter.notifyDataSetChanged();
+                    Toast.makeText(getContext(), "Them san pham thanh cong", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getContext(), "Chua nhap ten", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Them san pham that bai", Toast.LENGTH_SHORT).show();
                 }
+            } else {
+                Toast.makeText(getContext(), "Chua nhap ten", Toast.LENGTH_SHORT).show();
             }
         });
 
-                        Toast.makeText(getContext(), "Thêm sản phẩm thành công", Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(getContext(), "Thêm sản phẩm thất bại", Toast.LENGTH_SHORT).show();
-                    }
-                }else{
-                    Toast.makeText(getContext(), "Chưa nhập tên", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-
-        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                // dialogInterface.dismiss();
-            }
+        builder.setNegativeButton("Hủy", (dialogInterface, i) -> {
+            // dialogInterface.dismiss();
         });
 
         AlertDialog alertDialog = builder.create();
@@ -121,7 +90,6 @@ public class FragmentSanPham extends Fragment {
 
 
     public void click_item(int i) {
-
         Bundle bundle = new Bundle();
         Intent intent = new Intent(requireActivity(), ManHinh_CTSanPham.class);
         bundle.putString("tensanpham", list.get(i).getTensanpham());
@@ -130,7 +98,6 @@ public class FragmentSanPham extends Fragment {
     }
 
     public void update_Sp() {
-
     }
 
 }

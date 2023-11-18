@@ -22,7 +22,6 @@ import com.example.appbangiayonline.fragmentTA.FragmentKhachHang;
 import com.example.appbangiayonline.fragmentTA.FragmentNhanVien;
 
 
-
 //import com.example.appbangiayonline.tab.tab_Adapter;
 
 
@@ -62,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                 Fragment fragment = new FragmentSanPham();
                 int id = item.getItemId();
                 if (R.id.mQLSanPham == id) {
-                    fragment =new FragmentSanPham();
+                    fragment = new FragmentSanPham();
 
                 } else if (R.id.mQLNhanVien == id) {
                     fragment = new FragmentNhanVien();
@@ -73,10 +72,6 @@ public class MainActivity extends AppCompatActivity {
                 } else if (R.id.mQLHoaDon == id) {
 
                     fragment = new FragmentHoaDon();
-
-                } else if (R.id.mGioHang == id) {
-
-
 
                 } else if (R.id.mThongKe == id) {
 
@@ -106,15 +101,7 @@ public class MainActivity extends AppCompatActivity {
             change_Fragment(new Fragment_Main(), "Trang chủ");
         });
         btn_shoe.setOnClickListener(view -> {
-
             change_Fragment(new FragmentSanPham(), "Sản phẩm");
-
-
-            change_Fragment(new FragmentSanPham(), "Sản phẩm");
-
-            change_Fragment(new Shoes_tab(), "Sản phẩm");
-
-
 
         });
         btn_user.setOnClickListener(view -> {
