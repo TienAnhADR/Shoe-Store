@@ -43,7 +43,7 @@ public class HoaDonDao {
         values.put("tongsl", tongsl);
         values.put("tongtien", tongtien);
         values.put("trangthai", 0);
-        long kt = sqLiteDatabase.insert("hoadon", null, values);
+        long kt = db.insert("hoadon", null, values);
         return (kt > 0);
     }
     public boolean thayDoiTrangThaiHoaDon(int mahd, int manv){

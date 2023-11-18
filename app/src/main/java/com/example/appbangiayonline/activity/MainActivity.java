@@ -72,7 +72,8 @@ public class MainActivity extends AppCompatActivity {
                 } else if (R.id.mThongKe == id) {
 
 
-//                } else if (R.id.mQLHoaDon == id) {
+                } else if (R.id.mQLHoaDon == id) {
+                    fragment = new FragmentHoaDon();
 
                 } else if (R.id.mDoiMK == id) {
 

@@ -1,6 +1,8 @@
 package com.example.appbangiayonline.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appbangiayonline.R;
+import com.example.appbangiayonline.activity.ManHinh_CTSanPham;
 import com.example.appbangiayonline.fragmentTA.FragmentSanPham;
 import com.example.appbangiayonline.model.SanPham;
 

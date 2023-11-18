@@ -52,7 +52,6 @@ public class Giohang_Dao {
             } while (cursor.moveToNext());
         }
         SharedPreferences sharedPreferences = context.getSharedPreferences("admin", Context.MODE_PRIVATE);
-
         if (sharedPreferences.getInt("setting", -1) == 2) {
             String taikhoan = sharedPreferences.getString("taikhoan", "");
             ArrayList<GioHang> gioHangs = new ArrayList<>();
