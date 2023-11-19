@@ -32,7 +32,6 @@ public class CTSanPhamDao {
                     list.add(new CTSanPham(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getInt(4), cursor.getInt(5)));
                 }
             }
-
             cursor.close();
         } catch (Exception e) {
             Log.i(TAG, "loi", e);
@@ -95,6 +94,39 @@ public class CTSanPhamDao {
         cursor.close();
         return tonTai;
     }
+    //-------------------------
+    public ArrayList<CTSanPham> getList(String tensanpham) {
+        ArrayList<CTSanPham> list = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        try {
+            Cursor cursor = db.rawQuery("select ctsp.mactsanpham, sp.tensanpham, ctsp.mausac, ctsp.kichco, ctsp.gia, ctsp.soluong from sanpham sp, ctsanpham ctsp where ctsp.masanpham = sp.masanpham and sp.tensanpham = ?", new String[]{tensanpham});
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                do {
+                    list.add(new CTSanPham(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getInt(4), cursor.getInt(5)));
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        } catch (Exception e) {
+            Log.i(TAG, "loi", e);
+        }
+        return list;
+    }
+
+    public CTSanPham getItemctSP_config(String mausac, int kichco) {
+        CTSanPham ctSanPham = null;
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        try {
+            Cursor cursor = db.rawQuery("select ctsp.gia, ctsp.soluong from ctsanpham ctsp where mausac = ? AND kichco = ?", new String[]{mausac, String.valueOf(kichco)});
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                ctSanPham = new CTSanPham(cursor.getInt(0), cursor.getInt(1));
+            }
+        } catch (Exception e) {
+            Log.i(TAG, "loi", e);
+        }
+        return ctSanPham;
+
     public  boolean capNhatSoLuongMoi(int mactsanpham, int soluong){
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();

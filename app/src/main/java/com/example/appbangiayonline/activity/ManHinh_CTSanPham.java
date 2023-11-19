@@ -3,7 +3,6 @@ package com.example.appbangiayonline.activity;
 import static android.content.ContentValues.TAG;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.helper.widget.MotionEffect;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -26,6 +24,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,23 +39,26 @@ import com.example.appbangiayonline.dao.CTSanPhamDao;
 
 import com.example.appbangiayonline.dao.HoaDonDao;
 import com.example.appbangiayonline.dao.NhanVien_KhachHang_Dao;
-import com.example.appbangiayonline.fragmentTA.FragmentSanPham;
+
 
 import com.example.appbangiayonline.model.CTSanPham;
 import com.example.appbangiayonline.model.HoaDon;
 import com.example.appbangiayonline.model.KhachHang;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 
 public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickMauSize {
     String tenchung;
     //nhan bundel
     TextView nhanten;
-    TextView giohang;
-    TextView muaNgay;
+    ImageButton giohang;
+    Button muaNgay;
 
     CTSanPhamDao dao;
     ArrayList<CTSanPham> list;
@@ -110,14 +113,15 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         giohang = findViewById(R.id.giohang_sanpham);
         muaNgay = findViewById(R.id.muangay_sanpham);
         quaylai_rc_sanpham = findViewById(R.id.quaylai_rc_sanpham);
-
+        giohang.setOnClickListener(view -> {
+            themGioHang();
+        });
         quaylai_rc_sanpham.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(ManHinh_CTSanPham.this, MainActivity.class));
             }
         });
-
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -353,12 +357,13 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         });
         alertDialog.show();
     }
+
     private void XacNhanMuaNgay(int tongSoLuongSP, int tongGiaSP) {
         daohd = new HoaDonDao(this);
         listhd = daohd.getDSHoaDon();
         adapterhd = new HoaDonAdapter(this, listhd);
         dao_nv_kh = new NhanVien_KhachHang_Dao(this);
-        if(xemConSoLuong(tongSoLuongSP)){
+        if (xemConSoLuong(tongSoLuongSP)) {
             laySoLuongMoi(tongSoLuongSP);
             //
             SharedPreferences sharedPreferences = getSharedPreferences("admin", MODE_PRIVATE);
@@ -377,13 +382,13 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                     } else {
                         Toast.makeText(getApplicationContext(), "Dat hang that bai", Toast.LENGTH_SHORT).show();
                     }
-                }else{
+                } else {
                     Toast.makeText(this, "Khong ton tai", Toast.LENGTH_SHORT).show();
                 }
             } else {
                 Toast.makeText(getApplicationContext(), "Khong ton tai", Toast.LENGTH_SHORT).show();
             }
-        }else{
+        } else {
             Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Het so luong roi", Snackbar.LENGTH_SHORT);
             snackbar.show();
             Toast.makeText(this, "Het so luong roi", Toast.LENGTH_SHORT).show();
@@ -391,14 +396,149 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         //
     }
 
-    private boolean xemConSoLuong(int tongSoLuongSP){
+    private boolean xemConSoLuong(int tongSoLuongSP) {
         return ctSanPham.getSoluong() >= tongSoLuongSP;
     }
-    private void laySoLuongMoi(int tongSoLuongSP){
+
+    private void laySoLuongMoi(int tongSoLuongSP) {
         ctSanPham.setSoluong(ctSanPham.getSoluong() - tongSoLuongSP);
         newslsanpham = ctSanPham.getSoluong();
         //load so luong moi
 
     }
+
+    //-------------------------------------------------
+    TextView txt_giasp;
+    TextView txt_slsp;
+
+    private void themGioHang() {
+        final Dialog dialog = new Dialog(this);
+
+        dao = new CTSanPhamDao(this);
+        ArrayList<CTSanPham> list1 = dao.getList(tenchung);
+
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_them_giohang);
+
+        Set<String> set_color = new HashSet<>();
+        list1.forEach(e -> {
+            set_color.add(e.getTenmausac());
+        });
+
+        ArrayList<String> list_color = new ArrayList<>(set_color);
+        GridLayout gridLayout_color = dialog.findViewById(R.id.container_color_themsp_giohang);
+        createButton_Color(gridLayout_color, list_color);
+        //-----------------------------------------
+        Set<Integer> set_size = new HashSet<>();
+        list1.forEach(e -> {
+            set_size.add(e.getKichco());
+        });
+
+        ArrayList<Integer> list_size = new ArrayList<>(set_size);
+        GridLayout gridLayout_size = dialog.findViewById(R.id.container_size_themsp_giohang);
+        createButton_Quality(gridLayout_size, list_size);
+        //--------------------------
+        txt_giasp = dialog.findViewById(R.id.txt_giasp_themgiohang);
+        txt_slsp = dialog.findViewById(R.id.txt_slsp_themgiohang);
+
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialoAnomation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
+        dialog.show();
+    }
+
+    public void createButton_Color(GridLayout gridLayout, ArrayList<String> list2) {
+        list2.forEach(e -> {
+            Button button = createButton_color(e);
+            gridLayout.addView(button);
+        });
+    }
+
+    public void createButton_Quality(GridLayout gridLayout, ArrayList<Integer> list2) {
+        list2.forEach(e -> {
+            Button button = createButton_size(e + "");
+            gridLayout.addView(button);
+        });
+    }
+
+    Button clickedColor;
+    Button clickedSize;
+
+    private Button createButton_color(String text) {
+        Context context = this;
+        Button button = new Button(context);
+        button.setText(text);
+        button.setBackgroundColor(Color.WHITE);
+        button.setTextColor(Color.BLACK);
+        button.setTextSize(15);
+        button.setGravity(Gravity.CENTER);
+
+        button.setOnClickListener(v -> {
+            if (clickedColor != null) {
+                clickedColor.setBackgroundColor(Color.WHITE);
+                clickedColor.setTextColor(Color.BLACK);
+            }
+
+            button.setBackgroundColor(Color.BLACK);
+            button.setTextColor(Color.WHITE);
+            clickedColor = button;
+            if (clickedSize != null) {
+                ButtonClick(text, Integer.parseInt(clickedSize.getText().toString()));
+            }
+        });
+
+        GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams();
+        layoutParams.width = GridLayout.LayoutParams.WRAP_CONTENT;
+        layoutParams.height = GridLayout.LayoutParams.WRAP_CONTENT;
+        layoutParams.setMargins(5, 5, 5, 5);
+        button.setLayoutParams(layoutParams);
+        return button;
+    }
+
+        private Button createButton_size(String text) {
+        Context context = this;
+        Button button = new Button(context);
+        button.setText(text);
+        button.setBackgroundColor(Color.WHITE);
+        button.setTextColor(Color.BLACK);
+        button.setTextSize(15);
+        button.setGravity(Gravity.CENTER);
+
+        button.setOnClickListener(v -> {
+            if (clickedSize != null) {
+                clickedSize.setBackgroundColor(Color.WHITE);
+                clickedSize.setTextColor(Color.BLACK);
+
+            }
+
+            button.setBackgroundColor(Color.BLACK);
+            button.setTextColor(Color.WHITE);
+            clickedSize = button;
+            if (clickedColor != null) {
+                ButtonClick(clickedColor.getText().toString(), Integer.parseInt(text));
+            }
+        });
+
+        GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams();
+        layoutParams.width = GridLayout.LayoutParams.WRAP_CONTENT;
+        layoutParams.height = GridLayout.LayoutParams.WRAP_CONTENT;
+        layoutParams.setMargins(5, 5, 5, 5);
+        button.setLayoutParams(layoutParams);
+        return button;
+    }
+
+    private void ButtonClick(String color, int size) {
+        CTSanPham ctSanPham = dao.getItemctSP_config(color, size);
+        if (ctSanPham != null) {
+            txt_giasp.setText(ctSanPham.getGia() + "VNĐ");
+            txt_slsp.setText("Kho: " + ctSanPham.getSoluong());
+        } else {
+            txt_giasp.setText(0 + "VNĐ");
+            txt_slsp.setText("Kho: " + 0);
+        }
+    }
+
 }
+
 
