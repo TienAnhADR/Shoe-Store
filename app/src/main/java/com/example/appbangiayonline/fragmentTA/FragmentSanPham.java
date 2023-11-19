@@ -80,7 +80,7 @@ public class FragmentSanPham extends Fragment {
          rc_sanpham = view1.findViewById(R.id.rc_shoes_tab2);
 
 
-        rc_sanpham.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        rc_sanpham.setLayoutManager(new GridLayoutManager(getContext(), 1));
         list = new ArrayList<>();
         dao = new SanPhamDao(getContext());
         list = dao.getListSanPham();

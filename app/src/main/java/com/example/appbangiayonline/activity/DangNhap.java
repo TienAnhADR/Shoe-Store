@@ -46,10 +46,10 @@ public class DangNhap extends AppCompatActivity {
 
                 SharedPreferences.Editor sharedPreferences = getSharedPreferences("admin",Context.MODE_PRIVATE).edit();
                 Intent intent = new Intent(DangNhap.this, MainActivity.class);
+                sharedPreferences.putInt("setting", check);
+                // Yến sua cho nó lưu thông tin
                 sharedPreferences.putString("taikhoan", taikhoan);
-                 // Yến sua cho nó lưu thông tin
-                  sharedPreferences.putInt("setting", check);
-                sharedPreferences.apply();
+                 sharedPreferences.apply();
                  startActivity(intent);
 
             } else {

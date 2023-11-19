@@ -37,7 +37,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "chucvu integer)";//1 la admin , 0 la nhanvien
         //san pham
         String tbl_sanpham = "create table sanpham(masanpham integer primary key autoincrement," +
-                "tensanpham text )";
+                "tensanpham text," +
+                "trangthai text)";
         sqLiteDatabase.execSQL(tbl_sanpham);
 
         //chi tiet sanpham
@@ -88,11 +89,11 @@ public class DBHelper extends SQLiteOpenHelper {
                 "(2,2,'Màu tím',35,14000,11)," +
                 "(3,3,'Màu vàng',35,50000,11)";
         //sp
-        String ins_sp = "insert into sanpham(tensanpham) values" +
-                "('Loại 1')," +
-                "('Loại 2')," +
-                "('Loại 3')," +
-                "('Loại 4')";
+        String ins_sp = "insert into sanpham(tensanpham, trangthai) values" +
+                "('Loại 1','Còn hàng')," +
+                "('Loại 2','Còn hàng')," +
+                "('Loại 3','Còn hàng')," +
+                "('Loại 4','Còn hàng')";
         sqLiteDatabase.execSQL(ins_sp);
         String ct_sp = "insert into ctsanpham(masanpham,mausac,kichco,gia,soluong) values" +
                 "(1,'Màu xanh',34,50000,15)," +

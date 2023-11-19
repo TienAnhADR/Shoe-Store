@@ -95,4 +95,11 @@ public class CTSanPhamDao {
         cursor.close();
         return tonTai;
     }
+    public  boolean capNhatSoLuongMoi(int mactsanpham, int soluong){
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("soluong", soluong);
+        long kt = sqLiteDatabase.update("ctsanpham", values, "mactsanpham =?", new String[]{String.valueOf(mactsanpham)});
+        return (kt > 0);
+    }
 }

@@ -106,6 +106,8 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
 
     //new soluong moi
     int newslsanpham;
+    //lay mactsp để cập nhật số lương mới nè
+    int laymactsp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -215,31 +217,29 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         list = dao.getListCTSanPham(tansanpham);
         adapter = new CTSanPhamAdapter(ManHinh_CTSanPham.this, list);
         rcctsanpham.setAdapter(adapter);
-        // Khi dữ liệu đã được lấy xong, gọi phương thức onDataLoaded()
     }
 
     private void loadDSKichCo(String tansanpham) {
-        rckichco.setLayoutManager(new LinearLayoutManager(ManHinh_CTSanPham.this, RecyclerView.HORIZONTAL, false));
+        rckichco.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         list = dao.getListDSMauSize(tansanpham);
         kichCoAdapter = new SizeAdapter(ManHinh_CTSanPham.this, list, new OnItemClickMauSize() {
             @Override
             public void onItemClick(CTSanPham ctSanPham) {
-                nhankichco.setText(String.valueOf(ctSanPham.getKichco()));
+                nhankichco.setText("Kích cỡ: " + String.valueOf(ctSanPham.getKichco()));
                 selectedKichCo = ctSanPham.getKichco();
                 mauSize(selectedMauSac, selectedKichCo);
             }
         });
         rckichco.setAdapter(kichCoAdapter);
-        // Khi dữ liệu đã được lấy xong, gọi phương thức onDataLoaded()
     }
 
     private void loadDSMau(String tansanpham) {
-        rcmau.setLayoutManager(new GridLayoutManager(ManHinh_CTSanPham.this, 3));
+        rcmau.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         list = dao.getListDSMauSize(tansanpham);
         mauSacAdapter = new MauSacAdapter(ManHinh_CTSanPham.this, list, new OnItemClickMauSize() {
             @Override
             public void onItemClick(CTSanPham ctSanPham) {
-                nhanmausac.setText(ctSanPham.getTenmausac());
+                nhanmausac.setText("Màu sắc: " + ctSanPham.getTenmausac());
                 //o day minh dat cho no ten bien de de dang goi
                 selectedMauSac = ctSanPham.getTenmausac();
                 //thuc hiện truyền dữ liệu trước b1
@@ -254,11 +254,14 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
             ctSanPham = new CTSanPham();
             ctSanPham = dao.getItemCTSanPham(mausac, kichCo);
             if (ctSanPham != null) {
-                nhanmausac.setText(mausac);
-                nhankichco.setText(Integer.toString(kichCo));
-                nhangia.setText(Integer.toString(ctSanPham.getGia()));
-                nhansiluong.setText(Integer.toString(ctSanPham.getSoluong()));
-                 //CHÚ Ý NÈ: đây sẽ là chỗ cho nút mua ngay
+                //lay mactsp cho cho cap nhat so luong moi
+                laymactsp = ctSanPham.getMactsanpham();
+                //
+                nhanmausac.setText("Màu sắc: " + mausac);
+                nhankichco.setText("Kích cỡ: " + Integer.toString(kichCo));
+                nhangia.setText("Giá" + Integer.toString(ctSanPham.getGia()));
+                nhansiluong.setText("Số lượng: " + Integer.toString(ctSanPham.getSoluong()));
+                //CHÚ Ý NÈ: đây sẽ là chỗ cho nút mua ngay
                 //CHÚ Ý NÈ: Cong tru va sotien, soluong
 
                 boolean kt = dao.kiemTraTonTaiTrongMactsp(ctSanPham.getMactsanpham(), mausac, kichCo, ctSanPham.getGia(), ctSanPham.getSoluong());
@@ -271,7 +274,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                                     tongSoLuongSP++;
                                     tongGiaSP = ctSanPham.getGia() * tongSoLuongSP;
                                     muangay_soluong.setText(String.valueOf(tongSoLuongSP));
-                                    muangay_tongtien.setText(String.valueOf(tongGiaSP));
+                                    muangay_tongtien.setText("Tổng giá tiền: " + String.valueOf(tongGiaSP));
                                 }
                             }
                         });
@@ -285,7 +288,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                                     tongSoLuongSP--;
                                     tongGiaSP = ctSanPham.getGia() * tongSoLuongSP;
                                     muangay_soluong.setText(String.valueOf(tongSoLuongSP));
-                                    muangay_tongtien.setText(String.valueOf(tongGiaSP));
+                                    muangay_tongtien.setText("Tổng giá tiền : " + String.valueOf(tongGiaSP));
                                 }
                             }
                         });
@@ -294,12 +297,12 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                     Toast.makeText(this, "Khong ton tai", Toast.LENGTH_SHORT).show();
                 }
             } else {
-                nhangia.setText("0");
-                nhansiluong.setText("0");
+                nhangia.setText("Giá : " + "0");
+                nhansiluong.setText("Số lượng : " + "0");
             }
         } else {
-            nhangia.setText("0");
-            nhansiluong.setText("0");
+            nhangia.setText("Giá : " + "0");
+            nhansiluong.setText("Số lượng : " + "0");
         }
     }
 
@@ -385,7 +388,16 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                         listhd.addAll(daohd.getDSHoaDon());
                         adapterhd.notifyDataSetChanged();
                         Toast.makeText(getApplicationContext(), "Dat hang thanh cong", Toast.LENGTH_SHORT).show();
-                       
+                        //Cap nhat so luong moi trong sql ne
+                        boolean ktsoluongmoi = dao.capNhatSoLuongMoi(laymactsp, newslsanpham);
+                        if(ktsoluongmoi){
+                            list.clear();
+                            list.addAll(dao.getListCTSanPham(tenchung));
+                            adapter.notifyDataSetChanged();
+                            Toast.makeText(this, "Cap nhat so luong thanh cong", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(this, "Cap nhat so luong that bai roi", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
                         Toast.makeText(getApplicationContext(), "Dat hang that bai", Toast.LENGTH_SHORT).show();
                     }
@@ -400,7 +412,6 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
             snackbar.show();
             Toast.makeText(this, "Het so luong roi", Toast.LENGTH_SHORT).show();
         }
-        //
     }
 
     private boolean xemConSoLuong(int tongSoLuongSP){
