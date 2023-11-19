@@ -93,6 +93,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
     ImageView imgTru;
     TextView muangay_soluong;
     TextView muangay_tongtien;
+    ImageView quaylai_rc_sanpham;
     //Xac nhan mua ngay
     Button btnxacnhanhoadon;
     //KhachHang
@@ -101,11 +102,6 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
     HoaDonDao daohd;
     HoaDonAdapter adapterhd;
     ArrayList<HoaDon> listhd;
-    //
-    ImageView quaylai_rc_sanpham;
-
-    //new soluong moi
-    int newslsanpham;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +114,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         quaylai_rc_sanpham.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                startActivity(new Intent(ManHinh_CTSanPham.this, MainActivity.class));
             }
         });
 
@@ -130,14 +126,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
             nhanten = findViewById(R.id.tensanpham_sanpham);
             nhanten.setText(tenchung);
         }
-        //Phan quyền rồi đó
-        SharedPreferences sharedPreferences = getSharedPreferences("admin", MODE_PRIVATE);
-        int check = sharedPreferences.getInt("setting", 2);
-        if(check == 2){
-            muaNgay.setVisibility(View.VISIBLE);
-        }else{
-            muaNgay.setVisibility(View.GONE);
-        }
+
         muaNgay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -258,7 +247,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                 nhankichco.setText(Integer.toString(kichCo));
                 nhangia.setText(Integer.toString(ctSanPham.getGia()));
                 nhansiluong.setText(Integer.toString(ctSanPham.getSoluong()));
-                 //CHÚ Ý NÈ: đây sẽ là chỗ cho nút mua ngay
+                //CHÚ Ý NÈ: đây sẽ là chỗ cho nút mua ngay
                 //CHÚ Ý NÈ: Cong tru va sotien, soluong
 
                 boolean kt = dao.kiemTraTonTaiTrongMactsp(ctSanPham.getMactsanpham(), mausac, kichCo, ctSanPham.getGia(), ctSanPham.getSoluong());
@@ -267,7 +256,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                         imgCong.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                if (tongSoLuongSP >= 0  ) {
+                                if (tongSoLuongSP >= 0) {
                                     tongSoLuongSP++;
                                     tongGiaSP = ctSanPham.getGia() * tongSoLuongSP;
                                     muangay_soluong.setText(String.valueOf(tongSoLuongSP));
@@ -281,7 +270,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                         imgTru.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                if (tongSoLuongSP > 1  ) {
+                                if (tongSoLuongSP > 1) {
                                     tongSoLuongSP--;
                                     tongGiaSP = ctSanPham.getGia() * tongSoLuongSP;
                                     muangay_soluong.setText(String.valueOf(tongSoLuongSP));
@@ -385,7 +374,6 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                         listhd.addAll(daohd.getDSHoaDon());
                         adapterhd.notifyDataSetChanged();
                         Toast.makeText(getApplicationContext(), "Dat hang thanh cong", Toast.LENGTH_SHORT).show();
-                       
                     } else {
                         Toast.makeText(getApplicationContext(), "Dat hang that bai", Toast.LENGTH_SHORT).show();
                     }

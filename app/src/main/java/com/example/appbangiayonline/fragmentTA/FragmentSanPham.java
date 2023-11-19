@@ -78,16 +78,14 @@ public class FragmentSanPham extends Fragment {
         View view1 = inflater.inflate(R.layout.fragment_san_pham, container, false);
          fl = view1.findViewById(R.id.fl_shoes_tab2);
          rc_sanpham = view1.findViewById(R.id.rc_shoes_tab2);
+          rc_sanpham.setLayoutManager(new GridLayoutManager(getContext(), 1));
+          list = new ArrayList<>();
+          dao = new SanPhamDao(getContext());
+          list = dao.getListSanPham();
+          adapter = new SanPhamAdapter(getContext(), list);
+          rc_sanpham.setAdapter(adapter);
 
-
-        rc_sanpham.setLayoutManager(new GridLayoutManager(getContext(), 1));
-        list = new ArrayList<>();
-        dao = new SanPhamDao(getContext());
-        list = dao.getListSanPham();
-        adapter = new SanPhamAdapter(getContext(), list);
-        rc_sanpham.setAdapter(adapter);
-
-        fl.setOnClickListener(new View.OnClickListener() {
+          fl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ThemSanPham();
@@ -140,5 +138,15 @@ public class FragmentSanPham extends Fragment {
     }
 
     public void update_Sp() {
+//._.
+    }
+
+    //click item edit
+    public void click_item(int i) {
+        Bundle bundle = new Bundle();
+        Intent intent = new Intent(requireActivity(), ManHinh_CTSanPham.class);
+        bundle.putInt("vitri", i);
+        intent.putExtras(bundle);
+        requireActivity().startActivity(intent);
     }
 }
