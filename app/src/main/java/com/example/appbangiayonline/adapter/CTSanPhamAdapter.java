@@ -31,13 +31,14 @@ public class CTSanPhamAdapter extends RecyclerView.Adapter<CTSanPhamAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull CTSanPhamAdapter.Viewholder holder, int position) {
-        holder.ma.setText(Integer.toString(list.get(position).getMactsanpham()));
-        holder.tensp.setText(list.get(position).getTensanpham());
-        holder.tenmau.setText(list.get(position).getTenmausac());
-        holder.kichco.setText(Integer.toString(list.get(position).getKichco()));
-        holder.soluong.setText(Integer.toString(list.get(position).getSoluong()));
-        holder.gia.setText(Integer.toString(list.get(position).getGia()));
+        holder.ma.setText("Mã chi tiết sản phẩm : " + Integer.toString(list.get(position).getMactsanpham()));
+        holder.tensp.setText("Tên sản phẩm : " +list.get(position).getTensanpham());
+        holder.tenmau.setText("Màu : " +list.get(position).getTenmausac());
+        holder.kichco.setText("Kích cỡ : " +Integer.toString(list.get(position).getKichco()));
+        holder.soluong.setText("Số lượng : " +Integer.toString(list.get(position).getSoluong()));
+        holder.gia.setText("Giá sản phẩm : " +Integer.toString(list.get(position).getGia()));
     }
+
 
 
     @Override
