@@ -126,12 +126,13 @@ public class CTSanPhamDao {
             Log.i(TAG, "loi", e);
         }
         return ctSanPham;
-
-    public  boolean capNhatSoLuongMoi(int mactsanpham, int soluong){
-        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("soluong", soluong);
-        long kt = sqLiteDatabase.update("ctsanpham", values, "mactsanpham =?", new String[]{String.valueOf(mactsanpham)});
-        return (kt > 0);
     }
+
+        public  boolean capNhatSoLuongMoi(int mactsanpham, int soluong){
+            SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put("soluong", soluong);
+            long kt = sqLiteDatabase.update("ctsanpham", values, "mactsanpham =?", new String[]{String.valueOf(mactsanpham)});
+            return (kt > 0);
+        }
 }

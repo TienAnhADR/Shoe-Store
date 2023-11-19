@@ -105,6 +105,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
     HoaDonDao daohd;
     HoaDonAdapter adapterhd;
     ArrayList<HoaDon> listhd;
+    int newslsanpham;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

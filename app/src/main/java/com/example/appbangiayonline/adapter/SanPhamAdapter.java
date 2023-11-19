@@ -60,12 +60,16 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.Viewhold
         holder.ma.setText("Ma san pham: " + sp1.getMasanpham());
         holder.ten.setText("Ten san pham: " + sp1.getTensanpham());
         holder.trangthai.setText("Trang thai: " + sp1.getTrangthai());
+        SharedPreferences sharedPreferences = context.getSharedPreferences("admin", Context.MODE_PRIVATE);
+        int check = sharedPreferences.getInt("setting", 2);
+        if(check == 2){
+            holder.update.setVisibility(View.GONE);
+        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences sharedPreferences = context.getSharedPreferences("admin", Context.MODE_PRIVATE);
-                int check = sharedPreferences.getInt("setting", 2);
+
                 if (check == 2) {
                     if (sp1.getTrangthai().equalsIgnoreCase("Còn hàng")) {
                         //truyen du lieu
