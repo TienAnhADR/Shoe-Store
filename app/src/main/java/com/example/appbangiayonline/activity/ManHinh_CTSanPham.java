@@ -396,6 +396,9 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
     }
     private void laySoLuongMoi(int tongSoLuongSP){
         ctSanPham.setSoluong(ctSanPham.getSoluong() - tongSoLuongSP);
+        newslsanpham = ctSanPham.getSoluong();
+        //load so luong moi
+
     }
 }
 

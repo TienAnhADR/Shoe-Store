@@ -45,12 +45,12 @@ public class DangNhap extends AppCompatActivity {
             } else if (check == 1 || check == 2 || check == 0) {
                 SharedPreferences.Editor sharedPreferences = getSharedPreferences("admin", Context.MODE_PRIVATE).edit();
                 Intent intent = new Intent(DangNhap.this, MainActivity.class);
-                sharedPreferences.putString("taikhoan", taikhoan);
                 sharedPreferences.putInt("setting", check);
-
-                // Yến cmt sua cho nó lưu thông tin
-                sharedPreferences.apply();
-                startActivity(intent);
+                // Yến sua cho nó lưu thông tin
+                sharedPreferences.putString("taikhoan", taikhoan);
+                 sharedPreferences.apply();
+                 startActivity(intent);
+                sharedPreferences.putInt("setting", check);
             } else {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.create();

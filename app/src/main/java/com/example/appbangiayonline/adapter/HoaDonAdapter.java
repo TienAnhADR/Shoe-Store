@@ -45,11 +45,11 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.Viewholder
 
     @Override
     public void onBindViewHolder(@NonNull Viewholder holder, int position) {
-        holder.ma.setText(Integer.toString(list.get(position).getMahoadon()));
-        holder.tennv.setText(list.get(position).getTennv());
-        holder.tenkh.setText(list.get(position).getTenkh());
-        holder.tongsl.setText(Integer.toString(list.get(position).getTongsl()));
-        holder.tongtien.setText(Integer.toString(list.get(position).getTongTien()));
+        holder.ma.setText("Mã hóa đơn : " +Integer.toString(list.get(position).getMahoadon()));
+        holder.tennv.setText("Tên nhân viên : " +list.get(position).getTennv());
+        holder.tenkh.setText("Tên khách hàng : " +list.get(position).getTenkh());
+        holder.tongsl.setText("Tổng số lượng : " +Integer.toString(list.get(position).getTongsl()));
+        holder.tongtien.setText("Tổng tiền : " +Integer.toString(list.get(position).getTongTien()));
         holder.btnxacnhan.setText(Integer.toString(list.get(position).getTrangthai()));
 
         int mahd = list.get(position).getMahoadon();

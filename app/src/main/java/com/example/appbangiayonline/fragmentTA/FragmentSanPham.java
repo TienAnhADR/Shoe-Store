@@ -1,7 +1,6 @@
 package com.example.appbangiayonline.fragmentTA;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -18,7 +17,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.appbangiayonline.R;
-import com.example.appbangiayonline.activity.ManHinh_CTSanPham;
 import com.example.appbangiayonline.adapter.SanPhamAdapter;
 import com.example.appbangiayonline.dao.SanPhamDao;
 import com.example.appbangiayonline.model.SanPham;
@@ -80,16 +78,14 @@ public class FragmentSanPham extends Fragment {
         View view1 = inflater.inflate(R.layout.fragment_san_pham, container, false);
          fl = view1.findViewById(R.id.fl_shoes_tab2);
          rc_sanpham = view1.findViewById(R.id.rc_shoes_tab2);
+          rc_sanpham.setLayoutManager(new GridLayoutManager(getContext(), 1));
+          list = new ArrayList<>();
+          dao = new SanPhamDao(getContext());
+          list = dao.getListSanPham();
+          adapter = new SanPhamAdapter(getContext(), list);
+          rc_sanpham.setAdapter(adapter);
 
-
-        rc_sanpham.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        list = new ArrayList<>();
-        dao = new SanPhamDao(getContext());
-        list = dao.getListSanPham();
-        adapter = new SanPhamAdapter(getContext(), list);
-        rc_sanpham.setAdapter(adapter);
-
-        fl.setOnClickListener(new View.OnClickListener() {
+          fl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ThemSanPham();
@@ -140,6 +136,7 @@ public class FragmentSanPham extends Fragment {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+
     public void update_Sp() {
 //._.
     }
