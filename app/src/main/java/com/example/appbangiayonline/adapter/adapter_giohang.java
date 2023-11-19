@@ -79,6 +79,7 @@ public class adapter_giohang extends RecyclerView.Adapter<adapter_giohang.rcv_ho
             gioHang.setSl_mua(gioHang.getSl_mua() + 1);
             holder.sl_sp_item.setText(gioHang.getSl_mua() + "");
             context.reload_tongtien();
+
         });
 
         holder.chck_item.setOnClickListener(view -> {
