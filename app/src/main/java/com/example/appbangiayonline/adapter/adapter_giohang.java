@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,7 +34,7 @@ public class adapter_giohang extends RecyclerView.Adapter<adapter_giohang.rcv_ho
         ImageView img_item;
         TextView tensp_item, mausac_item, giasp_item, sl_sp_item, kichco_item;
 
-        Button tang_item, giam_item;
+        ImageButton tang_item, giam_item;
 
         public rcv_holder(@NonNull View itemView) {
             super(itemView);
