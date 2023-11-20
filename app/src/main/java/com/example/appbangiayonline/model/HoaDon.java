@@ -1,6 +1,8 @@
 package com.example.appbangiayonline.model;
 
-public class HoaDon {
+import java.io.Serializable;
+
+public class HoaDon implements Serializable {
     private int mahoadon;
     private String tenkh;
     private String tennv;

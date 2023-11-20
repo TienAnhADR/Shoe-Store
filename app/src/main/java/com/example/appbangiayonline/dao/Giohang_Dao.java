@@ -1,5 +1,6 @@
 package com.example.appbangiayonline.dao;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.appbangiayonline.database.DBHelper;
+import com.example.appbangiayonline.model.CTSanPham;
 import com.example.appbangiayonline.model.GioHang;
 import com.example.appbangiayonline.model.KhachHang;
 
@@ -69,6 +71,19 @@ public class Giohang_Dao {
     public void remove_data(int magiohang) {
         SQLiteDatabase sql = helper.getWritableDatabase();
         sql.delete("giohang", "magiohang=?", new String[]{String.valueOf(magiohang)});
+        sql.close();
+    }
+
+    public void themGioHang(CTSanPham ctSanPham, int makh) {
+        SQLiteDatabase sql = helper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("masanpham", ctSanPham.getMasanpham());
+        contentValues.put("makhachhang", makh);
+        contentValues.put("mausac", ctSanPham.getTenmausac());
+        contentValues.put("kichco", ctSanPham.getKichco());
+        contentValues.put("gia", ctSanPham.getGia());
+        contentValues.put("soluong", ctSanPham.getSoluong());
+        sql.insert("giohang", null, contentValues);
         sql.close();
     }
 }
