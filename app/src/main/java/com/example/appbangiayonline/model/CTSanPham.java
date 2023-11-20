@@ -1,5 +1,7 @@
 package com.example.appbangiayonline.model;
 
+import java.util.Objects;
+
 public class CTSanPham {
     private int mactsanpham;
     private int masanpham;
@@ -8,6 +10,11 @@ public class CTSanPham {
     private int kichco;
     private int gia;
     private int soluong;
+
+    public CTSanPham(int gia, int soluong) {
+        this.gia = gia;
+        this.soluong = soluong;
+    }
 
     public CTSanPham(int mactsanpham, String tensanpham, String tenmausac, int kichco, int gia, int soluong) {
         this.mactsanpham = mactsanpham;
@@ -94,4 +101,5 @@ public class CTSanPham {
     public void setSoluong(int soluong) {
         this.soluong = soluong;
     }
+    
 }
