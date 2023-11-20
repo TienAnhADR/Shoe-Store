@@ -14,20 +14,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.appbangiayonline.R;
 import com.example.appbangiayonline.fragmentTA.FragmentHoaDon;
 import com.example.appbangiayonline.fragmentTA.FragmentKhachHang;
 import com.example.appbangiayonline.fragmentTA.FragmentNhanVien;
-
-
-//import com.example.appbangiayonline.tab.tab_Adapter;
-
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 
 import com.example.appbangiayonline.fragmentTA.FragmentSanPham;
 
@@ -84,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
                 } else if (R.id.mQLHoaDon == id) {
                     fragment = new FragmentHoaDon();
 
+                } else if (R.id.mThongKe == id) {
+
                 } else if (R.id.mDoiMK == id) {
 
 
@@ -111,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
         });
         btn_shoe.setOnClickListener(view -> {
             change_Fragment(new FragmentSanPham(), "Sản phẩm");
+
         });
         btn_user.setOnClickListener(view -> {
             change_Fragment(new FragmentThongTin(), "Thông tin khách hàng");

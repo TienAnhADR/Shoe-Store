@@ -94,7 +94,6 @@ public class CTSanPhamDao {
         return tonTai;
     }
 
-    //----------------------------------------------------------
     public ArrayList<CTSanPham> getList(String tensanpham) {
         ArrayList<CTSanPham> list = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -126,6 +125,14 @@ public class CTSanPhamDao {
             Log.i(TAG, "loi", e);
         }
         return ctSanPham;
+    }
+
+    public boolean capNhatSoLuongMoi(int mactsanpham, int soluong) {
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("soluong", soluong);
+        long kt = sqLiteDatabase.update("ctsanpham", values, "mactsanpham =?", new String[]{String.valueOf(mactsanpham)});
+        return (kt > 0);
     }
 
     public CTSanPham getItemCTSanPham_config(String tensp, String mausac, int kichco) {

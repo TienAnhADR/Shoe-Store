@@ -105,7 +105,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
     HoaDonDao daohd;
     HoaDonAdapter adapterhd;
     ArrayList<HoaDon> listhd;
-
+    int newslsanpham;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -393,7 +393,6 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
             snackbar.show();
             Toast.makeText(this, "Het so luong roi", Toast.LENGTH_SHORT).show();
         }
-        //
     }
 
     private boolean xemConSoLuong(int tongSoLuongSP) {
@@ -402,6 +401,8 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
 
     private void laySoLuongMoi(int tongSoLuongSP) {
         ctSanPham.setSoluong(ctSanPham.getSoluong() - tongSoLuongSP);
+        newslsanpham = ctSanPham.getSoluong();
+        //load so luong moi
     }
 
     //-------------------------------------------------

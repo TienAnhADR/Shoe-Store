@@ -25,7 +25,7 @@ public class SanPhamDao {
         try{
             Cursor cursor = db.rawQuery("select * from sanpham", null);
             while (cursor.moveToNext()){
-                list.add(new SanPham(cursor.getInt(0), cursor.getString(1)));
+                list.add(new SanPham(cursor.getInt(0), cursor.getString(1), cursor.getString(2)));
             }
             cursor.close();
         }catch (Exception e){
@@ -37,13 +37,16 @@ public class SanPhamDao {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("tensanpham", sanPham.getTensanpham());
+        values.put("trangthai", "Còn hàng");
         long kt = db.insert("sanpham", null, values);
         return (kt > 0);
     }
     public boolean SuaSanPham(SanPham sanPham){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put("masanpham", sanPham.getMasanpham());
         values.put("tensanpham", sanPham.getTensanpham());
+        values.put("trangthai", sanPham.getTrangthai());
         long kt = db.update("sanpham", values, "masanpham = ?", new String[]{String.valueOf(sanPham.getMasanpham())});
         return (kt > 0);
     }

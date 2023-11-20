@@ -14,7 +14,7 @@
             android:textStyle="bold"
             android:padding="10dp"
             android:gravity="center"
-            android:textColor="#E34C4C"
+            android:textColor="@color/black"
             android:background="@drawable/mauvien_mausize"
             android:id="@+id/kiccosanpham_ctsanpham"
             android:text="Kich co: "/>
