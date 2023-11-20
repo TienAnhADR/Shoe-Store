@@ -84,6 +84,14 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.Viewhold
                     } else {
 
                     }
+                }else{
+                    Bundle bundle = new Bundle();
+                    Intent intent = new Intent(context, ManHinh_CTSanPham.class);
+                    bundle.putString("tensanpham", sp1.getTensanpham());
+                    intent.putExtras(bundle);
+                    context.startActivity(intent);
+                    holder.itemView.setClickable(true);
+                    Toast.makeText(context, "Sản phẩm đang ở trạng thái còn hàng", Toast.LENGTH_SHORT).show();
                 }
             }
         });

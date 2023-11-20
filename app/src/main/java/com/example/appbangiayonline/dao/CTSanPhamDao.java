@@ -94,6 +94,36 @@ public class CTSanPhamDao {
         cursor.close();
         return tonTai;
     }
+    //Đây là khi xuất hoadon thì load lại số lượng ctsanpham
+    public  boolean capNhatSoLuongMoi(int mactsanpham, int soluong){
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("soluong", soluong);
+        long kt = sqLiteDatabase.update("ctsanpham", values, "mactsanpham =?", new String[]{String.valueOf(mactsanpham)});
+        return (kt > 0);
+    }
+    //Thêm số lượng mới rồi cập nhật lại số luong (cũ + mới)
+    public boolean themSoLuongMoi(int mactsanpham, int soluong){
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("soluong", soluong);
+        long kt = sqLiteDatabase.update("ctsanpham", values, "mactsanpham = ?", new String[]{String.valueOf(mactsanpham)});
+        return (kt > 0);
+    }
+    //Lay so lượng hiện tại từ sql
+    public int getSL(int mactsanpham){
+        int sl = 0;
+        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
+        try{
+            Cursor cursor = sqLiteDatabase.rawQuery("select soluong from ctsanpham where mactsanpham = ?", new String[]{String.valueOf(mactsanpham)});
+            while (cursor.moveToNext()){
+                sl = cursor.getInt(0);
+            }
+        }catch (Exception e){
+            Log.i(TAG, "getSL",e);
+        }
+        return sl;
+    }
     //-------------------------
     public ArrayList<CTSanPham> getList(String tensanpham) {
         ArrayList<CTSanPham> list = new ArrayList<>();

@@ -107,6 +107,13 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
     ArrayList<HoaDon> listhd;
     int newslsanpham;
 
+    //new soluong moi
+    int newslsanpham;
+    //lay mactsp để cập nhật số lương mới nè
+    int laymactsp;
+    //biến thêm số lượng mới
+    TextView themSL_CTSanPham;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,7 +127,8 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         quaylai_rc_sanpham.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ManHinh_CTSanPham.this, MainActivity.class));
+                finish();
+
             }
         });
 
@@ -146,7 +154,13 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         dialog.setContentView(R.layout.dialog_muangay);
         dialog.dismiss();
         ImageView quaylai = dialog.findViewById(R.id.quaylai);
-
+        themSL_CTSanPham = dialog.findViewById(R.id.themSoLuongMoi);
+        themSL_CTSanPham.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                them_SL_CTSanPhamMoi();
+            }
+        });
         //CHÚ Ý NÈ: Cong tru va sotien, soluong
         imgCong = dialog.findViewById(R.id.imgCong);
         imgTru = dialog.findViewById(R.id.imgTru);
@@ -380,6 +394,16 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                         listhd.addAll(daohd.getDSHoaDon());
                         adapterhd.notifyDataSetChanged();
                         Toast.makeText(getApplicationContext(), "Dat hang thanh cong", Toast.LENGTH_SHORT).show();
+                        //Cap nhat so luong moi trong sql ne
+                        boolean ktsoluongmoi = dao.capNhatSoLuongMoi(laymactsp, newslsanpham);
+                        if (ktsoluongmoi) {
+                            list.clear();
+                            list.addAll(dao.getListCTSanPham(tenchung));
+                            adapter.notifyDataSetChanged();
+                            Toast.makeText(this, "Cap nhat so luong thanh cong", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(this, "Cap nhat so luong that bai roi", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
                         Toast.makeText(getApplicationContext(), "Dat hang that bai", Toast.LENGTH_SHORT).show();
                     }
@@ -394,7 +418,6 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
             snackbar.show();
             Toast.makeText(this, "Het so luong roi", Toast.LENGTH_SHORT).show();
         }
-        //
     }
 
     private boolean xemConSoLuong(int tongSoLuongSP) {
@@ -404,7 +427,48 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
     private void laySoLuongMoi(int tongSoLuongSP) {
         ctSanPham.setSoluong(ctSanPham.getSoluong() - tongSoLuongSP);
         newslsanpham = ctSanPham.getSoluong();
-        //load so luong moi
+    }
+    //SL cũ + sl mới = sl cần cập nhật
+    private void  them_SL_CTSanPhamMoi(){
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+        LayoutInflater inflater1  = getLayoutInflater();
+        View view1 = inflater1.inflate(R.layout.them_sl_ctsanpham, null);
+        builder1.setView(view1);
+        builder1.setTitle("Bạn có muốn thêm số lượng mới ?");
+        EditText txtma = view1.findViewById(R.id.mactsanpham_them_sl);
+        EditText txtsl = view1.findViewById(R.id.soluongthem_sl);
+        builder1.setPositiveButton("Them", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if(!TextUtils.isEmpty(txtma.getText().toString()) && !TextUtils.isEmpty(txtsl.getText().toString())){
+                    int ma = Integer.parseInt(txtma.getText().toString());
+                    int newSl = Integer.parseInt(txtsl.getText().toString());
+                    if(!TextUtils.isEmpty(txtma.getText().toString()) && !TextUtils.isEmpty(txtsl.getText().toString())){
+                        int oldSl = dao.getSL(ma);
+                        if (oldSl != 0){
+                            int slDuocCapNhat = newSl + oldSl;
+                            dao.themSoLuongMoi(ma,slDuocCapNhat);
+                            Toast.makeText(ManHinh_CTSanPham.this, "Thêm số lượng mới thành công", Toast.LENGTH_SHORT).show();
+                            finish();
+
+                        }else{
+                            Toast.makeText(ManHinh_CTSanPham.this, "Số lượng không tồn tai", Toast.LENGTH_SHORT).show();
+                        }
+                    }else{
+                        Toast.makeText(ManHinh_CTSanPham.this, "Nhập đủ thông tin", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+        builder1.setNegativeButton("Huy", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+//                alertDialog.dismiss();
+                finish();
+            }
+        });
+        AlertDialog alertDialog = builder1.create();
+        alertDialog.show();
 
     }
 
@@ -541,5 +605,3 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
     }
 
 }
-
-
