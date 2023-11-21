@@ -16,7 +16,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 
 import com.example.appbangiayonline.R;
 import com.example.appbangiayonline.fragmentTA.FragmentHoaDon;
@@ -44,13 +43,21 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerLayout);
         setSupportActionBar(toolbar);
         SharedPreferences sharedPreferences = getSharedPreferences("admin", Context.MODE_PRIVATE);
+        //??
         String username = sharedPreferences.getString("taikhoan", "a");
         String b = username;
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.baseline_menu_24);
-        change_Fragment(new FragmentSanPham(), "Sản phẩm");
+
+        Intent intent1 = getIntent();
+        if (intent1.hasExtra("open_hoadon")) {
+            change_Fragment(new FragmentHoaDon(), "Hóa đơn");
+        }else{
+            change_Fragment(new FragmentSanPham(), "Sản phẩm");
+        }
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

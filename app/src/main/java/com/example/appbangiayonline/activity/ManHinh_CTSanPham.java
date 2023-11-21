@@ -105,14 +105,13 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
     HoaDonDao daohd;
     HoaDonAdapter adapterhd;
     ArrayList<HoaDon> listhd;
-    int newslsanpham;
-
     //new soluong moi
     int newslsanpham;
     //lay mactsp để cập nhật số lương mới nè
     int laymactsp;
     //biến thêm số lượng mới
     TextView themSL_CTSanPham;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -427,6 +426,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
     private void laySoLuongMoi(int tongSoLuongSP) {
         ctSanPham.setSoluong(ctSanPham.getSoluong() - tongSoLuongSP);
         newslsanpham = ctSanPham.getSoluong();
+        //load so luong moi
     }
     //SL cũ + sl mới = sl cần cập nhật
     private void  them_SL_CTSanPhamMoi(){
@@ -475,6 +475,9 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
     //-------------------------------------------------
     TextView txt_giasp;
     TextView txt_slsp;
+    int slMua = 1;
+    Button clickedColor;
+    Button clickedSize;
 
     private void themGioHang() {
         final Dialog dialog = new Dialog(this);
@@ -506,6 +509,39 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         txt_giasp = dialog.findViewById(R.id.txt_giasp_themgiohang);
         txt_slsp = dialog.findViewById(R.id.txt_slsp_themgiohang);
 
+        ImageButton tang = dialog.findViewById(R.id.btn_tang_themgiohang);
+        ImageButton giam = dialog.findViewById(R.id.btn_giam_themgiohang);
+        TextView sl_mua = dialog.findViewById(R.id.sl_sp_themgiohang);
+
+        tang.setOnClickListener(view -> {
+            slMua++;
+            sl_mua.setText(slMua + "");
+        });
+        giam.setOnClickListener(view -> {
+            if (slMua > 1) {
+                slMua--;
+                sl_mua.setText(slMua + "");
+            }
+        });
+        //----------------------------------------
+        Button btnThem = dialog.findViewById(R.id.btn_them_themgiohang);
+        btnThem.setOnClickListener(view -> {
+            Intent intent = new Intent(ManHinh_CTSanPham.this, Activity_GioHang.class);
+            if (clickedColor != null && clickedSize != null) {
+                CTSanPham ctSanPham1 = dao.getItemCTSanPham_config(tenchung, clickedColor.getText().toString(), Integer.parseInt(clickedSize.getText().toString()));
+
+                if (ctSanPham1 == null) {
+                    Toast.makeText(this, "Sản phẩm đã hết hàng :(", Toast.LENGTH_SHORT).show();
+                } else {
+                    ctSanPham1.setSoluong_mua(slMua);
+                    intent.putExtra("themgiohang", ctSanPham1);
+                    startActivity(intent);
+                }
+            } else {
+                Toast.makeText(this, "Bạn hãy chọn màu sắc và kích cỡ phù hợp!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialoAnomation;
@@ -526,9 +562,6 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
             gridLayout.addView(button);
         });
     }
-
-    Button clickedColor;
-    Button clickedSize;
 
     private Button createButton_color(String text) {
         Context context = this;
@@ -552,7 +585,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                 ButtonClick(text, Integer.parseInt(clickedSize.getText().toString()));
             }
         });
-
+        //-------------------------------
         GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams();
         layoutParams.width = GridLayout.LayoutParams.WRAP_CONTENT;
         layoutParams.height = GridLayout.LayoutParams.WRAP_CONTENT;
@@ -561,7 +594,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         return button;
     }
 
-        private Button createButton_size(String text) {
+    private Button createButton_size(String text) {
         Context context = this;
         Button button = new Button(context);
         button.setText(text);
@@ -603,5 +636,4 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
             txt_slsp.setText("Kho: " + 0);
         }
     }
-
 }

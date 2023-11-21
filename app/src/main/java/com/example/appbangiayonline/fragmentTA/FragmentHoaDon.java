@@ -23,17 +23,22 @@ public class FragmentHoaDon extends Fragment {
     HoaDonAdapter adapter;
     HoaDonDao dao;
     ArrayList<HoaDon> list;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_hoa_don, container, false);
         recyclerView = view.findViewById(R.id.rchoadon);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-        list = new ArrayList<>();
+        // list = new ArrayList<>();
         dao = new HoaDonDao(getContext());
+        reload();
+        return view;
+    }
+
+    public void reload() {
         list = dao.getDSHoaDon();
         adapter = new HoaDonAdapter(getContext(), list);
         recyclerView.setAdapter(adapter);
-        return view;
     }
 }

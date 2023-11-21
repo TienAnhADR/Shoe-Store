@@ -11,7 +11,6 @@ import android.util.Log;
 import com.example.appbangiayonline.database.DBHelper;
 import com.example.appbangiayonline.model.CTSanPham;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class CTSanPhamDao {
@@ -158,11 +157,39 @@ public class CTSanPhamDao {
         return ctSanPham;
     }
 
-        public  boolean capNhatSoLuongMoi(int mactsanpham, int soluong){
-            SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
-            ContentValues values = new ContentValues();
-            values.put("soluong", soluong);
-            long kt = sqLiteDatabase.update("ctsanpham", values, "mactsanpham =?", new String[]{String.valueOf(mactsanpham)});
-            return (kt > 0);
+    public boolean capNhatSoLuongMoi(int mactsanpham, int soluong) {
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("soluong", soluong);
+        long kt = sqLiteDatabase.update("ctsanpham", values, "mactsanpham =?", new String[]{String.valueOf(mactsanpham)});
+        return (kt > 0);
+    }
+
+    public CTSanPham getItemCTSanPham_config(String tensp, String mausac, int kichco) {
+        CTSanPham ctSanPham = null;
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        try {
+            Cursor cursor = db.rawQuery("SELECT ctsp.mactsanpham, sp.masanpham, sp.tensanpham, ctsp.mausac, ctsp.kichco, ctsp.gia, ctsp.soluong " +
+                            "FROM sanpham sp " +
+                            "JOIN ctsanpham ctsp ON sp.masanpham = ctsp.masanpham " +
+                            "WHERE ctsp.mausac = ? AND ctsp.kichco = ? AND sp.tensanpham = ?",
+                    new String[]{mausac, String.valueOf(kichco), tensp});
+            if (cursor.moveToFirst()) {
+                ctSanPham = new CTSanPham(
+                        cursor.getInt(0),
+                        cursor.getInt(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getInt(4),
+                        cursor.getInt(5),
+                        cursor.getInt(6)
+                );
+            }
+
+            cursor.close();
+        } catch (Exception e) {
+            Log.i(TAG, "loi", e);
         }
+        return ctSanPham;
+    }
 }

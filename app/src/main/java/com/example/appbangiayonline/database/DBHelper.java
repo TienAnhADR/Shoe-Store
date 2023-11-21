@@ -71,7 +71,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
         //--------------------------
         //chèn dữ liệu
-
         //nhan vien
         String insert_hoadon = "insert into hoadon" +
                 "(mahd,manv,makh,tongsl,tongtien,trangthai) " +
