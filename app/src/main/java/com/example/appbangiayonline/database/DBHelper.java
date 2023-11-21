@@ -94,6 +94,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "('Loại 3','Còn hàng')," +
                 "('Loại 4','Còn hàng')";
         sqLiteDatabase.execSQL(ins_sp);
+
+        
         String ct_sp = "insert into ctsanpham(masanpham,mausac,kichco,gia,soluong) values" +
                 "(1,'Màu xanh',34,50000,15)," +
                 "(2,'Màu tím',35,14000,11)," +

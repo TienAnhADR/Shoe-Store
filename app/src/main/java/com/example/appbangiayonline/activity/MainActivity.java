@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         if (intent1.hasExtra("open_hoadon")) {
             change_Fragment(new FragmentHoaDon(), "Hóa đơn");
         }else{
-            change_Fragment(new FragmentSanPham(), "Sản phẩm");
+            change_Fragment(new Fragment_Main(), "Trang chủ");
         }
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
