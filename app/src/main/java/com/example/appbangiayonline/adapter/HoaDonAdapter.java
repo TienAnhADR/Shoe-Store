@@ -57,14 +57,14 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.Viewholder
         if(list.get(position).getTrangthai() == 0){
             trangthai ="Xac nhan";
             holder.tennv.setVisibility(View.INVISIBLE);
-            holder.tennv.setText(list.get(position).getTennv());
+            holder.tennv.setText("Tên nhân viên: " + list.get(position).getTennv());
          }else{
             trangthai = "Da xac nhan";
             holder.tennv.setVisibility(View.VISIBLE);
             holder.btnxacnhan.setVisibility(View.GONE);
-            holder.tennv.setText(list.get(position).getTennv());
+            holder.tennv.setText("Tên nhân viên: " + list.get(position).getTennv());
         }
-        holder.trangthai_texthd.setText(trangthai);
+        holder.trangthai_texthd.setText("Trạng thái: " + trangthai);
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("admin", MODE_PRIVATE);
         int check = sharedPreferences.getInt("setting", 2);
