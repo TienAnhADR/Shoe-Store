@@ -1,7 +1,9 @@
 package com.example.appbangiayonline.fragmentTA;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AlertDialog;
@@ -46,6 +48,11 @@ public class FragmentSanPham extends Fragment {
           list = dao.getListSanPham();
           adapter = new SanPhamAdapter(getContext(), list);
           rc_sanpham.setAdapter(adapter);
+            SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("admin", Context.MODE_PRIVATE);
+            int check = sharedPreferences.getInt("setting", 2);
+            if(check == 2){
+                fl.setVisibility(View.GONE);
+            }
 
           fl.setOnClickListener(new View.OnClickListener() {
             @Override
