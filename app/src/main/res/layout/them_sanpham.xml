@@ -1,11 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
-<EditText
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:hint="Nhap ten san pham"
-    android:id="@+id/tensanpham_shoes_tab_them"/>
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:text="Thêm sản phẩm"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/tensanpham_shoes_tab_them"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:hint="Nhap ten san pham" />
+
+    <ImageView
+        android:id="@+id/setimg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/txt_chooseImage_sanpham"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:text="Chọn ảnh"
+        android:textColor="#5061FA"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5sp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_them_dialogThemsp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10sp"
+            android:layout_weight="1"
+            android:text="Thêm" />
+
+        <Button
+            android:id="@+id/btn_huy_dialogThemsp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10sp"
+            android:layout_weight="1"
+            android:text="Hủy" />
+    </LinearLayout>
+
 </LinearLayout>

@@ -3,7 +3,7 @@ package com.example.appbangiayonline.model;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class CTSanPham implements Serializable {
+public class CTSanPham implements  Serializable {
     private int mactsanpham;
     private int masanpham;
     private String tensanpham;

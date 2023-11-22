@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appbangiayonline.R;
 import com.example.appbangiayonline.activity.ManHinh_CTSanPham;
+import com.example.appbangiayonline.convert.ConvertImage;
 import com.example.appbangiayonline.dao.SanPhamDao;
 import com.example.appbangiayonline.fragmentTA.FragmentSanPham;
 import com.example.appbangiayonline.model.SanPham;
@@ -30,17 +33,11 @@ import java.util.ArrayList;
 
 public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.Viewholder> {
     private Context context;
-    private FragmentSanPham fragment;
     private final ArrayList<SanPham> list;
     SanPham sp1;
     //    SanPham sp;
     SanPhamDao daosp;
 
-    public SanPhamAdapter(Context context, FragmentSanPham fragment, ArrayList<SanPham> list) {
-        this.context = context;
-        this.fragment = fragment;
-        this.list = list;
-    }
 
     public SanPhamAdapter(Context context, ArrayList<SanPham> list) {
         this.context = context;
@@ -56,42 +53,42 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.Viewhold
     @Override
     public void onBindViewHolder(@NonNull SanPhamAdapter.Viewholder holder, @SuppressLint("RecyclerView") int position) {
         SanPham sp1 = list.get(position);
+        Bitmap bitmap = ConvertImage.ByteToBitmap(sp1.getImage());
 
         holder.ma.setText("Ma san pham: " + sp1.getMasanpham());
         holder.ten.setText("Ten san pham: " + sp1.getTensanpham());
         holder.trangthai.setText("Trang thai: " + sp1.getTrangthai());
+        holder.img_sanpham.setImageBitmap(bitmap);
+
         SharedPreferences sharedPreferences = context.getSharedPreferences("admin", Context.MODE_PRIVATE);
         int check = sharedPreferences.getInt("setting", 2);
-        if(check == 2){
+        if (check == 2) {
             holder.update.setVisibility(View.GONE);
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (check == 2) {
                     if (sp1.getTrangthai().equalsIgnoreCase("Còn hàng")) {
                         //truyen du lieu
-                        Bundle bundle = new Bundle();
+                        //   Bundle bundle = new Bundle();
                         Intent intent = new Intent(context, ManHinh_CTSanPham.class);
-                        bundle.putString("tensanpham", sp1.getTensanpham());
-                        intent.putExtras(bundle);
-                        context.startActivity(intent);
+                        //intent.putExtras(bundle);
+                        intent.putExtra("obj_sanpham", sp1);
                         holder.itemView.setClickable(true);
                         Toast.makeText(context, "Sản phẩm đang ở trạng thái còn hàng", Toast.LENGTH_SHORT).show();
-
-                    } else {
-
+                        context.startActivity(intent);
                     }
-                }else{
-                    Bundle bundle = new Bundle();
+                } else {
+                    //Bundle bundle = new Bundle();
                     Intent intent = new Intent(context, ManHinh_CTSanPham.class);
-                    bundle.putString("tensanpham", sp1.getTensanpham());
-                    intent.putExtras(bundle);
-                    context.startActivity(intent);
+                    //bundle.putString("tensanpham", sp1.getTensanpham());
+                    /// intent.putExtras(bundle);
+                    intent.putExtra("obj_sanpham", sp1);
                     holder.itemView.setClickable(true);
                     Toast.makeText(context, "Sản phẩm đang ở trạng thái còn hàng", Toast.LENGTH_SHORT).show();
+                    context.startActivity(intent);
                 }
             }
         });
@@ -112,7 +109,7 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.Viewhold
 
     public class Viewholder extends RecyclerView.ViewHolder {
         TextView ma, ten, trangthai;
-        ImageView update;
+        ImageView update, img_sanpham;
 
         public Viewholder(@NonNull View itemView) {
             super(itemView);
@@ -120,8 +117,10 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.Viewhold
             ten = itemView.findViewById(R.id.tensanpham_shoes_tab);
             trangthai = itemView.findViewById(R.id.trangthai_shoes_tab);
             update = itemView.findViewById(R.id.update_sanpham);
+            img_sanpham = itemView.findViewById(R.id.image_SanPham);
         }
     }
+
     private void updateSP(SanPham sp) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();

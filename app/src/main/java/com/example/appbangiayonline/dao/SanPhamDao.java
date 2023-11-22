@@ -19,29 +19,33 @@ public class SanPhamDao {
     public SanPhamDao(Context context) {
         dbHelper = new DBHelper(context);
     }
-    public ArrayList<SanPham> getListSanPham(){
+
+    public ArrayList<SanPham> getListSanPham() {
         ArrayList<SanPham> list = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        try{
+        try {
             Cursor cursor = db.rawQuery("select * from sanpham", null);
-            while (cursor.moveToNext()){
-                list.add(new SanPham(cursor.getInt(0), cursor.getString(1), cursor.getString(2)));
+            while (cursor.moveToNext()) {
+                list.add(new SanPham(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getBlob(3)));
             }
             cursor.close();
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.i(TAG, "loi", e);
         }
         return list;
     }
-    public boolean ThemSanPham(SanPham sanPham){
+
+    public boolean ThemSanPham(SanPham sanPham) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("tensanpham", sanPham.getTensanpham());
         values.put("trangthai", "Còn hàng");
+        values.put("hinhanh", sanPham.getImage());
         long kt = db.insert("sanpham", null, values);
         return (kt > 0);
     }
-    public boolean SuaSanPham(SanPham sanPham){
+
+    public boolean SuaSanPham(SanPham sanPham) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("masanpham", sanPham.getMasanpham());

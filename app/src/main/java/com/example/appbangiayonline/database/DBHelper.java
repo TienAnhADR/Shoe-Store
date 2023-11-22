@@ -1,17 +1,27 @@
 package com.example.appbangiayonline.database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.example.appbangiayonline.R;
+import com.example.appbangiayonline.convert.ConvertImage;
+import com.example.appbangiayonline.model.SanPham;
+
+import java.util.ArrayList;
+
 public class DBHelper extends SQLiteOpenHelper {
     public static String name_db = "ShoseStore";
     public static int version_db = 1;
+    Context context;
+
 
     public DBHelper(@Nullable Context context) {
         super(context, name_db, null, version_db);
+        this.context = context;
     }
 
     @Override
@@ -38,7 +48,8 @@ public class DBHelper extends SQLiteOpenHelper {
         //san pham
         String tbl_sanpham = "create table sanpham(masanpham integer primary key autoincrement," +
                 "tensanpham text," +
-                "trangthai text)";
+                "trangthai text," +
+                "hinhanh blob)";
         sqLiteDatabase.execSQL(tbl_sanpham);
 
         //chi tiet sanpham
@@ -88,14 +99,19 @@ public class DBHelper extends SQLiteOpenHelper {
                 "(2,2,'Màu tím',35,14000,11)," +
                 "(3,3,'Màu vàng',35,50000,11)";
         //sp
-        String ins_sp = "insert into sanpham(tensanpham, trangthai) values" +
-                "('Loại 1','Còn hàng')," +
-                "('Loại 2','Còn hàng')," +
-                "('Loại 3','Còn hàng')," +
-                "('Loại 4','Còn hàng')";
-        sqLiteDatabase.execSQL(ins_sp);
+        ArrayList<SanPham> list = new ArrayList<>();
+        list.add(new SanPham(1, "Sản phẩm 1", "Còn hàng", ConvertImage.ImageToByte(context, R.drawable.slider1)));
+        list.add(new SanPham(2, "Sản phẩm 2", "Còn hàng", ConvertImage.ImageToByte(context, R.drawable.slider2)));
+        list.add(new SanPham(3, "Sản phẩm 3", "Còn hàng", ConvertImage.ImageToByte(context, R.drawable.slider3)));
+        list.add(new SanPham(4, "Sản phẩm 4", "Còn hàng", ConvertImage.ImageToByte(context, R.drawable.slider4)));
+        list.forEach(e -> {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("tensanpham", e.getTensanpham());
+            contentValues.put("trangthai", e.getTrangthai());
+            contentValues.put("hinhanh", e.getImage());
+            sqLiteDatabase.insert("sanpham", null, contentValues);
+        });
 
-        
         String ct_sp = "insert into ctsanpham(masanpham,mausac,kichco,gia,soluong) values" +
                 "(1,'Màu xanh',34,50000,15)," +
                 "(2,'Màu tím',35,14000,11)," +
@@ -107,7 +123,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "(4,'Màu tím',33,45000,12)";
         sqLiteDatabase.execSQL(ct_sp);
 
-         //khach hang
+        //khach hang
         String insert_khachhang = "insert into khachhang" +
                 "(hoten,taikhoan,matkhau,sdt,email,diachi) " +
                 "values " +

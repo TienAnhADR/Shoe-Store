@@ -58,6 +58,7 @@ public class Activity_GioHang extends AppCompatActivity {
         if (intent != null && intent.hasExtra("themgiohang")) {
             CTSanPham sanPham = (CTSanPham) intent.getSerializableExtra("themgiohang");
             SharedPreferences sharedPreferences = getSharedPreferences("khachhang", MODE_PRIVATE);
+
             int id_kh = sharedPreferences.getInt("id_kh", -1);
             if (id_kh == -1) {
                 Toast.makeText(this, "Đăng nhập dưới quyền thành viên để thêm giỏ hàng!", Toast.LENGTH_SHORT).show();
@@ -93,7 +94,6 @@ public class Activity_GioHang extends AppCompatActivity {
             intent1.putExtra("open_hoadon", "hoadon");
             startActivity(intent1);
         });
-
     }
 
     void reload() {

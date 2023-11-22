@@ -1,16 +1,33 @@
 package com.example.appbangiayonline.model;
 
-public class SanPham {
+import java.io.Serializable;
+
+public class SanPham implements Serializable {
     private int masanpham;
     private String tensanpham;
     private String trangthai;
 
-
+    private byte[] image;
 
     public SanPham(int masanpham, String tensanpham, String trangthai) {
         this.masanpham = masanpham;
         this.tensanpham = tensanpham;
         this.trangthai = trangthai;
+    }
+
+    public SanPham(int masanpham, String tensanpham, String trangthai, byte[] hinhanh) {
+        this.masanpham = masanpham;
+        this.tensanpham = tensanpham;
+        this.trangthai = trangthai;
+        this.image = hinhanh;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public SanPham() {
