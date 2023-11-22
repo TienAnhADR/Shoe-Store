@@ -157,13 +157,6 @@ public class CTSanPhamDao {
         return ctSanPham;
     }
 
-//    public boolean capNhatSoLuongMoi(int mactsanpham, int soluong) {
-//        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//        values.put("soluong", soluong);
-//        long kt = sqLiteDatabase.update("ctsanpham", values, "mactsanpham =?", new String[]{String.valueOf(mactsanpham)});
-//        return (kt > 0);
-//    }
 
     public CTSanPham getItemCTSanPham_config(String tensp, String mausac, int kichco) {
         CTSanPham ctSanPham = null;

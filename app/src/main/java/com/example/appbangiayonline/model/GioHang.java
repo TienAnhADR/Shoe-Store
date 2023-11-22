@@ -7,6 +7,10 @@ public class GioHang {
     //-----------
     private int sl_mua;
 
+    public GioHang() {
+
+    }
+
     public int getSl_mua() {
         return sl_mua;
     }
@@ -20,6 +24,7 @@ public class GioHang {
         this.giasp = giasp;
         this.sl_mua = sl_mua;
     }
+
 
     //--------------------
     public GioHang(int magiohang, int masanpham, int makhachhang, String tensp, String mausac, int kichco, int giasp, int soluong) {

@@ -79,6 +79,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "kichco integer," +
                 "gia integer," +
                 "soluong integer)";
+        String tbl_cthoadon = "CREATE TABLE cthoadon (mahd INTEGER,mactsanpham INTEGER,soluongmua INTEGER,PRIMARY KEY (mahd, mactsanpham),FOREIGN KEY (mahd) REFERENCES hoadon(mahd),FOREIGN KEY (mactsanpham) REFERENCES ctsanpham(mactsanpham))";
+        sqLiteDatabase.execSQL(tbl_cthoadon);
 
         //--------------------------
         //chèn dữ liệu
@@ -100,10 +102,10 @@ public class DBHelper extends SQLiteOpenHelper {
                 "(3,3,'Màu vàng',35,50000,11)";
         //sp
         ArrayList<SanPham> list = new ArrayList<>();
-        list.add(new SanPham(1, "Sản phẩm 1", "Còn hàng", ConvertImage.ImageToByte(context, R.drawable.slider1)));
-        list.add(new SanPham(2, "Sản phẩm 2", "Còn hàng", ConvertImage.ImageToByte(context, R.drawable.slider2)));
-        list.add(new SanPham(3, "Sản phẩm 3", "Còn hàng", ConvertImage.ImageToByte(context, R.drawable.slider3)));
-        list.add(new SanPham(4, "Sản phẩm 4", "Còn hàng", ConvertImage.ImageToByte(context, R.drawable.slider4)));
+        list.add(new SanPham(1, "Sản phẩm 1", "Còn hàng", ConvertImage.ImageToByte(context, R.drawable.plus)));
+        list.add(new SanPham(2, "Sản phẩm 2", "Còn hàng", ConvertImage.ImageToByte(context, R.drawable.shoe)));
+        list.add(new SanPham(3, "Sản phẩm 3", "Còn hàng", ConvertImage.ImageToByte(context, R.drawable.shoes)));
+        list.add(new SanPham(4, "Sản phẩm 4", "Còn hàng", ConvertImage.ImageToByte(context, R.drawable.img)));
         list.forEach(e -> {
             ContentValues contentValues = new ContentValues();
             contentValues.put("tensanpham", e.getTensanpham());
@@ -137,6 +139,15 @@ public class DBHelper extends SQLiteOpenHelper {
                 "('Nguyễn Tiến Anh','anhntph37315','ph37315','0882618529','anhntph37315@gmail.com',1)," +
                 "('Phạm Hoàng Yến','yenphph34781','ph34781','0358164951','yenphph34781@gmail.com',0)," +
                 "('Hoàng Quốc Quân','quanhqph33420','ph33420','0975460402','quanhqph33420@gmail.com',1)";
+        sqLiteDatabase.execSQL("insert into cthoadon" +
+                "(mahd,mactsanpham,soluongmua) " +
+                "values " +
+                "(1,1,3)," +
+                "(1,2,5)," +
+                "(2,2,3)," +
+                "(2,3,5)," +
+                "(3,3,5)," +
+                "(3,1,1)");
 
         sqLiteDatabase.execSQL(tbl_khachhang);
         sqLiteDatabase.execSQL(tbl_nhanvien);
@@ -155,6 +166,7 @@ public class DBHelper extends SQLiteOpenHelper {
             sqLiteDatabase.execSQL("drop table ctsanpham");
             sqLiteDatabase.execSQL("drop table hoadon");
             sqLiteDatabase.execSQL("drop table giohang");
+            sqLiteDatabase.execSQL("drop table cthoadon");
             onCreate(sqLiteDatabase);
         }
     }

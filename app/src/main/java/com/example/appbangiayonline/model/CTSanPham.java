@@ -11,7 +11,6 @@ public class CTSanPham implements  Serializable {
     private int kichco;
     private int gia;
     private int soluong;
-    private int soluong_mua;
 
     public CTSanPham(int gia, int soluong) {
         this.gia = gia;
@@ -20,6 +19,14 @@ public class CTSanPham implements  Serializable {
 
     public CTSanPham(int mactsanpham, String tensanpham, String tenmausac, int kichco, int gia, int soluong) {
         this.mactsanpham = mactsanpham;
+        this.tensanpham = tensanpham;
+        this.tenmausac = tenmausac;
+        this.kichco = kichco;
+        this.gia = gia;
+        this.soluong = soluong;
+    }
+
+    public CTSanPham(String tensanpham, String tenmausac, int kichco, int gia, int soluong) {
         this.tensanpham = tensanpham;
         this.tenmausac = tenmausac;
         this.kichco = kichco;
@@ -36,15 +43,6 @@ public class CTSanPham implements  Serializable {
         this.gia = gia;
         this.soluong = soluong;
     }
-
-    public CTSanPham(String tensanpham, String tenmausac, int kichco, int gia, int soluong) {
-        this.tensanpham = tensanpham;
-        this.tenmausac = tenmausac;
-        this.kichco = kichco;
-        this.gia = gia;
-        this.soluong = soluong;
-    }
-
 
     public CTSanPham() {
     }
@@ -105,26 +103,11 @@ public class CTSanPham implements  Serializable {
         this.soluong = soluong;
     }
 
-    public int getSoluong_mua() {
-        return soluong_mua;
+
+    public int tinhTien_1_SP() {
+        return gia*soluong;
     }
 
-    public void setSoluong_mua(int soluong_mua) {
-        this.soluong_mua = soluong_mua;
-    }
-
-    @Override
-    public String toString() {
-        return "CTSanPham{" +
-                "mactsanpham=" + mactsanpham +
-                ", masanpham=" + masanpham +
-                ", tensanpham='" + tensanpham + '\'' +
-                ", tenmausac='" + tenmausac + '\'' +
-                ", kichco=" + kichco +
-                ", gia=" + gia +
-                ", soluong=" + soluong +
-                ", soluong_mua=" + soluong_mua +
-                '}';
+    public void setSoluong_mua(int slMua) {
     }
 }
-

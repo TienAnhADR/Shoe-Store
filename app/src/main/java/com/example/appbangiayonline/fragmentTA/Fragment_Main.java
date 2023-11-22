@@ -24,7 +24,7 @@ public class Fragment_Main extends Fragment {
     SliderAdapter adapter;
     int index = 0;
     //----------------
-    int[] images = {R.drawable.slider1, R.drawable.slider2, R.drawable.slider3, R.drawable.slider4, R.drawable.slider5};
+    int[] images = {R.drawable.shoe, R.drawable.shoes, R.drawable.shoe, R.drawable.shoe, R.drawable.shoe};
 
     //'''''''''''''''''
 
