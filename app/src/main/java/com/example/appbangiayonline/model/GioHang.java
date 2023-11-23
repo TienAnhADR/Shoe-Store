@@ -2,11 +2,42 @@ package com.example.appbangiayonline.model;
 
 public class GioHang {
     private int magiohang, masanpham, makhachhang;
+    private byte[] hinhanh;
     private String tensp, mausac;
     private int kichco, giasp, soluong;
     //-----------
     private int sl_mua;
 
+    public GioHang(int magiohang, int masanpham, int makhachhang, byte[] hinhanh, String mausac, int kichco, int giasp, int soluong) {
+        this.magiohang = magiohang;
+        this.masanpham = masanpham;
+        this.makhachhang = makhachhang;
+        this.hinhanh = hinhanh;
+        this.mausac = mausac;
+        this.kichco = kichco;
+        this.giasp = giasp;
+        this.soluong = soluong;
+    }
+
+    public GioHang(int magiohang, int masanpham, int makhachhang, byte[] hinhanh, String tensp, String mausac, int kichco, int giasp, int soluong) {
+        this.magiohang = magiohang;
+        this.masanpham = masanpham;
+        this.makhachhang = makhachhang;
+        this.hinhanh = hinhanh;
+        this.tensp = tensp;
+        this.mausac = mausac;
+        this.kichco = kichco;
+        this.giasp = giasp;
+        this.soluong = soluong;
+    }
+
+    public byte[] getHinhanh() {
+        return hinhanh;
+    }
+
+    public void setHinhanh(byte[] hinhanh) {
+        this.hinhanh = hinhanh;
+    }
     public GioHang() {
 
     }

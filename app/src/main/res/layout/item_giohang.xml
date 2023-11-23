@@ -27,8 +27,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5sp"
                 android:layout_toRightOf="@id/chck_item_giohang"
-                android:scaleType="centerCrop"
-                android:src="@drawable/shose_item" />
+                android:scaleType="centerCrop" />
 
             <LinearLayout
                 android:layout_width="match_parent"

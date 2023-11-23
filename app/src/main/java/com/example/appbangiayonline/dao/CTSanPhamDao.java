@@ -93,52 +93,60 @@ public class CTSanPhamDao {
         cursor.close();
         return tonTai;
     }
+
     //Đây là khi xuất hoadon thì load lại số lượng ctsanpham
-    public  boolean capNhatSoLuongMoi(int mactsanpham, int soluong){
+    public boolean capNhatSoLuongMoi(int mactsanpham, int soluong) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("soluong", soluong);
         long kt = sqLiteDatabase.update("ctsanpham", values, "mactsanpham =?", new String[]{String.valueOf(mactsanpham)});
         return (kt > 0);
     }
+
     //Thêm số lượng mới rồi cập nhật lại số luong (cũ + mới)
-    public boolean themSoLuongMoi(int mactsanpham, int soluong){
+    public boolean themSoLuongMoi(int mactsanpham, int soluong) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("soluong", soluong);
         long kt = sqLiteDatabase.update("ctsanpham", values, "mactsanpham = ?", new String[]{String.valueOf(mactsanpham)});
         return (kt > 0);
     }
+
     //Lay so lượng hiện tại từ sql
-    public int getSL(int mactsanpham){
+    public int getSL(int mactsanpham) {
         int sl = 0;
         SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
-        try{
+        try {
             Cursor cursor = sqLiteDatabase.rawQuery("select soluong from ctsanpham where mactsanpham = ?", new String[]{String.valueOf(mactsanpham)});
-            while (cursor.moveToNext()){
+            while (cursor.moveToNext()) {
                 sl = cursor.getInt(0);
             }
-        }catch (Exception e){
-            Log.i(TAG, "getSL",e);
+        } catch (Exception e) {
+            Log.i(TAG, "getSL", e);
         }
         return sl;
     }
+
     //-------------------------
     public ArrayList<CTSanPham> getList(String tensanpham) {
         ArrayList<CTSanPham> list = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        try {
-            Cursor cursor = db.rawQuery("select ctsp.mactsanpham, sp.tensanpham, ctsp.mausac, ctsp.kichco, ctsp.gia, ctsp.soluong from sanpham sp, ctsanpham ctsp where ctsp.masanpham = sp.masanpham and sp.tensanpham = ?", new String[]{tensanpham});
+            Cursor cursor = db.rawQuery("select ctsp.mactsanpham, sp.tensanpham,sp.hinhanh, ctsp.mausac, ctsp.kichco, ctsp.gia, ctsp.soluong from sanpham sp, ctsanpham ctsp where ctsp.masanpham = sp.masanpham and sp.tensanpham = ?", new String[]{tensanpham});
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 do {
-                    list.add(new CTSanPham(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getInt(4), cursor.getInt(5)));
+                    list.add(new CTSanPham(
+                            cursor.getInt(0),
+                            cursor.getString(1),
+                            cursor.getBlob(2),
+                            cursor.getString(3),
+                            cursor.getInt(4),
+                            cursor.getInt(5),
+                            cursor.getInt(6)
+                    ));
                 } while (cursor.moveToNext());
             }
             cursor.close();
-        } catch (Exception e) {
-            Log.i(TAG, "loi", e);
-        }
         return list;
     }
 
@@ -157,12 +165,10 @@ public class CTSanPhamDao {
         return ctSanPham;
     }
 
-
     public CTSanPham getItemCTSanPham_config(String tensp, String mausac, int kichco) {
         CTSanPham ctSanPham = null;
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        try {
-            Cursor cursor = db.rawQuery("SELECT ctsp.mactsanpham, sp.masanpham, sp.tensanpham, ctsp.mausac, ctsp.kichco, ctsp.gia, ctsp.soluong " +
+            Cursor cursor = db.rawQuery("SELECT ctsp.mactsanpham, sp.hinhanh, sp.masanpham, sp.tensanpham, ctsp.mausac, ctsp.kichco, ctsp.gia, ctsp.soluong " +
                             "FROM sanpham sp " +
                             "JOIN ctsanpham ctsp ON sp.masanpham = ctsp.masanpham " +
                             "WHERE ctsp.mausac = ? AND ctsp.kichco = ? AND sp.tensanpham = ?",
@@ -170,19 +176,16 @@ public class CTSanPhamDao {
             if (cursor.moveToFirst()) {
                 ctSanPham = new CTSanPham(
                         cursor.getInt(0),
-                        cursor.getInt(1),
-                        cursor.getString(2),
+                        cursor.getBlob(1),
+                        cursor.getInt(2),
                         cursor.getString(3),
-                        cursor.getInt(4),
+                        cursor.getString(4),
                         cursor.getInt(5),
-                        cursor.getInt(6)
+                        cursor.getInt(6),
+                        cursor.getInt(7)
                 );
             }
-
             cursor.close();
-        } catch (Exception e) {
-            Log.i(TAG, "loi", e);
-        }
         return ctSanPham;
     }
 }

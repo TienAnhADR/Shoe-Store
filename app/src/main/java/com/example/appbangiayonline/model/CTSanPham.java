@@ -3,9 +3,10 @@ package com.example.appbangiayonline.model;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class CTSanPham implements  Serializable {
+public class CTSanPham implements Serializable {
     private int mactsanpham;
     private int masanpham;
+    private byte[] hinhanh;
     private String tensanpham;
     private String tenmausac;
     private int kichco;
@@ -13,6 +14,17 @@ public class CTSanPham implements  Serializable {
     private int soluong;
 
     public CTSanPham(int gia, int soluong) {
+        this.gia = gia;
+        this.soluong = soluong;
+    }
+
+
+    public CTSanPham(int mactsanpham, String tensanpham, byte[] hinhanh, String tenmausac, int kichco, int gia, int soluong) {
+        this.mactsanpham = mactsanpham;
+        this.hinhanh = hinhanh;
+        this.tensanpham = tensanpham;
+        this.tenmausac = tenmausac;
+        this.kichco = kichco;
         this.gia = gia;
         this.soluong = soluong;
     }
@@ -26,12 +38,18 @@ public class CTSanPham implements  Serializable {
         this.soluong = soluong;
     }
 
+
+    public CTSanPham(int mactsanpham, byte[] hinhanh, int masanpham, String tensanpham, String tenmausac, int kichco, int gia, int soluong) {
+        this.mactsanpham = mactsanpham;
+        this.masanpham = masanpham;
+}
     public CTSanPham(String tensanpham, String tenmausac, int kichco, int gia, int soluong) {
         this.tensanpham = tensanpham;
         this.tenmausac = tenmausac;
         this.kichco = kichco;
         this.gia = gia;
         this.soluong = soluong;
+        this.hinhanh = hinhanh;
     }
 
     public CTSanPham(int mactsanpham, int masanpham, String tensanpham, String tenmausac, int kichco, int gia, int soluong) {
@@ -108,6 +126,15 @@ public class CTSanPham implements  Serializable {
         return gia*soluong;
     }
 
+
+    public byte[] getHinhanh() {
+        return hinhanh;
+    }
+
+    public void setHinhanh(byte[] hinhanh) {
+        this.hinhanh = hinhanh;
+    }
     public void setSoluong_mua(int slMua) {
+
     }
 }

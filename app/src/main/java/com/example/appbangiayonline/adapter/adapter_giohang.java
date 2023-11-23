@@ -15,7 +15,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appbangiayonline.R;
 import com.example.appbangiayonline.activity.Activity_GioHang;
+import com.example.appbangiayonline.convert.ConvertImage;
 import com.example.appbangiayonline.dao.HoaDonCT_Dao;
+
 import com.example.appbangiayonline.model.GioHang;
 
 import java.util.ArrayList;
@@ -71,6 +73,7 @@ public class adapter_giohang extends RecyclerView.Adapter<adapter_giohang.rcv_ho
         holder.mausac_item.setText("Màu: " + gioHang.getMausac());
         holder.giasp_item.setText(gioHang.getGiasp() + "");
         holder.sl_sp_item.setText(gioHang.getSl_mua() + "");
+        holder.img_item.setImageBitmap(ConvertImage.ByteToBitmap(gioHang.getHinhanh()));
         holder.kichco_item.setText("Size: " + gioHang.getKichco());
 
         holder.giam_item.setOnClickListener(view -> {

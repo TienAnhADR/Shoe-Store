@@ -69,6 +69,7 @@ public class Activity_GioHang extends AppCompatActivity {
             id_kh = sharedPreferences.getInt("id_kh", -1);
             if (id_kh == -1) {
                 Toast.makeText(this, "Đăng nhập dưới quyền thành viên để thêm giỏ hàng!", Toast.LENGTH_SHORT).show();
+                //some anything
             } else {
                 dao.themGioHang(sanPham, id_kh);
                 Toast.makeText(this, "Thêm sản phẩm " + sanPham.getTensanpham() + " thành công!", Toast.LENGTH_SHORT).show();

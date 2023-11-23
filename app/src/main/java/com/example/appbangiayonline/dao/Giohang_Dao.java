@@ -32,6 +32,7 @@ public class Giohang_Dao {
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor cursor = db.rawQuery("select " +
                 "giohang.magiohang,sanpham.masanpham,khachhang.makh," +
+                "sanpham.hinhanh, " +
                 "sanpham.tensanpham, " +
                 "giohang.mausac,giohang.kichco,giohang.gia,giohang.soluong " +
                 "from sanpham " +
@@ -47,11 +48,12 @@ public class Giohang_Dao {
                                 cursor.getInt(0),
                                 cursor.getInt(1),
                                 cursor.getInt(2),
-                                cursor.getString(3),
+                                cursor.getBlob(3),
                                 cursor.getString(4),
-                                cursor.getInt(5),
+                                cursor.getString(5),
                                 cursor.getInt(6),
-                                cursor.getInt(7)));
+                                cursor.getInt(7),
+                                cursor.getInt(8)));
             } while (cursor.moveToNext());
         }
         SharedPreferences sharedPreferences = context.getSharedPreferences("admin", Context.MODE_PRIVATE);
@@ -90,6 +92,7 @@ public class Giohang_Dao {
         ContentValues contentValues = new ContentValues();
         contentValues.put("masanpham", ctSanPham.getMasanpham());
         contentValues.put("makhachhang", makh);
+        contentValues.put("hinhanh", ctSanPham.getHinhanh());
         contentValues.put("mausac", ctSanPham.getTenmausac());
         contentValues.put("kichco", ctSanPham.getKichco());
         contentValues.put("gia", ctSanPham.getGia());
