@@ -19,6 +19,7 @@ public class CTSanPham implements Serializable {
         this.soluong = soluong;
     }
 
+
     public CTSanPham(int mactsanpham, String tensanpham, byte[] hinhanh, String tenmausac, int kichco, int gia, int soluong) {
         this.mactsanpham = mactsanpham;
         this.hinhanh = hinhanh;
@@ -38,7 +39,7 @@ public class CTSanPham implements Serializable {
         this.soluong = soluong;
     }
 
-    public CTSanPham(int mactsanpham, int masanpham, String tensanpham, String tenmausac, int kichco, int gia, int soluong) {
+    public CTSanPham(int mactsanpham, byte[] hinhanh, int masanpham, String tensanpham, String tenmausac, int kichco, int gia, int soluong) {
         this.mactsanpham = mactsanpham;
         this.masanpham = masanpham;
         this.tensanpham = tensanpham;
@@ -46,6 +47,7 @@ public class CTSanPham implements Serializable {
         this.kichco = kichco;
         this.gia = gia;
         this.soluong = soluong;
+        this.hinhanh = hinhanh;
     }
 
     public CTSanPham(String tensanpham, String tenmausac, int kichco, int gia, int soluong) {
@@ -124,18 +126,12 @@ public class CTSanPham implements Serializable {
         this.soluong_mua = soluong_mua;
     }
 
-    @Override
-    public String toString() {
-        return "CTSanPham{" +
-                "mactsanpham=" + mactsanpham +
-                ", masanpham=" + masanpham +
-                ", tensanpham='" + tensanpham + '\'' +
-                ", tenmausac='" + tenmausac + '\'' +
-                ", kichco=" + kichco +
-                ", gia=" + gia +
-                ", soluong=" + soluong +
-                ", soluong_mua=" + soluong_mua +
-                '}';
+    public byte[] getHinhanh() {
+        return hinhanh;
+    }
+
+    public void setHinhanh(byte[] hinhanh) {
+        this.hinhanh = hinhanh;
     }
 }
 

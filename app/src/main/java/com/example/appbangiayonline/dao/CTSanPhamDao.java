@@ -131,7 +131,6 @@ public class CTSanPhamDao {
     public ArrayList<CTSanPham> getList(String tensanpham) {
         ArrayList<CTSanPham> list = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        try {
             Cursor cursor = db.rawQuery("select ctsp.mactsanpham, sp.tensanpham,sp.hinhanh, ctsp.mausac, ctsp.kichco, ctsp.gia, ctsp.soluong from sanpham sp, ctsanpham ctsp where ctsp.masanpham = sp.masanpham and sp.tensanpham = ?", new String[]{tensanpham});
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
@@ -139,18 +138,15 @@ public class CTSanPhamDao {
                     list.add(new CTSanPham(
                             cursor.getInt(0),
                             cursor.getString(1),
-                            cursor.getBlob(3),
-                            cursor.getString(4),
+                            cursor.getBlob(2),
+                            cursor.getString(3),
+                            cursor.getInt(4),
                             cursor.getInt(5),
-                            cursor.getInt(6),
-                            cursor.getInt(7)
+                            cursor.getInt(6)
                     ));
                 } while (cursor.moveToNext());
             }
             cursor.close();
-        } catch (Exception e) {
-            Log.i(TAG, "loi", e);
-        }
         return list;
     }
 
@@ -172,8 +168,7 @@ public class CTSanPhamDao {
     public CTSanPham getItemCTSanPham_config(String tensp, String mausac, int kichco) {
         CTSanPham ctSanPham = null;
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        try {
-            Cursor cursor = db.rawQuery("SELECT ctsp.mactsanpham, sp.masanpham, sp.tensanpham, ctsp.mausac, ctsp.kichco, ctsp.gia, ctsp.soluong " +
+            Cursor cursor = db.rawQuery("SELECT ctsp.mactsanpham, sp.hinhanh, sp.masanpham, sp.tensanpham, ctsp.mausac, ctsp.kichco, ctsp.gia, ctsp.soluong " +
                             "FROM sanpham sp " +
                             "JOIN ctsanpham ctsp ON sp.masanpham = ctsp.masanpham " +
                             "WHERE ctsp.mausac = ? AND ctsp.kichco = ? AND sp.tensanpham = ?",
@@ -181,19 +176,16 @@ public class CTSanPhamDao {
             if (cursor.moveToFirst()) {
                 ctSanPham = new CTSanPham(
                         cursor.getInt(0),
-                        cursor.getInt(1),
-                        cursor.getString(2),
+                        cursor.getBlob(1),
+                        cursor.getInt(2),
                         cursor.getString(3),
-                        cursor.getInt(4),
+                        cursor.getString(4),
                         cursor.getInt(5),
-                        cursor.getInt(6)
+                        cursor.getInt(6),
+                        cursor.getInt(7)
                 );
             }
-
             cursor.close();
-        } catch (Exception e) {
-            Log.i(TAG, "loi", e);
-        }
         return ctSanPham;
     }
 }
