@@ -12,7 +12,6 @@ public class CTSanPham implements Serializable {
     private int kichco;
     private int gia;
     private int soluong;
-    private int soluong_mua;
 
     public CTSanPham(int gia, int soluong) {
         this.gia = gia;
@@ -39,9 +38,12 @@ public class CTSanPham implements Serializable {
         this.soluong = soluong;
     }
 
+
     public CTSanPham(int mactsanpham, byte[] hinhanh, int masanpham, String tensanpham, String tenmausac, int kichco, int gia, int soluong) {
         this.mactsanpham = mactsanpham;
         this.masanpham = masanpham;
+}
+    public CTSanPham(String tensanpham, String tenmausac, int kichco, int gia, int soluong) {
         this.tensanpham = tensanpham;
         this.tenmausac = tenmausac;
         this.kichco = kichco;
@@ -50,14 +52,15 @@ public class CTSanPham implements Serializable {
         this.hinhanh = hinhanh;
     }
 
-    public CTSanPham(String tensanpham, String tenmausac, int kichco, int gia, int soluong) {
+    public CTSanPham(int mactsanpham, int masanpham, String tensanpham, String tenmausac, int kichco, int gia, int soluong) {
+        this.mactsanpham = mactsanpham;
+        this.masanpham = masanpham;
         this.tensanpham = tensanpham;
         this.tenmausac = tenmausac;
         this.kichco = kichco;
         this.gia = gia;
         this.soluong = soluong;
     }
-
 
     public CTSanPham() {
     }
@@ -118,13 +121,11 @@ public class CTSanPham implements Serializable {
         this.soluong = soluong;
     }
 
-    public int getSoluong_mua() {
-        return soluong_mua;
+
+    public int tinhTien_1_SP() {
+        return gia*soluong;
     }
 
-    public void setSoluong_mua(int soluong_mua) {
-        this.soluong_mua = soluong_mua;
-    }
 
     public byte[] getHinhanh() {
         return hinhanh;
@@ -133,5 +134,7 @@ public class CTSanPham implements Serializable {
     public void setHinhanh(byte[] hinhanh) {
         this.hinhanh = hinhanh;
     }
-}
+    public void setSoluong_mua(int slMua) {
 
+    }
+}

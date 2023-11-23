@@ -46,7 +46,17 @@ public class HoaDonDao {
         long kt = db.insert("hoadon", null, values);
         return (kt > 0);
     }
+    public boolean addHoaDon(int makh){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("manv", 1);
+        values.put("makh", makh);
+        values.put("trangthai", 0);
+        long kt = db.insert("hoadon", null, values);
+        return (kt > 0);
+    }
     public boolean thayDoiTrangThaiHoaDon(int mahd, int manv){
+
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values =new ContentValues();
         values.put("trangthai", 1);

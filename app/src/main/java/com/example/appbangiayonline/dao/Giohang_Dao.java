@@ -25,6 +25,7 @@ public class Giohang_Dao {
         dao = new NhanVien_KhachHang_Dao(context);
     }
 
+
     public ArrayList<GioHang> getList() {
         ArrayList<GioHang> list = new ArrayList<>();
 
@@ -68,6 +69,16 @@ public class Giohang_Dao {
             return gioHangs;
         }
         return list;
+    }
+    public int getMaCTSP(int magiohang){
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select masanpham from giohang where magiohang = ?",new String[]{String.valueOf(magiohang)});
+        if(cursor.getCount()>0){
+            cursor.moveToFirst();
+            return cursor.getInt(0);
+        }
+        return -1;
+
     }
 
     public void remove_data(int magiohang) {

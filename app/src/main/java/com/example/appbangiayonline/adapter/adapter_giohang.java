@@ -16,13 +16,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.appbangiayonline.R;
 import com.example.appbangiayonline.activity.Activity_GioHang;
 import com.example.appbangiayonline.convert.ConvertImage;
+import com.example.appbangiayonline.dao.HoaDonCT_Dao;
+
 import com.example.appbangiayonline.model.GioHang;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class adapter_giohang extends RecyclerView.Adapter<adapter_giohang.rcv_holder> {
     List<GioHang> list;
     Activity_GioHang context;
+    ArrayList<GioHang> list2;
+    private gioHangInterface gioHangInterface;
+
     int sl = 1;
 
     public adapter_giohang(List<GioHang> list, Activity_GioHang context) {
@@ -93,6 +99,12 @@ public class adapter_giohang extends RecyclerView.Adapter<adapter_giohang.rcv_ho
                 context.rm_chck(gioHang.getMagiohang());
             }
         });
+    }
+    public void addHoaDonCT(int mahd){
+        HoaDonCT_Dao dao2 = new HoaDonCT_Dao(context);
+        for(GioHang x :list2){
+            dao2.themCTHD(mahd,x.getMasanpham(),x.getSl_mua());
+        }
     }
 
     @Override

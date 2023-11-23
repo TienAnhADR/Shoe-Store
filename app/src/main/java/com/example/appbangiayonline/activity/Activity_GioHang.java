@@ -3,6 +3,7 @@ package com.example.appbangiayonline.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
@@ -20,6 +21,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.appbangiayonline.R;
 import com.example.appbangiayonline.adapter.adapter_giohang;
 import com.example.appbangiayonline.dao.Giohang_Dao;
+import com.example.appbangiayonline.dao.HoaDonCT_Dao;
+import com.example.appbangiayonline.dao.HoaDonDao;
+import com.example.appbangiayonline.dao.NhanVien_KhachHang_Dao;
 import com.example.appbangiayonline.fragmentTA.FragmentHoaDon;
 import com.example.appbangiayonline.model.CTSanPham;
 import com.example.appbangiayonline.model.GioHang;
@@ -36,13 +40,16 @@ public class Activity_GioHang extends AppCompatActivity {
 
     ArrayList<GioHang> list;
     TextView tongtien;
+    ArrayList<HoaDon> listhd;
     public int s;
+    int id_kh,makh;
+    HoaDonCT_Dao daoHDCT;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment__gio_hang);
-
+        daoHDCT = new HoaDonCT_Dao(this);
         dao = new Giohang_Dao(this);
         recyclerView = findViewById(R.id.rcv_giohang);
         tongtien = findViewById(R.id.tongTien_giohang);
@@ -59,7 +66,7 @@ public class Activity_GioHang extends AppCompatActivity {
             CTSanPham sanPham = (CTSanPham) intent.getSerializableExtra("themgiohang");
             SharedPreferences sharedPreferences = getSharedPreferences("khachhang", MODE_PRIVATE);
 
-            int id_kh = sharedPreferences.getInt("id_kh", -1);
+            id_kh = sharedPreferences.getInt("id_kh", -1);
             if (id_kh == -1) {
                 Toast.makeText(this, "Đăng nhập dưới quyền thành viên để thêm giỏ hàng!", Toast.LENGTH_SHORT).show();
                 //some anything
@@ -89,11 +96,39 @@ public class Activity_GioHang extends AppCompatActivity {
             }
             alBuilder.show();
         });
+        NhanVien_KhachHang_Dao dao_nv_kh = new NhanVien_KhachHang_Dao(this);
+        SharedPreferences sharedPreferences = getSharedPreferences("admin", MODE_PRIVATE);
+        String username = sharedPreferences.getString("taikhoan", "");
+        if (!TextUtils.isEmpty(username)) {
+            KhachHang khachHang = new KhachHang();
+            khachHang = dao_nv_kh.getThongTinKhachHang(username);
+            makh = khachHang.getMakh();
+        }
         Button button_thanhToan = findViewById(R.id.btn_thanhtoan_giohang);
         button_thanhToan.setOnClickListener(view -> {
-            Intent intent1 = new Intent(Activity_GioHang.this, MainActivity.class);
-            intent1.putExtra("open_hoadon", "hoadon");
-            startActivity(intent1);
+            HoaDonDao dao2 = new HoaDonDao(this);
+            boolean check = dao2.addHoaDon(makh);
+            if(check){
+                listhd = dao2.getDSHoaDon();
+                AlertDialog.Builder alBuilder = new AlertDialog.Builder(this);
+                if (listchk.size() != 0) {
+                    alBuilder.setTitle("Thanh toán sản phẩm trong giỏ hàng!").setIcon(R.drawable.baseline_error_outline_24).setMessage("Bạn có chắc chắn muốn Thanh toán sản phẩm").setPositiveButton("Cóa", ((dialogInterface, i) -> {
+                        listchk.forEach(e -> {
+                            int mactsp = dao.getMaCTSP(e);
+                            daoHDCT.themCTHD(listhd.size(),mactsp,1);
+                            dao.remove_data(e);
+                        });
+                        listchk.clear();
+                        tongtien.setText("0 VNĐ");
+                        reload();
+                    })).setNegativeButton("Hông", ((dialogInterface, i) -> {
+                    }));
+                }
+                alBuilder.show();
+            }
+//            Intent intent1 = new Intent(Activity_GioHang.this, MainActivity.class);
+//            intent1.putExtra("open_hoadon", "hoadon");
+//            startActivity(intent1);
         });
     }
 
@@ -101,6 +136,9 @@ public class Activity_GioHang extends AppCompatActivity {
         list = dao.getList();
         adap = new adapter_giohang(list, this);
         recyclerView.setAdapter(adap);
+    }
+    public  void addHoaDonCT(int id_CTSP,int soLuongMua){
+
     }
 
     public void add_chck(int i) {
