@@ -15,8 +15,7 @@
             android:layout_width="200sp"
             android:layout_height="200sp"
             android:layout_marginRight="10sp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/shose_item" />
+            android:scaleType="centerCrop" />
 
         <TextView
             android:id="@+id/txt_giasp_themgiohang"

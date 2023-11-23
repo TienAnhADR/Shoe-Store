@@ -3,9 +3,10 @@ package com.example.appbangiayonline.model;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class CTSanPham implements  Serializable {
+public class CTSanPham implements Serializable {
     private int mactsanpham;
     private int masanpham;
+    private byte[] hinhanh;
     private String tensanpham;
     private String tenmausac;
     private int kichco;
@@ -14,6 +15,16 @@ public class CTSanPham implements  Serializable {
     private int soluong_mua;
 
     public CTSanPham(int gia, int soluong) {
+        this.gia = gia;
+        this.soluong = soluong;
+    }
+
+    public CTSanPham(int mactsanpham, String tensanpham, byte[] hinhanh, String tenmausac, int kichco, int gia, int soluong) {
+        this.mactsanpham = mactsanpham;
+        this.hinhanh = hinhanh;
+        this.tensanpham = tensanpham;
+        this.tenmausac = tenmausac;
+        this.kichco = kichco;
         this.gia = gia;
         this.soluong = soluong;
     }

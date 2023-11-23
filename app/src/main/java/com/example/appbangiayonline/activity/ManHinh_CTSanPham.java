@@ -115,7 +115,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
     int laymactsp;
     //biến thêm số lượng mới
     TextView themSL_CTSanPham;
-
+    Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,7 +139,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         // Bundle bundle = intent.getExtras();
         if (intent.hasExtra("obj_sanpham")) {
             SanPham sanPham = (SanPham) intent.getSerializableExtra("obj_sanpham");
-            Bitmap bitmap = ConvertImage.ByteToBitmap(sanPham.getImage());
+            bitmap = ConvertImage.ByteToBitmap(sanPham.getImage());
             tenchung = sanPham.getTensanpham();
 
             nhanten = findViewById(R.id.tensanpham_sanpham);
@@ -519,7 +519,9 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
 
         ImageButton tang = dialog.findViewById(R.id.btn_tang_themgiohang);
         ImageButton giam = dialog.findViewById(R.id.btn_giam_themgiohang);
+        ImageView imageView = dialog.findViewById(R.id.img_sp_themgiohang);
         TextView sl_mua = dialog.findViewById(R.id.sl_sp_themgiohang);
+        imageView.setImageBitmap(bitmap);
 
         tang.setOnClickListener(view -> {
             slMua++;
