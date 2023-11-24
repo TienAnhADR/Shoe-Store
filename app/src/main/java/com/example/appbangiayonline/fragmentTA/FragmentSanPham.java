@@ -55,7 +55,6 @@ public class FragmentSanPham extends Fragment {
     AlertDialog alertDialog;
 
     @Override
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view1 = inflater.inflate(R.layout.fragment_san_pham, container, false);
 
