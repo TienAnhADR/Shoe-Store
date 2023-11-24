@@ -25,7 +25,8 @@ public class NhanVien_KhachHang_Dao {
         this.context = context;
         helper = new DBHelper(context);
     }
-    public ArrayList<NhanVien> getList_NV(){
+
+    public ArrayList<NhanVien> getList_NV() {
 //        int manv, int chucvu, String hoten, String sdt, String email
 //        String tbl_nhanvien = "create table nhanvien (" +
 //                "manv integer primary key autoincrement," +
@@ -37,16 +38,17 @@ public class NhanVien_KhachHang_Dao {
 //                "chucvu integer)";
         ArrayList<NhanVien> list = new ArrayList<>();
         SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM nhanvien ",null);
-        if (cursor.getCount() != 0){
+        Cursor cursor = db.rawQuery("SELECT * FROM nhanvien ", null);
+        if (cursor.getCount() != 0) {
             cursor.moveToFirst();
             do {
-                list.add(new NhanVien(cursor.getInt(0),cursor.getInt(6),cursor.getString(1),cursor.getString(4),cursor.getString(5)));
-            }while (cursor.moveToNext());
+                list.add(new NhanVien(cursor.getInt(0), cursor.getInt(6), cursor.getString(1), cursor.getString(4), cursor.getString(5)));
+            } while (cursor.moveToNext());
         }
         return list;
     }
-    public int newKhachHang(String hoTen,String userName,String pass,String sdt,String email,String diachi){
+
+    public int newKhachHang(String hoTen, String userName, String pass, String sdt, String email, String diachi) {
         SQLiteDatabase sql = helper.getWritableDatabase();
         Cursor cursor = sql.rawQuery("SELECT * FROM khachhang WHERE khachhang.taikhoan='" + userName + "'", null);
         if (cursor.getCount() > 0) {
@@ -64,14 +66,15 @@ public class NhanVien_KhachHang_Dao {
             contentValues.put("matkhau", pass);
             contentValues.put("sdt", sdt);
             contentValues.put("email", email);
-            contentValues.put("diachi",diachi);
+            contentValues.put("diachi", diachi);
             sql.insert("khachhang", null, contentValues);
             sql.close();
             return 1;
         }
 
     }
-    public int newNhanVien(String hoTen,String userName,String pass,String sdt,String email){
+
+    public int newNhanVien(String hoTen, String userName, String pass, String sdt, String email) {
         SQLiteDatabase sql = helper.getWritableDatabase();
         Cursor cursor = sql.rawQuery("SELECT * FROM nhanvien WHERE nhanvien.taikhoan='" + userName + "'", null);
         if (cursor.getCount() > 0) {
@@ -89,7 +92,7 @@ public class NhanVien_KhachHang_Dao {
             contentValues.put("matkhau", pass);
             contentValues.put("sdt", sdt);
             contentValues.put("email", email);
-            contentValues.put("chucvu",0);
+            contentValues.put("chucvu", 0);
             sql.insert("nhanvien", null, contentValues);
             sql.close();
             return 1;
@@ -110,28 +113,33 @@ public class NhanVien_KhachHang_Dao {
         }
         return false;
     }
-    public ArrayList<KhachHang> getList_KH(){
+
+    public ArrayList<KhachHang> getList_KH() {
         ArrayList<KhachHang> list = new ArrayList<>();
         SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM khachhang",null);
-        if (cursor.getCount() != 0){
+        Cursor cursor = db.rawQuery("SELECT * FROM khachhang", null);
+        if (cursor.getCount() != 0) {
             cursor.moveToFirst();
             do {
-                list.add(new KhachHang(cursor.getInt(0),cursor.getString(1),cursor.getString(4),cursor.getString(5),cursor.getString(6)));
-            }while (cursor.moveToNext());
+                list.add(new KhachHang(cursor.getInt(0), cursor.getString(1), cursor.getString(4), cursor.getString(5), cursor.getString(6)));
+            } while (cursor.moveToNext());
         }
         return list;
     }
+
     //Lay makh khachhang với đk trùng taikhoan khach hàng truyền vào(Lien quan đến hoaDon)
     public KhachHang getThongTinKhachHang(String taikhoan) {
         KhachHang khachHang = null;
         SQLiteDatabase db = helper.getReadableDatabase();
         try {
             Cursor cursor = db.rawQuery("SELECT makh,hoten, taikhoan, matkhau, sdt,email, diachi FROM khachhang WHERE taikhoan = ?", new String[]{taikhoan});
-            while (cursor.moveToNext()) {
-
-                khachHang = new KhachHang(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6) );
+            // while (cursor.moveToNext()) {
+            //1 tai khoan khong can movetonext
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                khachHang = new KhachHang(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6));
             }
+            //  }
             cursor.close();
         } catch (Exception e) {
             Log.i(TAG, "loi", e);
@@ -139,16 +147,16 @@ public class NhanVien_KhachHang_Dao {
         return khachHang;
     }
 
-    public NhanVien getThongTinNhanVien(String taikhoan){
+    public NhanVien getThongTinNhanVien(String taikhoan) {
         NhanVien nhanVien = null;
         SQLiteDatabase db = helper.getReadableDatabase();
-        try{
+        try {
             Cursor cursor = db.rawQuery("select manv, hoten, taikhoan, matkhau, sdt, email, chucvu from nhanvien where taikhoan = ?", new String[]{taikhoan});
-            while (cursor.moveToNext()){
+            while (cursor.moveToNext()) {
                 nhanVien = new NhanVien(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getInt(6));
             }
             cursor.close();
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.i(TAG, "loi", e);
         }
         return nhanVien;

@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -36,6 +37,7 @@ import com.example.appbangiayonline.adapter.CTSanPhamAdapter;
 import com.example.appbangiayonline.adapter.HoaDonAdapter;
 import com.example.appbangiayonline.adapter.MauSacAdapter;
 import com.example.appbangiayonline.adapter.SizeAdapter;
+import com.example.appbangiayonline.convert.ConvertImage;
 import com.example.appbangiayonline.dao.CTSanPhamDao;
 
 import com.example.appbangiayonline.dao.HoaDonDao;
@@ -46,6 +48,7 @@ import com.example.appbangiayonline.model.CTSanPham;
 import com.example.appbangiayonline.model.HoaDon;
 import com.example.appbangiayonline.model.KhachHang;
 
+import com.example.appbangiayonline.model.SanPham;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -97,7 +100,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
     ImageView imgTru;
     TextView muangay_soluong;
     TextView muangay_tongtien;
-    ImageView quaylai_rc_sanpham;
+    ImageView quaylai_rc_sanpham, img_ctsp;
     //Xac nhan mua ngay
     Button btnxacnhanhoadon;
     //KhachHang
@@ -139,22 +142,26 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
             SanPham sanPham = (SanPham) intent.getSerializableExtra("obj_sanpham");
             bitmap = ConvertImage.ByteToBitmap(sanPham.getImage());
             tenchung = sanPham.getTensanpham();
-
-
-        Bundle bundle = intent.getExtras();
-        if (bundle != null) {
-            tenchung = bundle.getString("tensanpham");
-
             nhanten = findViewById(R.id.tensanpham_sanpham);
+            img_ctsp = findViewById(R.id.anhSanpham_ctSanpham);
+            img_ctsp.setImageBitmap(bitmap);
             nhanten.setText(tenchung);
-        }
 
-        muaNgay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showCTSanPham();
-            }
-        });
+//            Bundle bundle = intent.getExtras();
+//            if (bundle != null) {
+//                tenchung = bundle.getString("tensanpham");
+//
+//                nhanten = findViewById(R.id.tensanpham_sanpham);
+//                nhanten.setText(tenchung);
+//            }
+
+            muaNgay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showCTSanPham();
+                }
+            });
+        }
     }
 
     private void showCTSanPham() {
@@ -387,15 +394,17 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         listhd = daohd.getDSHoaDon();
         adapterhd = new HoaDonAdapter(this, listhd);
         dao_nv_kh = new NhanVien_KhachHang_Dao(this);
+
         if (xemConSoLuong(tongSoLuongSP)) {
             laySoLuongMoi(tongSoLuongSP);
             //
             SharedPreferences sharedPreferences = getSharedPreferences("admin", MODE_PRIVATE);
             String username = sharedPreferences.getString("taikhoan", "");
             if (!TextUtils.isEmpty(username)) {
-                KhachHang khachHang = new KhachHang();
-                khachHang = dao_nv_kh.getThongTinKhachHang(username);
+
+                KhachHang khachHang = dao_nv_kh.getThongTinKhachHang(username);
                 int makh = khachHang.getMakh();
+
                 if (makh != 0) {
                     boolean kt = daohd.ThemHoaDon(makh, tongSoLuongSP, tongGiaSP);
                     if (kt) {
@@ -438,10 +447,11 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         newslsanpham = ctSanPham.getSoluong();
         //load so luong moi
     }
+
     //SL cũ + sl mới = sl cần cập nhật
-    private void  them_SL_CTSanPhamMoi(){
+    private void them_SL_CTSanPhamMoi() {
         AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-        LayoutInflater inflater1  = getLayoutInflater();
+        LayoutInflater inflater1 = getLayoutInflater();
         View view1 = inflater1.inflate(R.layout.them_sl_ctsanpham, null);
         builder1.setView(view1);
         builder1.setTitle("Bạn có muốn thêm số lượng mới ?");
@@ -450,21 +460,21 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         builder1.setPositiveButton("Them", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                if(!TextUtils.isEmpty(txtma.getText().toString()) && !TextUtils.isEmpty(txtsl.getText().toString())){
+                if (!TextUtils.isEmpty(txtma.getText().toString()) && !TextUtils.isEmpty(txtsl.getText().toString())) {
                     int ma = Integer.parseInt(txtma.getText().toString());
                     int newSl = Integer.parseInt(txtsl.getText().toString());
-                    if(!TextUtils.isEmpty(txtma.getText().toString()) && !TextUtils.isEmpty(txtsl.getText().toString())){
+                    if (!TextUtils.isEmpty(txtma.getText().toString()) && !TextUtils.isEmpty(txtsl.getText().toString())) {
                         int oldSl = dao.getSL(ma);
-                        if (oldSl != 0){
+                        if (oldSl != 0) {
                             int slDuocCapNhat = newSl + oldSl;
-                            dao.themSoLuongMoi(ma,slDuocCapNhat);
+                            dao.themSoLuongMoi(ma, slDuocCapNhat);
                             Toast.makeText(ManHinh_CTSanPham.this, "Thêm số lượng mới thành công", Toast.LENGTH_SHORT).show();
                             finish();
 
-                        }else{
+                        } else {
                             Toast.makeText(ManHinh_CTSanPham.this, "Số lượng không tồn tai", Toast.LENGTH_SHORT).show();
                         }
-                    }else{
+                    } else {
                         Toast.makeText(ManHinh_CTSanPham.this, "Nhập đủ thông tin", Toast.LENGTH_SHORT).show();
                     }
                 }
