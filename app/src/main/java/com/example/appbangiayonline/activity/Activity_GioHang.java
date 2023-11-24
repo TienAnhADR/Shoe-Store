@@ -42,7 +42,7 @@ public class Activity_GioHang extends AppCompatActivity {
     TextView tongtien;
     ArrayList<HoaDon> listhd;
     public int s;
-    int id_kh, makh;
+    int id_kh, makh,s2;
     HoaDonCT_Dao daoHDCT;
 
     @Override
@@ -113,7 +113,7 @@ public class Activity_GioHang extends AppCompatActivity {
         Button button_thanhToan = findViewById(R.id.btn_thanhtoan_giohang);
         button_thanhToan.setOnClickListener(view -> {
             HoaDonDao dao2 = new HoaDonDao(this);
-            boolean check = dao2.addHoaDon(makh);
+            boolean check = dao2.addHoaDon(makh,s);
 
             if (check) {
                 listhd = dao2.getDSHoaDon();
@@ -121,8 +121,13 @@ public class Activity_GioHang extends AppCompatActivity {
                 if (listchk.size() != 0) {
                     alBuilder.setTitle("Thanh toán sản phẩm trong giỏ hàng!").setIcon(R.drawable.baseline_error_outline_24).setMessage("Bạn có chắc chắn muốn Thanh toán sản phẩm").setPositiveButton("Cóa", ((dialogInterface, i) -> {
                         listchk.forEach(e -> {
+                            list.forEach(e1 -> {
+                                if (e1.getMagiohang() == e) {
+                                    s2 = e1.getSl_mua();
+                                }
+                            });
                             int mactsp = dao.getMaCTSP(e);
-                            daoHDCT.themCTHD(listhd.size(), mactsp, 1);
+                            daoHDCT.themCTHD(listhd.size(), mactsp, s2);
                             dao.remove_data(e);
                         });
                         listchk.clear();
