@@ -68,15 +68,11 @@ public class Activity_GioHang extends AppCompatActivity {
 
             SharedPreferences sharedPreferences = getSharedPreferences("khachhang", MODE_PRIVATE);
             id_kh = sharedPreferences.getInt("id_kh", -1);
-            if (id_kh == -1) {
-                Toast.makeText(this, "Đăng nhập dưới quyền thành viên để thêm giỏ hàng!", Toast.LENGTH_SHORT).show();
-                //some anything
-            } else {
+            if (id_kh != -1) {
                 dao.themGioHang(sanPham, id_kh);
                 Toast.makeText(this, "Thêm sản phẩm " + sanPham.getTensanpham() + " thành công!", Toast.LENGTH_SHORT).show();
                 reload();
             }
-
         }
         //------------------
         reload();
@@ -97,6 +93,7 @@ public class Activity_GioHang extends AppCompatActivity {
             }
             alBuilder.show();
         });
+
         NhanVien_KhachHang_Dao dao_nv_kh = new NhanVien_KhachHang_Dao(this);
         SharedPreferences sharedPreferences = getSharedPreferences("admin", MODE_PRIVATE);
         String username = sharedPreferences.getString("taikhoan", "");
