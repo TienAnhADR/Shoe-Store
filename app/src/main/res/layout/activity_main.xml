@@ -14,9 +14,8 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#7903A9F4"
+            android:background="#6750A4"
             android:fitsSystemWindows="true" />
-
 
         <FrameLayout
             android:id="@+id/flameLayout"

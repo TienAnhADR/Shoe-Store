@@ -1,35 +1,19 @@
 package com.example.appbangiayonline.fragmentTA;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
 
-import android.os.CountDownTimer;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.appbangiayonline.R;
-import com.example.appbangiayonline.adapter.SliderAdapter;
 
 public class Fragment_Main extends Fragment {
-    ViewPager viewPager;
-    SliderAdapter adapter;
-    int index = 0;
-    //----------------
-    int[] images = {R.drawable.shoe, R.drawable.shoes, R.drawable.shoe, R.drawable.shoe, R.drawable.shoe};
-
-    //'''''''''''''''''
-
-    int sum_time = 3000;
-    int each_time = 1000;
 
     public Fragment_Main() {
 
@@ -38,22 +22,19 @@ public class Fragment_Main extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment__main, container, false);
-        viewPager = view.findViewById(R.id.viewPager);
-        adapter = new SliderAdapter(getContext(), images);
-        viewPager.setAdapter(adapter);
 
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (index == images.length) {
-                    index = 0;
-                }
-                viewPager.setCurrentItem(index++, true);
-                handler.postDelayed(this, 1000);
-            }
-        }, 1000);
+        TextView txt_name = view.findViewById(R.id.txt_name_mainscreen);
+        TextView txt_xemThem = view.findViewById(R.id.txt_xemthem_mainscreen);
+        SharedPreferences sharedPreferences_ = requireActivity().getSharedPreferences("taikhoan", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("admin", Context.MODE_PRIVATE);
+        if (sharedPreferences.getInt("setting", 0) == 2) {
+            txt_name.setText("Xin chào, " + sharedPreferences_.getString("name_kh", "" + "!"));
+        } else {
+            txt_name.setText("Xin chào admin!");
+        }
+        txt_xemThem.setOnClickListener(view1 -> {
 
+        });
         return view;
     }
 }
