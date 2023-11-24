@@ -1,6 +1,7 @@
 package com.example.appbangiayonline.model;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class CTSanPham implements Serializable {
@@ -39,10 +40,17 @@ public class CTSanPham implements Serializable {
     }
 
 
-    public CTSanPham(int mactsanpham, byte[] hinhanh, int masanpham, String tensanpham, String tenmausac, int kichco, int gia, int soluong) {
+    public CTSanPham(int mactsanpham, int masanpham, byte[] hinhanh, String tensanpham, String tenmausac, int kichco, int gia, int soluong) {
         this.mactsanpham = mactsanpham;
         this.masanpham = masanpham;
-}
+        this.hinhanh = hinhanh;
+        this.tenmausac = tenmausac;
+        this.tensanpham = tensanpham;
+        this.kichco = kichco;
+        this.gia = gia;
+        this.soluong = soluong;
+    }
+
     public CTSanPham(String tensanpham, String tenmausac, int kichco, int gia, int soluong) {
         this.tensanpham = tensanpham;
         this.tenmausac = tenmausac;
@@ -123,7 +131,7 @@ public class CTSanPham implements Serializable {
 
 
     public int tinhTien_1_SP() {
-        return gia*soluong;
+        return gia * soluong;
     }
 
 
@@ -134,6 +142,7 @@ public class CTSanPham implements Serializable {
     public void setHinhanh(byte[] hinhanh) {
         this.hinhanh = hinhanh;
     }
+
     public void setSoluong_mua(int slMua) {
 
     }
