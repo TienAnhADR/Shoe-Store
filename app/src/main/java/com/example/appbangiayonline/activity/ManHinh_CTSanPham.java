@@ -404,7 +404,6 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
 
                 KhachHang khachHang = dao_nv_kh.getThongTinKhachHang(username);
                 int makh = khachHang.getMakh();
-
                 if (makh != 0) {
                     boolean kt = daohd.ThemHoaDon(makh, tongSoLuongSP, tongGiaSP);
                     if (kt) {

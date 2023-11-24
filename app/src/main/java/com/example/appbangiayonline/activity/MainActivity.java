@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent1 = getIntent();
         if (intent1.hasExtra("open_hoadon")) {
             change_Fragment(new FragmentHoaDon(), "Hóa đơn");
-        }else{
+        } else {
             change_Fragment(new Fragment_Main(), "Trang chủ");
         }
 
@@ -118,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.flameLayout, fragment).commit();
         drawerLayout.closeDrawer(GravityCompat.START);
+        toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setTitle(title);
     }
 
