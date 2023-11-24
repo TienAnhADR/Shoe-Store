@@ -124,12 +124,12 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
 
         giohang = findViewById(R.id.giohang_sanpham);
         muaNgay = findViewById(R.id.muangay_sanpham);
-        SharedPreferences sharedPreferences = getSharedPreferences("admin", MODE_PRIVATE);
-        //admin ko thể thêm giỏ hàng hay mua sp
-        if (sharedPreferences.getInt("setting", 2) != 2) {
-            giohang.setVisibility(View.INVISIBLE);
-            muaNgay.setVisibility(View.INVISIBLE);
-        }
+//        SharedPreferences sharedPreferences = getSharedPreferences("admin", MODE_PRIVATE);
+//        //admin ko thể thêm giỏ hàng hay mua sp
+//        if (sharedPreferences.getInt("setting", 2) != 2) {
+//            giohang.setVisibility(View.INVISIBLE);
+//            muaNgay.setVisibility(View.INVISIBLE);
+//        }
         quaylai_rc_sanpham = findViewById(R.id.quaylai_rc_sanpham);
         giohang.setOnClickListener(view -> {
             themGioHang();
