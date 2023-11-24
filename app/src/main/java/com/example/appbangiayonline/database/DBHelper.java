@@ -87,7 +87,8 @@ public class DBHelper extends SQLiteOpenHelper {
         });
         //---------------------------------
         //chi tiet sanpham
-        String tbl_ctsanpham = "create table ctsanpham(mactsanpham integer primary key autoincrement," +
+        String tbl_ctsanpham = "create table ctsanpham(" +
+                "mactsanpham integer primary key autoincrement," +
                 "masanpham integer references sanpham(masanpham)," +
                 "mausac text," +
                 "kichco integer," +

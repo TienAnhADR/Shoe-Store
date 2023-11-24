@@ -131,22 +131,22 @@ public class CTSanPhamDao {
     public ArrayList<CTSanPham> getList(String tensanpham) {
         ArrayList<CTSanPham> list = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-            Cursor cursor = db.rawQuery("select ctsp.mactsanpham, sp.tensanpham,sp.hinhanh, ctsp.mausac, ctsp.kichco, ctsp.gia, ctsp.soluong from sanpham sp, ctsanpham ctsp where ctsp.masanpham = sp.masanpham and sp.tensanpham = ?", new String[]{tensanpham});
-            if (cursor.getCount() > 0) {
-                cursor.moveToFirst();
-                do {
-                    list.add(new CTSanPham(
-                            cursor.getInt(0),
-                            cursor.getString(1),
-                            cursor.getBlob(2),
-                            cursor.getString(3),
-                            cursor.getInt(4),
-                            cursor.getInt(5),
-                            cursor.getInt(6)
-                    ));
-                } while (cursor.moveToNext());
-            }
-            cursor.close();
+        Cursor cursor = db.rawQuery("select ctsp.mactsanpham, sp.tensanpham,sp.hinhanh, ctsp.mausac, ctsp.kichco, ctsp.gia, ctsp.soluong from sanpham sp, ctsanpham ctsp where ctsp.masanpham = sp.masanpham and sp.tensanpham = ?", new String[]{tensanpham});
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                list.add(new CTSanPham(
+                        cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getBlob(2),
+                        cursor.getString(3),
+                        cursor.getInt(4),
+                        cursor.getInt(5),
+                        cursor.getInt(6)
+                ));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
         return list;
     }
 
@@ -168,24 +168,28 @@ public class CTSanPhamDao {
     public CTSanPham getItemCTSanPham_config(String tensp, String mausac, int kichco) {
         CTSanPham ctSanPham = null;
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-            Cursor cursor = db.rawQuery("SELECT ctsp.mactsanpham, sp.hinhanh, sp.masanpham, sp.tensanpham, ctsp.mausac, ctsp.kichco, ctsp.gia, ctsp.soluong " +
-                            "FROM sanpham sp " +
-                            "JOIN ctsanpham ctsp ON sp.masanpham = ctsp.masanpham " +
-                            "WHERE ctsp.mausac = ? AND ctsp.kichco = ? AND sp.tensanpham = ?",
-                    new String[]{mausac, String.valueOf(kichco), tensp});
-            if (cursor.moveToFirst()) {
-                ctSanPham = new CTSanPham(
-                        cursor.getInt(0),
-                        cursor.getBlob(1),
-                        cursor.getInt(2),
-                        cursor.getString(3),
-                        cursor.getString(4),
-                        cursor.getInt(5),
-                        cursor.getInt(6),
-                        cursor.getInt(7)
-                );
-            }
-            cursor.close();
+
+        String query = "SELECT ctsanpham.mactsanpham, ctsanpham.masanpham, sanpham.hinhanh, sanpham.tensanpham, ctsanpham.mausac, ctsanpham.kichco, ctsanpham.gia, ctsanpham.soluong " +
+                "FROM ctsanpham " +
+                "JOIN sanpham ON ctsanpham.masanpham = sanpham.masanpham " +
+                "WHERE sanpham.tensanpham = ? AND ctsanpham.mausac = ? AND ctsanpham.kichco = ?";
+        String[] selectionArgs = {tensp, mausac, String.valueOf(kichco)};
+        Cursor cursor = db.rawQuery(query, selectionArgs);
+
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            ctSanPham = new CTSanPham(
+                    cursor.getInt(0),
+                    cursor.getInt(1),
+                    cursor.getBlob(2),
+                    cursor.getString(3),
+                    cursor.getString(4),
+                    cursor.getInt(5),
+                    cursor.getInt(6),
+                    cursor.getInt(7)
+            );
+        }
+        cursor.close();
         return ctSanPham;
     }
 }
