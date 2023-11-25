@@ -4,14 +4,24 @@ import java.io.Serializable;
 
 public class HoaDon implements Serializable {
     private int mahoadon;
+    private int makh;
     private String tenkh;
     private String tennv;
     private int tongsl;
     private int tongTien;
     private int trangthai;
 
+    public HoaDon(int mahoadon, int makh, String tenkh, String tennv, int tongsl, int tongTien, int trangthai) {
+        this.mahoadon = mahoadon;
+        this.makh = makh;
+        this.tenkh = tenkh;
+        this.tennv = tennv;
+        this.tongsl = tongsl;
+        this.tongTien = tongTien;
+        this.trangthai = trangthai;
+    }
 
-    public HoaDon(int mahoadon,String tennv,  String tenkh,  int tongsl, int tongTien, int trangthai) {
+    public HoaDon(int mahoadon, String tennv, String tenkh, int tongsl, int tongTien, int trangthai) {
         this.mahoadon = mahoadon;
         this.tennv = tennv;
         this.tenkh = tenkh;
@@ -71,5 +81,11 @@ public class HoaDon implements Serializable {
         this.tongTien = tongTien;
     }
 
+    public int getMakh() {
+        return makh;
+    }
 
+    public void setMakh(int makh) {
+        this.makh = makh;
+    }
 }

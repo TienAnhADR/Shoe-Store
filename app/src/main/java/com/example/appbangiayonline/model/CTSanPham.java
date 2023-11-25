@@ -13,6 +13,7 @@ public class CTSanPham implements Serializable {
     private int kichco;
     private int gia;
     private int soluong;
+    private int sl_mua;
 
     public CTSanPham(int gia, int soluong) {
         this.gia = gia;
@@ -143,7 +144,11 @@ public class CTSanPham implements Serializable {
         this.hinhanh = hinhanh;
     }
 
-    public void setSoluong_mua(int slMua) {
+    public int getSl_mua() {
+        return sl_mua;
+    }
 
+    public void setSl_mua(int sl_mua) {
+        this.sl_mua = sl_mua;
     }
 }

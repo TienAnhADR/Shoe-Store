@@ -565,7 +565,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                 if (ctSanPham1 == null) {
                     Toast.makeText(this, "Sản phẩm đã hết hàng :(", Toast.LENGTH_SHORT).show();
                 } else {
-                    ctSanPham1.setSoluong_mua(slMua);
+                    ctSanPham1.setSl_mua(slMua);
                     intent.putExtra("themgiohang", ctSanPham1);
                     startActivity(intent);
                 }
