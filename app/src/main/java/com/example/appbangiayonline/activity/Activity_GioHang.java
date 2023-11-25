@@ -113,6 +113,7 @@ public class Activity_GioHang extends AppCompatActivity {
 
             if (check) {
                 listhd = dao2.getDSHoaDon();
+                int mahd = dao2.mahd();
                 AlertDialog.Builder alBuilder = new AlertDialog.Builder(this);
                 if (listchk.size() != 0) {
                     alBuilder.setTitle("Thanh toán sản phẩm trong giỏ hàng!").setIcon(R.drawable.baseline_error_outline_24).setMessage("Bạn có chắc chắn muốn Thanh toán sản phẩm").setPositiveButton("Cóa", ((dialogInterface, i) -> {
@@ -123,7 +124,7 @@ public class Activity_GioHang extends AppCompatActivity {
                                 }
                             });
                             int mactsp = dao.getMaCTSP(e);
-                            daoHDCT.themCTHD(listhd.size(), mactsp, s2);
+                            daoHDCT.themCTHD(mahd, mactsp, s2);
                             dao.remove_data(e);
                         });
                         listchk.clear();

@@ -39,13 +39,13 @@ public class HoaDonDao {
                     "nhanvien nv, khachhang kh " +
                     "where hd.makh = kh.makh and " +
                     "hd.manv = nv.manv ", null);
-
+// public HoaDon(int mahoadon, int makh, String tenkh, String tennv, int tongsl, int tongTien, int trangthai) {
             while (cursor.moveToNext()) {
                 list.add(new HoaDon(
                         cursor.getInt(0),
                         cursor.getInt(1),
-                        cursor.getString(2),
                         cursor.getString(3),
+                        cursor.getString(2),
                         cursor.getInt(4),
                         cursor.getInt(5),
                         cursor.getInt(6)));
@@ -69,6 +69,16 @@ public class HoaDonDao {
             Log.i(TAG, "loi", e);
         }
         return list;
+    }
+
+    public int mahd(){
+        ArrayList<HoaDon> list = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select mahd from hoadon",null);
+        if (cursor!=null&&cursor.moveToLast()){
+            return cursor.getInt(0);
+        }
+        return -10;
     }
 
     public boolean ThemHoaDon(int makh, int tongsl, int tongtien) {

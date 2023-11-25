@@ -123,8 +123,8 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.Viewholder
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int mahd2 = position;
-                showDialog_CT_HoaDon(mahd2);
+                int mahd2 = list.get(position).getMahoadon();
+                showDialog_CT_HoaDon(mahd2,position);
             }
         });
     }
@@ -148,7 +148,7 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.Viewholder
             btnxacnhan = itemView.findViewById(R.id.txttrangthai_Hoadon);
         }
     }
-    private void showDialog_CT_HoaDon(int mahdCT){
+    private void showDialog_CT_HoaDon(int mahdCT,int posison){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LayoutInflater inflater  = ((Activity) context).getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_ct_hoa_don, null);
@@ -159,10 +159,10 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.Viewholder
         TextView txtTongTien = view.findViewById(R.id.txtTongTien_hoaDonCT);
         RecyclerView rcv = view.findViewById(R.id.recylerV_SP_hoaDonCT);
         HoaDonCT_Dao daoHDCT = new HoaDonCT_Dao(context);
-        ArrayList<CTSanPham> listCTSP = daoHDCT.getListSP_CTHD(mahdCT+1);
-        txtHoadon.setText("Hóa đơn "+ (mahdCT+1));
-        txtTenNV.setText("Nhân viên: "+list.get(mahdCT).getTennv());
-        txtTenKH.setText("Khách hàng: "+list.get(mahdCT).getTenkh());
+        ArrayList<CTSanPham> listCTSP = daoHDCT.getListSP_CTHD(mahdCT);
+        txtHoadon.setText("Hóa đơn "+ (mahdCT));
+        txtTenNV.setText("Nhân viên: "+list.get(posison).getTennv());
+        txtTenKH.setText("Khách hàng: "+list.get(posison).getTenkh());
         int tongTien = 0;
         for (CTSanPham x:listCTSP){
             tongTien += x.tinhTien_1_SP();

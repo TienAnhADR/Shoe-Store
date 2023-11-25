@@ -140,7 +140,7 @@ public class DBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(tbl_giohang);
 
         ArrayList<GioHang> list1 = new ArrayList<>();
-        list1.add(new GioHang(1, 1, 1, ConvertImage.ImageToByte(context, R.drawable.slider1), "Màu xanh", 34, 5000, 15));
+        list1.add(new GioHang(1, 1, 1, ConvertImage.ImageToByte(context, R.drawable.slider1), "Màu xanh", 34, 50000, 15));
         list1.add(new GioHang(2, 2, 2, ConvertImage.ImageToByte(context, R.drawable.slider2), "Màu tím", 35, 14000, 11));
         list1.add(new GioHang(3, 3, 3, ConvertImage.ImageToByte(context, R.drawable.slider3), "Màu vàng", 35, 50000, 11));
         list1.forEach(e -> {
@@ -184,7 +184,7 @@ public class DBHelper extends SQLiteOpenHelper {
             sqLiteDatabase.execSQL("drop table ctsanpham");
             sqLiteDatabase.execSQL("drop table hoadon");
             sqLiteDatabase.execSQL("drop table giohang");
-//            sqLiteDatabase.execSQL("drop table ct");
+            sqLiteDatabase.execSQL("drop table cthoadon");
             onCreate(sqLiteDatabase);
         }
     }

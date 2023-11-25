@@ -11,6 +11,7 @@ public class HoaDon implements Serializable {
     private int tongTien;
     private int trangthai;
 
+
     public HoaDon(int mahoadon, int makh, String tenkh, String tennv, int tongsl, int tongTien, int trangthai) {
         this.mahoadon = mahoadon;
         this.makh = makh;

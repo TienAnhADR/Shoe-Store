@@ -420,15 +420,20 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                         listhd.addAll(daohd.getDSHoaDon());
                         adapterhd.notifyDataSetChanged();
                         Toast.makeText(getApplicationContext(), "Dat hang thanh cong", Toast.LENGTH_SHORT).show();
+                        int mahd=daohd.mahd();
                         //Cap nhat so luong moi trong sql ne
                         boolean ktsoluongmoi = dao.capNhatSoLuongMoi(laymactsp, newslsanpham);
                         if (ktsoluongmoi) {
                             HoaDonCT_Dao daoCTHD = new HoaDonCT_Dao(this);
-                            boolean addCTHD = daoCTHD.themCTHD(listhd.size(),laymactsp,tongSoLuongSP);
-                            list.clear();
-                            list.addAll(dao.getListCTSanPham(tenchung));
-                            adapter.notifyDataSetChanged();
-                            Toast.makeText(this, "Cap nhat so luong thanh cong", Toast.LENGTH_SHORT).show();
+                            boolean addCTHD = daoCTHD.themCTHD(mahd,laymactsp,tongSoLuongSP);
+                            if(addCTHD){
+                                list.clear();
+                                list.addAll(dao.getListCTSanPham(tenchung));
+                                adapter.notifyDataSetChanged();
+                                Toast.makeText(this, "Cap nhat so luong thanh cong", Toast.LENGTH_SHORT).show();
+
+
+                            }
                         } else {
                             Toast.makeText(this, "Cap nhat so luong that bai roi", Toast.LENGTH_SHORT).show();
                         }
