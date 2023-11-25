@@ -4,30 +4,65 @@ import static android.content.ContentValues.TAG;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.appbangiayonline.database.DBHelper;
 import com.example.appbangiayonline.model.HoaDon;
+import com.example.appbangiayonline.model.KhachHang;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class HoaDonDao {
     private final DBHelper dbHelper;
+    Context context;
 
     public HoaDonDao(Context context) {
         dbHelper = new DBHelper(context);
+        this.context = context;
     }
 
     public ArrayList<HoaDon> getDSHoaDon() {
         ArrayList<HoaDon> list = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-
         try {
-            Cursor cursor = db.rawQuery("select hd.mahd, nv.hoten, kh.hoten, hd.tongsl, hd.tongtien, hd.trangthai from hoadon hd, nhanvien nv, khachhang kh where hd.makh = kh.makh and hd.manv = nv.manv ", null);
+            Cursor cursor = db.rawQuery("select " +
+                    "hd.mahd, " +
+                    "hd.makh, " +
+                    "nv.hoten, kh.hoten, " +
+                    "hd.tongsl, hd.tongtien, " +
+                    "hd.trangthai " +
+                    "from hoadon hd, " +
+                    "nhanvien nv, khachhang kh " +
+                    "where hd.makh = kh.makh and " +
+                    "hd.manv = nv.manv ", null);
+
             while (cursor.moveToNext()) {
-                list.add(new HoaDon(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getInt(4), cursor.getInt(5)));
+                list.add(new HoaDon(
+                        cursor.getInt(0),
+                        cursor.getInt(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getInt(4),
+                        cursor.getInt(5),
+                        cursor.getInt(6)));
+            }
+
+
+            SharedPreferences sharedPreferences = context.getSharedPreferences("admin", Context.MODE_PRIVATE);
+            if (sharedPreferences.getInt("setting", 0) == 2) {
+                NhanVien_KhachHang_Dao dao = new NhanVien_KhachHang_Dao(context);
+                KhachHang khachHang = dao.getThongTinKhachHang(sharedPreferences.getString("taikhoan", ""));
+                ArrayList<HoaDon> list1 = new ArrayList<>();
+                list.forEach(e -> {
+                    if (e.getMakh() == khachHang.getMakh()) {
+                        list1.add(e);
+                    }
+                });
+                return list1;
             }
             cursor.close();
         } catch (Exception e) {
@@ -35,7 +70,8 @@ public class HoaDonDao {
         }
         return list;
     }
-    public boolean ThemHoaDon(int makh, int tongsl, int tongtien){
+
+    public boolean ThemHoaDon(int makh, int tongsl, int tongtien) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("manv", 1);
@@ -46,20 +82,22 @@ public class HoaDonDao {
         long kt = db.insert("hoadon", null, values);
         return (kt > 0);
     }
-    public boolean addHoaDon(int makh,int tongtien){
+
+    public boolean addHoaDon(int makh, int tongtien) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("manv", 1);
         values.put("makh", makh);
-        values.put("tongtien",tongtien);
+        values.put("tongtien", tongtien);
         values.put("trangthai", 0);
         long kt = db.insert("hoadon", null, values);
         return (kt > 0);
     }
-    public boolean thayDoiTrangThaiHoaDon(int mahd, int manv){
+
+    public boolean thayDoiTrangThaiHoaDon(int mahd, int manv) {
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values =new ContentValues();
+        ContentValues values = new ContentValues();
         values.put("trangthai", 1);
         values.put("manv", manv);
         long row = db.update("hoadon", values, "mahd = ?", new String[]{String.valueOf(mahd)});

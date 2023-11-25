@@ -109,7 +109,8 @@ public class DBHelper extends SQLiteOpenHelper {
         //-----------------------------------------
 
         //hoadon
-        String tbl_hoadon = "create table hoadon(mahd integer primary key autoincrement," +
+        String tbl_hoadon = "create table hoadon(" +
+                "mahd integer primary key autoincrement," +
                 "manv integer references nhanvien(manv)," +
                 "makh integer references khachhang(makh)," +
                 "tongsl integer," +
@@ -122,8 +123,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "(mahd,manv,makh,tongsl,tongtien,trangthai) " +
                 "values " +
                 "(1,1,1,55,66,0)," +
-                "(2,1,1,55,66,0) ," +
-                "(3,1,1,55,66,0)";
+                "(2,1,2,55,66,0) ," +
+                "(3,1,3,55,66,0)";
         sqLiteDatabase.execSQL(insert_hoadon);
         //----------------------------------
 
@@ -153,7 +154,13 @@ public class DBHelper extends SQLiteOpenHelper {
             contentValues.put("soluong", e.getSoluong());
             sqLiteDatabase.insert("giohang", null, contentValues);
         });
-        String tbl_cthoadon = "CREATE TABLE cthoadon (mahd INTEGER,mactsanpham INTEGER,soluongmua INTEGER,PRIMARY KEY (mahd, mactsanpham),FOREIGN KEY (mahd) REFERENCES hoadon(mahd),FOREIGN KEY (mactsanpham) REFERENCES ctsanpham(mactsanpham))";
+        String tbl_cthoadon = "CREATE TABLE cthoadon (" +
+                "mahd INTEGER," +
+                "mactsanpham INTEGER," +
+                "soluongmua INTEGER," +
+                "PRIMARY KEY (mahd, mactsanpham)," +
+                "FOREIGN KEY (mahd) REFERENCES hoadon(mahd)," +
+                "FOREIGN KEY (mactsanpham) REFERENCES ctsanpham(mactsanpham))";
         sqLiteDatabase.execSQL(tbl_cthoadon);
 
         sqLiteDatabase.execSQL("insert into cthoadon" +

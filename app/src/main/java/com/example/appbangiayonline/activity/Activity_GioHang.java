@@ -42,7 +42,7 @@ public class Activity_GioHang extends AppCompatActivity {
     TextView tongtien;
     ArrayList<HoaDon> listhd;
     public int s;
-    int id_kh, makh,s2;
+    int id_kh, makh, s2;
     HoaDonCT_Dao daoHDCT;
 
     @Override
@@ -55,7 +55,7 @@ public class Activity_GioHang extends AppCompatActivity {
         recyclerView = findViewById(R.id.rcv_giohang);
         tongtien = findViewById(R.id.tongTien_giohang);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        reload();
         ImageButton back = findViewById(R.id.img_btn_back_giohang);
         back.setOnClickListener(view -> {
             finish();
@@ -68,18 +68,13 @@ public class Activity_GioHang extends AppCompatActivity {
 
             SharedPreferences sharedPreferences = getSharedPreferences("khachhang", MODE_PRIVATE);
             id_kh = sharedPreferences.getInt("id_kh", -1);
-            if (id_kh == -1) {
-                Toast.makeText(this, "Đăng nhập dưới quyền thành viên để thêm giỏ hàng!", Toast.LENGTH_SHORT).show();
-                //some anything
-            } else {
+            if (id_kh != -1) {
                 dao.themGioHang(sanPham, id_kh);
-                Toast.makeText(this, "Thêm sản phẩm " + sanPham.getTensanpham() + " thành công!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Thêm sản phẩm " + sanPham.getTensanpham() + " thành công!" , Toast.LENGTH_SHORT).show();
                 reload();
             }
-
         }
         //------------------
-        reload();
 
         TextView edit = findViewById(R.id.edit_sp_giohang);
         edit.setOnClickListener(view -> {
@@ -97,6 +92,7 @@ public class Activity_GioHang extends AppCompatActivity {
             }
             alBuilder.show();
         });
+
         NhanVien_KhachHang_Dao dao_nv_kh = new NhanVien_KhachHang_Dao(this);
         SharedPreferences sharedPreferences = getSharedPreferences("admin", MODE_PRIVATE);
         String username = sharedPreferences.getString("taikhoan", "");
@@ -113,7 +109,7 @@ public class Activity_GioHang extends AppCompatActivity {
         Button button_thanhToan = findViewById(R.id.btn_thanhtoan_giohang);
         button_thanhToan.setOnClickListener(view -> {
             HoaDonDao dao2 = new HoaDonDao(this);
-            boolean check = dao2.addHoaDon(makh,s);
+            boolean check = dao2.addHoaDon(makh, s);
 
             if (check) {
                 listhd = dao2.getDSHoaDon();

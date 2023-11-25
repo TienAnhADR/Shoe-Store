@@ -122,8 +122,15 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_man_hinh_ctsan_pham);
+
         giohang = findViewById(R.id.giohang_sanpham);
         muaNgay = findViewById(R.id.muangay_sanpham);
+//        SharedPreferences sharedPreferences = getSharedPreferences("admin", MODE_PRIVATE);
+//        //admin ko thể thêm giỏ hàng hay mua sp
+//        if (sharedPreferences.getInt("setting", 2) != 2) {
+//            giohang.setVisibility(View.INVISIBLE);
+//            muaNgay.setVisibility(View.INVISIBLE);
+//        }
         quaylai_rc_sanpham = findViewById(R.id.quaylai_rc_sanpham);
         giohang.setOnClickListener(view -> {
             themGioHang();
@@ -558,7 +565,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                 if (ctSanPham1 == null) {
                     Toast.makeText(this, "Sản phẩm đã hết hàng :(", Toast.LENGTH_SHORT).show();
                 } else {
-                    ctSanPham1.setSoluong_mua(slMua);
+                    ctSanPham1.setSl_mua(slMua);
                     intent.putExtra("themgiohang", ctSanPham1);
                     startActivity(intent);
                 }

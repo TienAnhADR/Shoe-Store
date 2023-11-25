@@ -28,7 +28,6 @@ public class Giohang_Dao {
 
     public ArrayList<GioHang> getList() {
         ArrayList<GioHang> list = new ArrayList<>();
-
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor cursor = db.rawQuery("select " +
                 "giohang.magiohang,sanpham.masanpham,khachhang.makh," +
@@ -70,10 +69,12 @@ public class Giohang_Dao {
         }
         return list;
     }
-    public int getMaCTSP(int magiohang){
+
+
+    public int getMaCTSP(int magiohang) {
         SQLiteDatabase db = helper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select masanpham from giohang where magiohang = ?",new String[]{String.valueOf(magiohang)});
-        if(cursor.getCount()>0){
+        Cursor cursor = db.rawQuery("select masanpham from giohang where magiohang = ?", new String[]{String.valueOf(magiohang)});
+        if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             return cursor.getInt(0);
         }
