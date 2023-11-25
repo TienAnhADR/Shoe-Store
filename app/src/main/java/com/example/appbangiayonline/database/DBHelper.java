@@ -153,6 +153,18 @@ public class DBHelper extends SQLiteOpenHelper {
             contentValues.put("soluong", e.getSoluong());
             sqLiteDatabase.insert("giohang", null, contentValues);
         });
+        String tbl_cthoadon = "CREATE TABLE cthoadon (mahd INTEGER,mactsanpham INTEGER,soluongmua INTEGER,PRIMARY KEY (mahd, mactsanpham),FOREIGN KEY (mahd) REFERENCES hoadon(mahd),FOREIGN KEY (mactsanpham) REFERENCES ctsanpham(mactsanpham))";
+        sqLiteDatabase.execSQL(tbl_cthoadon);
+
+        sqLiteDatabase.execSQL("insert into cthoadon" +
+                "(mahd,mactsanpham,soluongmua) " +
+                "values " +
+                "(1,1,3)," +
+                "(1,2,5)," +
+                "(2,2,3)," +
+                "(2,3,5)," +
+                "(3,3,5)," +
+                "(3,1,1)");
         //--------------------------------
     }
 
@@ -165,6 +177,7 @@ public class DBHelper extends SQLiteOpenHelper {
             sqLiteDatabase.execSQL("drop table ctsanpham");
             sqLiteDatabase.execSQL("drop table hoadon");
             sqLiteDatabase.execSQL("drop table giohang");
+//            sqLiteDatabase.execSQL("drop table ct");
             onCreate(sqLiteDatabase);
         }
     }

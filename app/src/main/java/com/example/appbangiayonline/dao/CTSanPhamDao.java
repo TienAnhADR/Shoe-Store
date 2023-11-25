@@ -165,6 +165,7 @@ public class CTSanPhamDao {
         return ctSanPham;
     }
 
+
     public CTSanPham getItemCTSanPham_config(String tensp, String mausac, int kichco) {
         CTSanPham ctSanPham = null;
         SQLiteDatabase db = dbHelper.getReadableDatabase();

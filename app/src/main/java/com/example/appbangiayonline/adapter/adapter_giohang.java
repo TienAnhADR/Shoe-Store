@@ -100,12 +100,6 @@ public class adapter_giohang extends RecyclerView.Adapter<adapter_giohang.rcv_ho
             }
         });
     }
-    public void addHoaDonCT(int mahd){
-        HoaDonCT_Dao dao2 = new HoaDonCT_Dao(context);
-        for(GioHang x :list2){
-            dao2.themCTHD(mahd,x.getMasanpham(),x.getSl_mua());
-        }
-    }
 
     @Override
     public int getItemCount() {

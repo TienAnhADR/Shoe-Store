@@ -40,6 +40,7 @@ import com.example.appbangiayonline.adapter.SizeAdapter;
 import com.example.appbangiayonline.convert.ConvertImage;
 import com.example.appbangiayonline.dao.CTSanPhamDao;
 
+import com.example.appbangiayonline.dao.HoaDonCT_Dao;
 import com.example.appbangiayonline.dao.HoaDonDao;
 import com.example.appbangiayonline.dao.NhanVien_KhachHang_Dao;
 
@@ -285,6 +286,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
             ctSanPham = new CTSanPham();
             ctSanPham = dao.getItemCTSanPham(mausac, kichCo);
             if (ctSanPham != null) {
+                laymactsp = ctSanPham.getMactsanpham();
                 nhanmausac.setText(mausac);
                 nhankichco.setText(Integer.toString(kichCo));
                 nhangia.setText(Integer.toString(ctSanPham.getGia()));
@@ -421,6 +423,8 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                         //Cap nhat so luong moi trong sql ne
                         boolean ktsoluongmoi = dao.capNhatSoLuongMoi(laymactsp, newslsanpham);
                         if (ktsoluongmoi) {
+                            HoaDonCT_Dao daoCTHD = new HoaDonCT_Dao(this);
+                            boolean addCTHD = daoCTHD.themCTHD(listhd.size(),laymactsp,tongSoLuongSP);
                             list.clear();
                             list.addAll(dao.getListCTSanPham(tenchung));
                             adapter.notifyDataSetChanged();
