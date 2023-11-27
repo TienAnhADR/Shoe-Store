@@ -53,7 +53,10 @@ import com.example.appbangiayonline.model.SanPham;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -414,7 +417,16 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                 KhachHang khachHang = dao_nv_kh.getThongTinKhachHang(username);
                 int makh = khachHang.getMakh();
                 if (makh != 0) {
-                    boolean kt = daohd.ThemHoaDon(makh, tongSoLuongSP, tongGiaSP);
+                    //lay ngay,thangg, nam
+                    Date ngayDate = Calendar.getInstance().getTime();
+                    SimpleDateFormat ngDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    String ngay = ngDateFormat.format(ngayDate);
+                    //lay gio
+                    Date gioDate = new Date();
+                    SimpleDateFormat gioFormat = new SimpleDateFormat("HH:mm");
+                    String gio = gioFormat.format(gioDate);
+
+                    boolean kt = daohd.ThemHoaDon(makh, tongSoLuongSP, tongGiaSP, ngay, gio);
                     if (kt) {
                         listhd.clear();
                         listhd.addAll(daohd.getDSHoaDon());

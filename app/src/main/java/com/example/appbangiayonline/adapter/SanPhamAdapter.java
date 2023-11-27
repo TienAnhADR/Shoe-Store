@@ -33,7 +33,7 @@ import java.util.ArrayList;
 
 public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.Viewholder> {
     private Context context;
-    private final ArrayList<SanPham> list;
+    private ArrayList<SanPham> list;
     SanPham sp1;
     //    SanPham sp;
     SanPhamDao daosp;
@@ -57,6 +57,7 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.Viewhold
 
         holder.ma.setText("Ma san pham: " + sp1.getMasanpham());
         holder.ten.setText("Ten san pham: " + sp1.getTensanpham());
+        holder.hang.setText("Hãng : " + sp1.getHang());
         holder.trangthai.setText("Trang thai: " + sp1.getTrangthai());
         holder.img_sanpham.setImageBitmap(bitmap);
 
@@ -102,14 +103,18 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.Viewhold
         return list.size();
     }
 
+    public void setData(ArrayList<SanPham> newList){
+        list = newList;
+    }
     public class Viewholder extends RecyclerView.ViewHolder {
-        TextView ma, ten, trangthai;
+        TextView ma, ten, trangthai, hang;
         ImageView update, img_sanpham;
 
         public Viewholder(@NonNull View itemView) {
             super(itemView);
             ma = itemView.findViewById(R.id.masanpham_shoes_tab);
             ten = itemView.findViewById(R.id.tensanpham_shoes_tab);
+            hang = itemView.findViewById(R.id.hangsanpham_shoes_tab);
             trangthai = itemView.findViewById(R.id.trangthai_shoes_tab);
             update = itemView.findViewById(R.id.update_sanpham);
             img_sanpham = itemView.findViewById(R.id.image_SanPham);

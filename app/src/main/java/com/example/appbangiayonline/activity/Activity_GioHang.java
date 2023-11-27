@@ -30,7 +30,10 @@ import com.example.appbangiayonline.model.GioHang;
 import com.example.appbangiayonline.model.HoaDon;
 import com.example.appbangiayonline.model.KhachHang;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Activity_GioHang extends AppCompatActivity {
     Giohang_Dao dao;
@@ -70,7 +73,7 @@ public class Activity_GioHang extends AppCompatActivity {
             id_kh = sharedPreferences.getInt("id_kh", -1);
             if (id_kh != -1) {
                 dao.themGioHang(sanPham, id_kh);
-                Toast.makeText(this, "Thêm sản phẩm " + sanPham.getTensanpham() + " thành công!" , Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Thêm sản phẩm " + sanPham.getTensanpham() + " thành công!", Toast.LENGTH_SHORT).show();
                 reload();
             }
         }
@@ -105,11 +108,18 @@ public class Activity_GioHang extends AppCompatActivity {
                 makh = 1;
             }
         }
-
+//lay ngay thang
+        Date ngayDate = Calendar.getInstance().getTime();
+        SimpleDateFormat ngDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String ngay = ngDateFormat.format(ngayDate);
+        //lay gio
+        Date gioDate = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+        String gio = simpleDateFormat.format(gioDate);
         Button button_thanhToan = findViewById(R.id.btn_thanhtoan_giohang);
         button_thanhToan.setOnClickListener(view -> {
             HoaDonDao dao2 = new HoaDonDao(this);
-            boolean check = dao2.addHoaDon(makh, s);
+            boolean check = dao2.addHoaDon(makh, s, ngay, gio);
 
             if (check) {
                 listhd = dao2.getDSHoaDon();

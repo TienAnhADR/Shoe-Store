@@ -22,6 +22,7 @@ import com.example.appbangiayonline.R;
 import com.example.appbangiayonline.fragmentTA.FragmentHoaDon;
 import com.example.appbangiayonline.fragmentTA.FragmentKhachHang;
 import com.example.appbangiayonline.fragmentTA.FragmentNhanVien;
+import com.example.appbangiayonline.fragmentTA.FragmentThongKe;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.example.appbangiayonline.fragmentTA.FragmentSanPham;
@@ -74,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                     fragment = new FragmentKhachHang();
 
                 } else if (R.id.mThongKe == id) {
-
+                    fragment = new FragmentThongKe();
 
                 } else if (R.id.mQLHoaDon == id) {
                     fragment = new FragmentHoaDon();

@@ -9,29 +9,49 @@ public class HoaDon implements Serializable {
     private String tennv;
     private int tongsl;
     private int tongTien;
+    private String ngay;
+    private String gio;
     private int trangthai;
 
 
-    public HoaDon(int mahoadon, int makh, String tenkh, String tennv, int tongsl, int tongTien, int trangthai) {
+//    public HoaDon(int mahoadon, int makh, String tenkh, String tennv, int tongsl, int tongTien, int trangthai) {
+//        this.mahoadon = mahoadon;
+//        this.makh = makh;
+//        this.tenkh = tenkh;
+//        this.tennv = tennv;
+//        this.tongsl = tongsl;
+//        this.tongTien = tongTien;
+//        this.trangthai = trangthai;
+//    }
+    public HoaDon(int mahoadon, int makh, String tenkh, String tennv, int tongsl, int tongTien, String ngay, String gio, int trangthai) {
         this.mahoadon = mahoadon;
         this.makh = makh;
         this.tenkh = tenkh;
         this.tennv = tennv;
         this.tongsl = tongsl;
         this.tongTien = tongTien;
-        this.trangthai = trangthai;
-    }
-
-    public HoaDon(int mahoadon, String tennv, String tenkh, int tongsl, int tongTien, int trangthai) {
-        this.mahoadon = mahoadon;
-        this.tennv = tennv;
-        this.tenkh = tenkh;
-        this.tongsl = tongsl;
-        this.tongTien = tongTien;
+        this.ngay = ngay;
+        this.gio = gio;
         this.trangthai = trangthai;
     }
 
     public HoaDon() {
+    }
+
+    public String getNgay() {
+        return ngay;
+    }
+
+    public void setNgay(String ngay) {
+        this.ngay = ngay;
+    }
+
+    public String getGio() {
+        return gio;
+    }
+
+    public void setGio(String gio) {
+        this.gio = gio;
     }
 
     public int getTrangthai() {
