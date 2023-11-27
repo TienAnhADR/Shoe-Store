@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.baseline_menu_24);
 
         Intent intent1 = getIntent();
-        if (intent1.hasExtra("open_hoadon")) {
+        if (intent1.hasExtra("gethoadon")) {
             change_Fragment(new FragmentHoaDon(), "Hóa đơn");
         } else {
             change_Fragment(new Fragment_Main(), "Trang chủ");

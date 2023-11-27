@@ -8,15 +8,17 @@ public class GioHang {
     //-----------
     private int sl_mua;
 
-    public GioHang(int magiohang, int masanpham, int makhachhang, byte[] hinhanh, String mausac, int kichco, int giasp, int soluong) {
+    public GioHang(int magiohang, int masanpham, int makhachhang, byte[] hinhanh, String tensp, String mausac, int kichco, int giasp, int soluong, int sl_mua) {
         this.magiohang = magiohang;
         this.masanpham = masanpham;
         this.makhachhang = makhachhang;
         this.hinhanh = hinhanh;
+        this.tensp = tensp;
         this.mausac = mausac;
         this.kichco = kichco;
         this.giasp = giasp;
         this.soluong = soluong;
+        this.sl_mua = sl_mua;
     }
 
     public GioHang(int magiohang, int masanpham, int makhachhang, byte[] hinhanh, String tensp, String mausac, int kichco, int giasp, int soluong) {

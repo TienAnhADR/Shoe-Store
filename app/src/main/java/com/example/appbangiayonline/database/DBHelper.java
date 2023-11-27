@@ -140,7 +140,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "mausac text," +
                 "kichco integer," +
                 "gia integer," +
-                "soluong integer)";
+                "soluong integer," +
+                "slmua integer)";
         sqLiteDatabase.execSQL(tbl_giohang);
         String tbl_cthoadon = "CREATE TABLE cthoadon (" +
                 "mahd INTEGER," +

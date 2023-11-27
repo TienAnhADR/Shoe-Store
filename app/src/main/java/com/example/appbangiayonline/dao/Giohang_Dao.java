@@ -33,7 +33,7 @@ public class Giohang_Dao {
                 "giohang.magiohang,sanpham.masanpham,khachhang.makh," +
                 "sanpham.hinhanh, " +
                 "sanpham.tensanpham, " +
-                "giohang.mausac,giohang.kichco,giohang.gia,giohang.soluong " +
+                "giohang.mausac,giohang.kichco,giohang.gia,giohang.soluong,giohang.slmua " +
                 "from sanpham " +
                 "join giohang " +
                 "on sanpham.masanpham=giohang.masanpham " +
@@ -52,7 +52,8 @@ public class Giohang_Dao {
                                 cursor.getString(5),
                                 cursor.getInt(6),
                                 cursor.getInt(7),
-                                cursor.getInt(8)));
+                                cursor.getInt(8),
+                                cursor.getInt(9)));
             } while (cursor.moveToNext());
         }
         SharedPreferences sharedPreferences = context.getSharedPreferences("admin", Context.MODE_PRIVATE);
@@ -98,6 +99,7 @@ public class Giohang_Dao {
         contentValues.put("kichco", ctSanPham.getKichco());
         contentValues.put("gia", ctSanPham.getGia());
         contentValues.put("soluong", ctSanPham.getSoluong());
+        contentValues.put("slmua", ctSanPham.getSl_mua());
         sql.insert("giohang", null, contentValues);
         sql.close();
     }
