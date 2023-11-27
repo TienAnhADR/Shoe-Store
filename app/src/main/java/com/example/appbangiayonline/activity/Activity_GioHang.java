@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appbangiayonline.R;
 import com.example.appbangiayonline.adapter.adapter_giohang;
+import com.example.appbangiayonline.dao.CTSanPhamDao;
 import com.example.appbangiayonline.dao.Giohang_Dao;
 import com.example.appbangiayonline.dao.HoaDonCT_Dao;
 import com.example.appbangiayonline.dao.HoaDonDao;
@@ -45,8 +46,10 @@ public class Activity_GioHang extends AppCompatActivity {
     TextView tongtien;
     ArrayList<HoaDon> listhd;
     public int s;
-    int id_kh, makh, s2;
+    int id_kh, makh, s2,kichco;
+    String mausac;
     HoaDonCT_Dao daoHDCT;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -120,6 +123,7 @@ public class Activity_GioHang extends AppCompatActivity {
         button_thanhToan.setOnClickListener(view -> {
             HoaDonDao dao2 = new HoaDonDao(this);
             boolean check = dao2.addHoaDon(makh, s, ngay, gio);
+            CTSanPhamDao daoSP = new CTSanPhamDao(this);
 
             if (check) {
                 listhd = dao2.getDSHoaDon();
@@ -131,10 +135,12 @@ public class Activity_GioHang extends AppCompatActivity {
                             list.forEach(e1 -> {
                                 if (e1.getMagiohang() == e) {
                                     s2 = e1.getSl_mua();
+                                    kichco = e1.getKichco();
+                                    mausac = e1.getMausac();
                                 }
                             });
-                            int mactsp = dao.getMaCTSP(e);
-                            daoHDCT.themCTHD(mahd, mactsp, s2);
+                            int masp = dao.getMaCTSP(e);
+                            daoHDCT.themCTHD(mahd, daoSP.getMaCTSP(masp,mausac,kichco), s2);
                             dao.remove_data(e);
                         });
                         listchk.clear();

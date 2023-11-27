@@ -193,4 +193,14 @@ public class CTSanPhamDao {
         cursor.close();
         return ctSanPham;
     }
+    public int getMaCTSP(int masp,String mausac,int kichco) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select mactsanpham from ctsanpham where masanpham = ? and mausac = ? and kichco = ?", new String[]{String.valueOf(masp),mausac, String.valueOf(kichco)});
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            return cursor.getInt(0);
+        }
+        return -1;
+
+    }
 }
