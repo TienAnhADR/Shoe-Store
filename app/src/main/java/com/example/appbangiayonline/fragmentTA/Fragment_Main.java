@@ -6,7 +6,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.appbangiayonline.R;
 import com.example.appbangiayonline.adapter.SanPhamAdapter;
+import com.example.appbangiayonline.adapter.SliderAdapter;
 import com.example.appbangiayonline.dao.ThongKeBanChayDao;
 import com.example.appbangiayonline.model.SanPham;
 
@@ -23,6 +27,11 @@ import java.util.ArrayList;
 public class Fragment_Main extends Fragment {
     SanPhamAdapter adapter;
     ThongKeBanChayDao tkdao;
+    ViewPager viewPager;
+    SliderAdapter sliderAdapter;
+    int index = 0;
+    int images[] = {R.drawable.slider1, R.drawable.slider2, R.drawable.slider3, R.drawable.slider4};
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -32,32 +41,48 @@ public class Fragment_Main extends Fragment {
         RecyclerView rc = view.findViewById(R.id.rc_macdinh);
         rc.setLayoutManager(new LinearLayoutManager(getContext()));
         tkdao = new ThongKeBanChayDao(getContext());
+        viewPager = view.findViewById(R.id.viewPager);
+        sliderAdapter = new SliderAdapter(getContext(), images);
+        viewPager.setAdapter(sliderAdapter);
+
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (index == images.length) {
+                    index = 0;
+                }
+                viewPager.setCurrentItem(index++, true);
+                handler.postDelayed(this, 1000);
+            }
+        }, 1000);
+
         ArrayList<SanPham> top10 = tkdao.getTop10();
         if (!top10.isEmpty()) {
             adapter = new SanPhamAdapter(getContext(), top10);
             rc.setAdapter(adapter);
-        }else{
+        } else {
             Toast.makeText(getContext(), "Null rồi", Toast.LENGTH_SHORT).show();
         }
-
 
         Button btn_banchay = view.findViewById(R.id.xuhuong);
         Button btn_nike = view.findViewById(R.id.nike);
         Button btn_newbalance = view.findViewById(R.id.newbalance);
 
-        btn_banchay.setOnClickListener(buttonView  -> {
+        btn_banchay.setOnClickListener(buttonView -> {
             change_Fragment(new Fragment_ThongKeBanChay());
         });
-        btn_nike.setOnClickListener(buttonView  -> {
+        btn_nike.setOnClickListener(buttonView -> {
             change_Fragment(new fragment_Nike());
 
         });
-        btn_newbalance.setOnClickListener(buttonView  -> {
+        btn_newbalance.setOnClickListener(buttonView -> {
             change_Fragment(new fragment_newBalance());
         });
 
         return view;
     }
+
     void change_Fragment(Fragment fragment) {
         FragmentManager manager = requireActivity().getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.frame_main, fragment).commit();
