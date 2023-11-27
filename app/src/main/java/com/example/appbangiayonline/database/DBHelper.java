@@ -69,18 +69,20 @@ public class DBHelper extends SQLiteOpenHelper {
         //san pham
         String tbl_sanpham = "create table sanpham(masanpham integer primary key autoincrement," +
                 "tensanpham text," +
+                "hang text," +
                 "trangthai text," +
                 "hinhanh blob)";
         sqLiteDatabase.execSQL(tbl_sanpham);
 
         ArrayList<SanPham> list = new ArrayList<>();
-        list.add(new SanPham(1, "Sản phẩm 1", "Còn hàng", ConvertImage.ImageToByte(context, R.drawable.slider1)));
-        list.add(new SanPham(2, "Sản phẩm 2", "Còn hàng", ConvertImage.ImageToByte(context, R.drawable.slider2)));
-        list.add(new SanPham(3, "Sản phẩm 3", "Còn hàng", ConvertImage.ImageToByte(context, R.drawable.slider3)));
-        list.add(new SanPham(4, "Sản phẩm 4", "Còn hàng", ConvertImage.ImageToByte(context, R.drawable.slider4)));
+        list.add(new SanPham(1, "Sản phẩm 1", "Nike", "Còn hàng", ConvertImage.ImageToByte(context, R.drawable.slider1)));
+        list.add(new SanPham(2, "Sản phẩm 2", "New balance", "Còn hàng", ConvertImage.ImageToByte(context, R.drawable.slider2)));
+        list.add(new SanPham(3, "Sản phẩm 3", "New balance", "Còn hàng", ConvertImage.ImageToByte(context, R.drawable.slider3)));
+        list.add(new SanPham(4, "Sản phẩm 4", "New balance", "Còn hàng", ConvertImage.ImageToByte(context, R.drawable.slider4)));
         list.forEach(e -> {
             ContentValues contentValues = new ContentValues();
             contentValues.put("tensanpham", e.getTensanpham());
+            contentValues.put("hang", e.getHang());
             contentValues.put("trangthai", e.getTrangthai());
             contentValues.put("hinhanh", e.getImage());
             sqLiteDatabase.insert("sanpham", null, contentValues);
@@ -115,16 +117,18 @@ public class DBHelper extends SQLiteOpenHelper {
                 "makh integer references khachhang(makh)," +
                 "tongsl integer," +
                 "tongtien integer," +
+                "ngay text," +
+                "gio text," +
                 "trangthai integer)";
         //0 chuaxacnhan 1 daxacnhan
         sqLiteDatabase.execSQL(tbl_hoadon);
 
         String insert_hoadon = "insert into hoadon" +
-                "(mahd,manv,makh,tongsl,tongtien,trangthai) " +
+                "(mahd,manv,makh,tongsl,tongtien,ngay, gio,trangthai) " +
                 "values " +
-                "(1,1,1,55,66,0)," +
-                "(2,1,2,55,66,0) ," +
-                "(3,1,3,55,66,0)";
+                "(1,1,1,55,66, '11/11/2023', '11:12',0)," +
+                "(2,1,2,55,66, '11/11/2023', '11:12',0) ," +
+                "(3,1,3,55,66, '11/11/2023', '11:12',0)";
         sqLiteDatabase.execSQL(insert_hoadon);
         //----------------------------------
 
@@ -139,21 +143,21 @@ public class DBHelper extends SQLiteOpenHelper {
                 "soluong integer)";
         sqLiteDatabase.execSQL(tbl_giohang);
 
-        ArrayList<GioHang> list1 = new ArrayList<>();
-        list1.add(new GioHang(1, 1, 1, ConvertImage.ImageToByte(context, R.drawable.slider1), "Màu xanh", 34, 50000, 15));
-        list1.add(new GioHang(2, 2, 2, ConvertImage.ImageToByte(context, R.drawable.slider2), "Màu tím", 35, 14000, 11));
-        list1.add(new GioHang(3, 3, 3, ConvertImage.ImageToByte(context, R.drawable.slider3), "Màu vàng", 35, 50000, 11));
-        list1.forEach(e -> {
-            ContentValues contentValues = new ContentValues();
-            contentValues.put("masanpham", e.getMasanpham());
-            contentValues.put("makhachhang", e.getMakhachhang());
-            contentValues.put("hinhanh", e.getHinhanh());
-            contentValues.put("mausac", e.getMausac());
-            contentValues.put("kichco", e.getKichco());
-            contentValues.put("gia", e.getGiasp());
-            contentValues.put("soluong", e.getSoluong());
-            sqLiteDatabase.insert("giohang", null, contentValues);
-        });
+//        ArrayList<GioHang> list1 = new ArrayList<>();
+//        list1.add(new GioHang(1, 1, 1, ConvertImage.ImageToByte(context, R.drawable.slider1), "Màu xanh", 34, 50000, 15));
+//        list1.add(new GioHang(2, 2, 2, ConvertImage.ImageToByte(context, R.drawable.slider2), "Màu tím", 35, 14000, 11));
+//        list1.add(new GioHang(3, 3, 3, ConvertImage.ImageToByte(context, R.drawable.slider3), "Màu vàng", 35, 50000, 11));
+//        list1.forEach(e -> {
+//            ContentValues contentValues = new ContentValues();
+//            contentValues.put("masanpham", e.getMasanpham());
+//            contentValues.put("makhachhang", e.getMakhachhang());
+//            contentValues.put("hinhanh", e.getHinhanh());
+//            contentValues.put("mausac", e.getMausac());
+//            contentValues.put("kichco", e.getKichco());
+//            contentValues.put("gia", e.getGiasp());
+//            contentValues.put("soluong", e.getSoluong());
+//            sqLiteDatabase.insert("giohang", null, contentValues);
+//        });
         String tbl_cthoadon = "CREATE TABLE cthoadon (" +
                 "mahd INTEGER," +
                 "mactsanpham INTEGER," +

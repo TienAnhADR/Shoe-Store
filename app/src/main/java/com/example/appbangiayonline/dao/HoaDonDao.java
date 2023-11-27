@@ -34,6 +34,7 @@ public class HoaDonDao {
                     "hd.makh, " +
                     "nv.hoten, kh.hoten, " +
                     "hd.tongsl, hd.tongtien, " +
+                    "hd.ngay, hd.gio, " +
                     "hd.trangthai " +
                     "from hoadon hd, " +
                     "nhanvien nv, khachhang kh " +
@@ -48,7 +49,9 @@ public class HoaDonDao {
                         cursor.getString(2),
                         cursor.getInt(4),
                         cursor.getInt(5),
-                        cursor.getInt(6)));
+                        cursor.getString(6),
+                        cursor.getString(7),
+                        cursor.getInt(8)));
             }
 
 
@@ -81,24 +84,28 @@ public class HoaDonDao {
         return -10;
     }
 
-    public boolean ThemHoaDon(int makh, int tongsl, int tongtien) {
+    public boolean ThemHoaDon(int makh, int tongsl, int tongtien, String ngay, String gio) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("manv", 1);
         values.put("makh", makh);
         values.put("tongsl", tongsl);
         values.put("tongtien", tongtien);
+        values.put("ngay", ngay);
+        values.put("gio", gio);
         values.put("trangthai", 0);
         long kt = db.insert("hoadon", null, values);
         return (kt > 0);
     }
 
-    public boolean addHoaDon(int makh, int tongtien) {
+    public boolean addHoaDon(int makh, int tongtien, String ngay, String gio) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("manv", 1);
         values.put("makh", makh);
         values.put("tongtien", tongtien);
+        values.put("ngay", ngay);
+        values.put("gio", gio);
         values.put("trangthai", 0);
         long kt = db.insert("hoadon", null, values);
         return (kt > 0);

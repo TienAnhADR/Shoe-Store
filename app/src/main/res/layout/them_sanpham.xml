@@ -19,6 +19,12 @@
         android:layout_height="wrap_content"
         android:layout_margin="10sp"
         android:hint="Nhap ten san pham" />
+    <EditText
+        android:id="@+id/hang_shoes_tab_them"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:hint="Nhap hãng " />
 
     <ImageView
         android:id="@+id/setimg"

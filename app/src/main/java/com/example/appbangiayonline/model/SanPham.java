@@ -5,19 +5,16 @@ import java.io.Serializable;
 public class SanPham implements Serializable {
     private int masanpham;
     private String tensanpham;
+    private String hang;
     private String trangthai;
 
     private byte[] image;
 
-    public SanPham(int masanpham, String tensanpham, String trangthai) {
-        this.masanpham = masanpham;
-        this.tensanpham = tensanpham;
-        this.trangthai = trangthai;
-    }
 
-    public SanPham(int masanpham, String tensanpham, String trangthai, byte[] hinhanh) {
+    public SanPham(int masanpham, String tensanpham, String hang, String trangthai, byte[] hinhanh) {
         this.masanpham = masanpham;
         this.tensanpham = tensanpham;
+        this.hang = hang;
         this.trangthai = trangthai;
         this.image = hinhanh;
     }
@@ -31,6 +28,14 @@ public class SanPham implements Serializable {
     }
 
     public SanPham() {
+    }
+
+    public String getHang() {
+        return hang;
+    }
+
+    public void setHang(String hang) {
+        this.hang = hang;
     }
 
     public String getTrangthai() {
