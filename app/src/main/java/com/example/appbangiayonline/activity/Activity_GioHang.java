@@ -46,7 +46,7 @@ public class Activity_GioHang extends AppCompatActivity {
     TextView tongtien;
     ArrayList<HoaDon> listhd;
     public int s;
-    int id_kh, makh, s2,kichco;
+    int id_kh, makh, s2, kichco;
     String mausac;
     HoaDonCT_Dao daoHDCT;
 
@@ -119,37 +119,50 @@ public class Activity_GioHang extends AppCompatActivity {
         Date gioDate = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
         String gio = simpleDateFormat.format(gioDate);
+
         Button button_thanhToan = findViewById(R.id.btn_thanhtoan_giohang);
         button_thanhToan.setOnClickListener(view -> {
-            HoaDonDao dao2 = new HoaDonDao(this);
-            boolean check = dao2.addHoaDon(makh, s, ngay, gio);
-            CTSanPhamDao daoSP = new CTSanPhamDao(this);
+            if (listchk.size() != 0) {
 
-            if (check) {
-                listhd = dao2.getDSHoaDon();
-                int mahd = dao2.mahd();
-                AlertDialog.Builder alBuilder = new AlertDialog.Builder(this);
-                if (listchk.size() != 0) {
-                    alBuilder.setTitle("Thanh toán sản phẩm trong giỏ hàng!").setIcon(R.drawable.baseline_error_outline_24).setMessage("Bạn có chắc chắn muốn Thanh toán sản phẩm").setPositiveButton("Cóa", ((dialogInterface, i) -> {
-                        listchk.forEach(e -> {
-                            list.forEach(e1 -> {
-                                if (e1.getMagiohang() == e) {
-                                    s2 = e1.getSl_mua();
-                                    kichco = e1.getKichco();
-                                    mausac = e1.getMausac();
-                                }
-                            });
-                            int masp = dao.getMaCTSP(e);
-                            daoHDCT.themCTHD(mahd, daoSP.getMaCTSP(masp,mausac,kichco), s2);
-                            dao.remove_data(e);
-                        });
-                        listchk.clear();
-                        tongtien.setText("0 VNĐ");
-                        reload();
-                    })).setNegativeButton("Hông", ((dialogInterface, i) -> {
-                    }));
+                HoaDonDao dao2 = new HoaDonDao(this);
+                boolean check = dao2.addHoaDon(makh, s, ngay, gio);
+                CTSanPhamDao daoSP = new CTSanPhamDao(this);
+
+                if (check) {
+                    listhd = dao2.getDSHoaDon();
+                    int mahd = dao2.mahd();
+
+                    AlertDialog.Builder alBuilder = new AlertDialog.Builder(this);
+                    if (listchk.size() != 0) {
+                        alBuilder.setTitle("Thanh toán sản phẩm trong giỏ hàng!").setIcon(R.drawable.baseline_error_outline_24).setMessage("Bạn có chắc chắn muốn Thanh toán sản phẩm")
+                                .setPositiveButton("Có", ((dialogInterface, i) -> {
+                                    listchk.forEach(e -> {
+                                        list.forEach(e1 -> {
+                                            if (e1.getMagiohang() == e) {
+                                                s2 = e1.getSl_mua();
+                                                kichco = e1.getKichco();
+                                                mausac = e1.getMausac();
+                                            }
+                                        });
+                                        int masp = dao.getMaCTSP(e);
+                                        daoHDCT.themCTHD(mahd, daoSP.getMaCTSP(masp, mausac, kichco), s2);
+                                        dao.remove_data(e);
+                                    });
+                                    listchk.clear();
+                                    tongtien.setText("0 VNĐ");
+                                    reload();
+
+                                    Intent intent1 = new Intent(Activity_GioHang.this, MainActivity.class);
+                                    intent1.putExtra("gethoadon", ":D");
+                                    startActivity(intent1);
+                                }))
+                                .setNegativeButton("Không", ((dialogInterface, i) -> {
+                                }));
+                    }
+                    alBuilder.show();
                 }
-                alBuilder.show();
+            } else {
+                Toast.makeText(this, "Bạn chưa chọn sản phẩm nào :(", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -140,24 +140,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 "mausac text," +
                 "kichco integer," +
                 "gia integer," +
-                "soluong integer)";
+                "soluong integer," +
+                "slmua integer)";
         sqLiteDatabase.execSQL(tbl_giohang);
-
-//        ArrayList<GioHang> list1 = new ArrayList<>();
-//        list1.add(new GioHang(1, 1, 1, ConvertImage.ImageToByte(context, R.drawable.slider1), "Màu xanh", 34, 50000, 15));
-//        list1.add(new GioHang(2, 2, 2, ConvertImage.ImageToByte(context, R.drawable.slider2), "Màu tím", 35, 14000, 11));
-//        list1.add(new GioHang(3, 3, 3, ConvertImage.ImageToByte(context, R.drawable.slider3), "Màu vàng", 35, 50000, 11));
-//        list1.forEach(e -> {
-//            ContentValues contentValues = new ContentValues();
-//            contentValues.put("masanpham", e.getMasanpham());
-//            contentValues.put("makhachhang", e.getMakhachhang());
-//            contentValues.put("hinhanh", e.getHinhanh());
-//            contentValues.put("mausac", e.getMausac());
-//            contentValues.put("kichco", e.getKichco());
-//            contentValues.put("gia", e.getGiasp());
-//            contentValues.put("soluong", e.getSoluong());
-//            sqLiteDatabase.insert("giohang", null, contentValues);
-//        });
         String tbl_cthoadon = "CREATE TABLE cthoadon (" +
                 "mahd INTEGER," +
                 "mactsanpham INTEGER," +

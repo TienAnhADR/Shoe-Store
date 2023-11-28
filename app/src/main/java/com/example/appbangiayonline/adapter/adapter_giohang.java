@@ -66,8 +66,6 @@ public class adapter_giohang extends RecyclerView.Adapter<adapter_giohang.rcv_ho
     @Override
     public void onBindViewHolder(@NonNull rcv_holder holder, int position) {
         GioHang gioHang = list.get(position);
-        gioHang.setSl_mua(1);
-        //sl mua lúc đầu là 1
 
         holder.tensp_item.setText(gioHang.getTensp());
         holder.mausac_item.setText("Màu: " + gioHang.getMausac());
