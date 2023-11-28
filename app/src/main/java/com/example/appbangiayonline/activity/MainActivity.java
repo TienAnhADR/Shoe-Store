@@ -78,7 +78,8 @@ public class MainActivity extends AppCompatActivity {
                     fragment = new FragmentHoaDon();
 
                 } else if (R.id.mDoiMK == id) {
-
+                    Intent intent = new Intent(MainActivity.this, Activity_DoiMK.class);
+                    startActivity(intent);
 
                 } else if (R.id.mDangXuat == id) {
                     Intent intent = new Intent(MainActivity.this, DangNhap.class);

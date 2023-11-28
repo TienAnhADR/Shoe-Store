@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.appbangiayonline.R;
+import com.example.appbangiayonline.activity.Activity_DoiMK;
 import com.example.appbangiayonline.activity.Activity_GioHang;
 import com.example.appbangiayonline.activity.MainActivity;
 import com.example.appbangiayonline.activity.SuaThongTinActivity;
@@ -64,7 +65,8 @@ public class FragmentThongTin extends Fragment {
         });
         Button doimk = view.findViewById(R.id.doimk_nguoidung);
         doimk.setOnClickListener(i -> {
-            //<?>
+            Intent intent = new Intent(requireActivity(), Activity_DoiMK.class);
+            startActivity(intent);
         });
         Button dangxuat = view.findViewById(R.id.dangxuat_nguoidung);
         dangxuat.setOnClickListener(i -> {

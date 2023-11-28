@@ -169,5 +169,19 @@ public class NhanVien_KhachHang_Dao {
         sql.delete("khachhang", "makh=?", new String[]{String.valueOf(id)});
         sql.close();
     }
+
+    public void ChangePassWord_KH(String taiKhoan,String newPass){
+        SQLiteDatabase db = helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("matkhau",newPass);
+        db.update("khachhang",values,"taikhoan = ? ",new String[]{taiKhoan});
+    }
+    public void ChangePassWord_NV(String taiKhoan,String newPass){
+        SQLiteDatabase db = helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("matkhau",newPass);
+        db.update("nhanvien",values,"taikhoan = ? ",new String[]{taiKhoan});
+    }
+
 }
 
