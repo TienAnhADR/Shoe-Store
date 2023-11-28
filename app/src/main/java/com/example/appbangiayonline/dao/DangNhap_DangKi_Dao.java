@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
+import com.example.appbangiayonline.check_information.CheckInformation;
 import com.example.appbangiayonline.database.DBHelper;
 import com.example.appbangiayonline.model.KhachHang;
 import com.example.appbangiayonline.model.NhanVien;
@@ -62,9 +63,9 @@ public class DangNhap_DangKi_Dao {
         Cursor cursor = sql.rawQuery("SELECT * FROM khachhang WHERE khachhang.taikhoan='" + taikhoan + "'", null);
         if (cursor.getCount() > 0) {
             return 0;
-        } else if (!isEmailValid(email)) {
+        } else if (CheckInformation.isEmailValid(email)) {
             Toast.makeText(context, "Email sai định dạng!", Toast.LENGTH_SHORT).show();
-        } else if (!isNumberValid(sdt)) {
+        } else if (CheckInformation.isNumberValid(sdt)) {
             Toast.makeText(context, "Số điện thoại sai định dạng!", Toast.LENGTH_SHORT).show();
         } else {
             ContentValues contentValues = new ContentValues();
@@ -80,17 +81,4 @@ public class DangNhap_DangKi_Dao {
         return -10;
     }
 
-    public boolean isEmailValid(String email) {
-        String emailRegex = "^[A-Za-z](.*)([@]{1})(.{1,})(\\.)(.{1,})";
-        Pattern pattern = Pattern.compile(emailRegex);
-        Matcher matcher = pattern.matcher(email);
-        return matcher.matches();
-    }
-
-    public boolean isNumberValid(String number) {
-        if (number.charAt(0) == '0' && number.length() == 10) {
-            return true;
-        }
-        return false;
-    }
 }

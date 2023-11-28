@@ -65,7 +65,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 "('Hoàng Quốc Quân','quanhqph33420','ph33420','0975460402','quanhqph33420@gmail.com',1)";
         sqLiteDatabase.execSQL(insert_nhanvien);
         //----------------------------
-
         //san pham
         String tbl_sanpham = "create table sanpham(masanpham integer primary key autoincrement," +
                 "tensanpham text," +
@@ -122,14 +121,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 "trangthai integer)";
         //0 chuaxacnhan 1 daxacnhan
         sqLiteDatabase.execSQL(tbl_hoadon);
-
-        String insert_hoadon = "insert into hoadon" +
-                "(mahd,manv,makh,tongsl,tongtien,ngay, gio,trangthai) " +
-                "values " +
-                "(1,1,1,55,66, '11/11/2023', '11:12',0)," +
-                "(2,1,2,55,66, '11/11/2023', '11:12',0) ," +
-                "(3,1,3,55,66, '11/11/2023', '11:12',0)";
-        sqLiteDatabase.execSQL(insert_hoadon);
         //----------------------------------
 
         String tbl_giohang = "create table giohang(" +
@@ -143,6 +134,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "soluong integer," +
                 "slmua integer)";
         sqLiteDatabase.execSQL(tbl_giohang);
+
         String tbl_cthoadon = "CREATE TABLE cthoadon (" +
                 "mahd INTEGER," +
                 "mactsanpham INTEGER," +
