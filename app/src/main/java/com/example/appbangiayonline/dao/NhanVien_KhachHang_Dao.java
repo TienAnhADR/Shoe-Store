@@ -27,15 +27,6 @@ public class NhanVien_KhachHang_Dao {
     }
 
     public ArrayList<NhanVien> getList_NV() {
-//        int manv, int chucvu, String hoten, String sdt, String email
-//        String tbl_nhanvien = "create table nhanvien (" +
-//                "manv integer primary key autoincrement," +
-//                "hoten text," +
-//                "taikhoan text," +
-//                "matkhau text," +
-//                "sdt text," +
-//                "email text," +
-//                "chucvu integer)";
         ArrayList<NhanVien> list = new ArrayList<>();
         SQLiteDatabase db = helper.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM nhanvien ", null);
@@ -162,5 +153,21 @@ public class NhanVien_KhachHang_Dao {
         return nhanVien;
     }
 
+    public void capNhatThongTin(int id, String hoten, String sdt, String email, String diachi) {
+        SQLiteDatabase sql = helper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("hoten", hoten);
+        contentValues.put("sdt", sdt);
+        contentValues.put("email", email);
+        contentValues.put("diachi", diachi);
+        sql.update("khachhang", contentValues, "makh=?", new String[]{String.valueOf(id)});
+        sql.close();
+    }
+
+    public void xoaTaiKhoan(int id) {
+        SQLiteDatabase sql = helper.getWritableDatabase();
+        sql.delete("khachhang", "makh=?", new String[]{String.valueOf(id)});
+        sql.close();
+    }
 }
 

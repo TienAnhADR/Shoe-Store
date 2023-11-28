@@ -45,6 +45,7 @@ public class DangNhap extends AppCompatActivity {
             } else if (check == 1 || check == 2 || check == 0) {
                 SharedPreferences.Editor sharedPreferences = getSharedPreferences("admin", Context.MODE_PRIVATE).edit();
                 Intent intent = new Intent(DangNhap.this, MainActivity.class);
+
                 sharedPreferences.putInt("setting", check);
                 sharedPreferences.putString("taikhoan", taikhoan);
                 sharedPreferences.apply();

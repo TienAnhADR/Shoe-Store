@@ -45,9 +45,6 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerLayout);
         setSupportActionBar(toolbar);
         SharedPreferences sharedPreferences = getSharedPreferences("admin", Context.MODE_PRIVATE);
-        //??
-        String username = sharedPreferences.getString("taikhoan", "a");
-        String b = username;
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -80,8 +77,6 @@ public class MainActivity extends AppCompatActivity {
                 } else if (R.id.mQLHoaDon == id) {
                     fragment = new FragmentHoaDon();
 
-                } else if (R.id.mThongKe == id) {
-
                 } else if (R.id.mDoiMK == id) {
 
 
@@ -109,14 +104,17 @@ public class MainActivity extends AppCompatActivity {
         });
         btn_shoe.setOnClickListener(view -> {
             change_Fragment(new FragmentSanPham(), "Sản phẩm");
-
         });
         btn_user.setOnClickListener(view -> {
-            change_Fragment(new FragmentThongTin(), "Thông tin khách hàng");
+            if (sharedPreferences.getInt("setting", 0) == 2) {
+                change_Fragment(new FragmentThongTin(), "Thông tin khách hàng");
+            } else {
+                change_Fragment(new FragmentKhachHang(), "Quản lí khách hàng");
+            }
         });
     }
 
-    void change_Fragment(Fragment fragment, String title) {
+    public void change_Fragment(Fragment fragment, String title) {
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.flameLayout, fragment).commit();
         drawerLayout.closeDrawer(GravityCompat.START);
