@@ -34,6 +34,7 @@ import com.google.android.material.navigation.NavigationView;
 public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     Toolbar toolbar;
+    private int check = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerLayout);
         setSupportActionBar(toolbar);
         SharedPreferences sharedPreferences = getSharedPreferences("admin", Context.MODE_PRIVATE);
+        check = sharedPreferences.getInt("setting",0);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -96,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
         Button btn_shoe = findViewById(R.id.btn_shoes_fg);
         Button btn_user = findViewById(R.id.btn_user_fg);
         Button cart = findViewById(R.id.btn_cart_fg);
+        cart.setVisibility(View.GONE);
+        if (check==2) cart.setVisibility(View.VISIBLE);
         cart.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, Activity_GioHang.class);
             startActivity(intent);

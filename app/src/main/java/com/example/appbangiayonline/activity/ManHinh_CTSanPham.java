@@ -120,14 +120,21 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
     //biến thêm số lượng mới
     TextView themSL_CTSanPham;
     Bitmap bitmap;
+    int check = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_man_hinh_ctsan_pham);
+        SharedPreferences sharedPreferences = getSharedPreferences("admin", Context.MODE_PRIVATE);
+        check = sharedPreferences.getInt("setting",0);
 
         giohang = findViewById(R.id.giohang_sanpham);
         muaNgay = findViewById(R.id.muangay_sanpham);
+        if(check!=2){
+            giohang.setVisibility(View.GONE);
+            muaNgay.setText("Xem chi tiết");
+        }
 //        SharedPreferences sharedPreferences = getSharedPreferences("admin", MODE_PRIVATE);
 //        //admin ko thể thêm giỏ hàng hay mua sp
 //        if (sharedPreferences.getInt("setting", 2) != 2) {
@@ -182,6 +189,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         dialog.dismiss();
         ImageView quaylai = dialog.findViewById(R.id.quaylai);
         themSL_CTSanPham = dialog.findViewById(R.id.themSoLuongMoi);
+
         themSL_CTSanPham.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -202,6 +210,9 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
 
         //XacNhanMuaNgay
         btnxacnhanhoadon = dialog.findViewById(R.id.xacnhanhoadon);
+        if(check!=2){
+            btnxacnhanhoadon.setVisibility(View.GONE);
+        }
         btnxacnhanhoadon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -216,6 +227,9 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         dao = new CTSanPhamDao(this);
         ctSanPham = new CTSanPham();
         FloatingActionButton fl = dialog.findViewById(R.id.flthemsanpham);
+
+
+        if(check == 2) fl.setVisibility(View.GONE); themSL_CTSanPham.setVisibility(View.GONE);
 //        nhan vao item
         nhankichco = dialog.findViewById(R.id.kiccosanphamct);
         nhanmausac = dialog.findViewById(R.id.mausacsanphamct);

@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.appbangiayonline.R;
@@ -30,11 +32,19 @@ public class SuaThongTinActivity extends AppCompatActivity {
         EditText edt_sdt = findViewById(R.id.edt_sdt_suathongtin);
         EditText edt_email = findViewById(R.id.edt_email_suathongtin);
         EditText edt_diachi = findViewById(R.id.edt_diachi_suathongtin);
+        ImageButton btnBack = findViewById(R.id.img_btn_back_nguoidung);
 
         edt_hoten.setText(khachHang.getHoten());
         edt_sdt.setText(khachHang.getSdt());
         edt_email.setText(khachHang.getEmail());
         edt_diachi.setText(khachHang.getDiachi());
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         Button updateIn4 = findViewById(R.id.btn_suatk_nguoidung);
         updateIn4.setOnClickListener(v -> {
@@ -53,6 +63,7 @@ public class SuaThongTinActivity extends AppCompatActivity {
             } else {
                 dao.capNhatThongTin(khachHang.getMakh(), hoten, sdt, email, diachi);
                 Toast.makeText(this, "Cập nhật thông tin thành công", Toast.LENGTH_SHORT).show();
+                finish();
             }
         });
         Button deleteIn4 = findViewById(R.id.btn_xoatk_nguoidung);
