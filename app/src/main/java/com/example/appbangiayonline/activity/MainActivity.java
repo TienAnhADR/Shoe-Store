@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.baseline_menu_24);
+        actionBar.setHomeAsUpIndicator(R.drawable.mm);
 
         Intent intent1 = getIntent();
         if (intent1.hasExtra("gethoadon")) {
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager manager = getSupportFragmentManager();
         manager.beginTransaction().replace(R.id.flameLayout, fragment).commit();
         drawerLayout.closeDrawer(GravityCompat.START);
-        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setTitleTextColor(Color.GRAY);
         toolbar.setTitle(title);
     }
 

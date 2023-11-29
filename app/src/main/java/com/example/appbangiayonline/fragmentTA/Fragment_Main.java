@@ -2,6 +2,7 @@ package com.example.appbangiayonline.fragmentTA;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,30 +18,61 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.appbangiayonline.R;
+import com.example.appbangiayonline.adapter.HoaDonAdapter;
 import com.example.appbangiayonline.adapter.SanPhamAdapter;
 import com.example.appbangiayonline.adapter.SliderAdapter;
+import com.example.appbangiayonline.dao.SanPhamDao;
 import com.example.appbangiayonline.dao.ThongKeBanChayDao;
 import com.example.appbangiayonline.model.SanPham;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Fragment_Main extends Fragment {
-    SanPhamAdapter adapter;
-    ThongKeBanChayDao tkdao;
+
+    private Fragment currentFragment;
+
     ViewPager viewPager;
     SliderAdapter sliderAdapter;
     int index = 0;
-    int images[] = {R.drawable.slider1, R.drawable.slider2, R.drawable.slider3, R.drawable.slider4};
-
+    int images[] = {R.drawable.n4, R.drawable.n1, R.drawable.n2, R.drawable.n3};
+    ArrayList<SanPham> list;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment__main, container, false);
 
-//        layout mac định banchay
-        RecyclerView rc = view.findViewById(R.id.rc_macdinh);
-        rc.setLayoutManager(new LinearLayoutManager(getContext()));
-        tkdao = new ThongKeBanChayDao(getContext());
+        RecyclerView rc_main = view.findViewById(R.id.rc_main);
+        rc_main.setLayoutManager(new LinearLayoutManager(getContext()));
+        SanPhamDao dao = new SanPhamDao(getContext());
+        list = new ArrayList<>();
+        list = dao.getListSanPham();
+        SanPhamAdapter adapter = new SanPhamAdapter(getContext(), list);
+        rc_main.setAdapter(adapter);
+
+        //Tìm kiếm
+        SearchView searchView = view.findViewById(R.id.search);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                ArrayList<SanPham> newSP = new ArrayList<>();
+                for (SanPham sn : list){
+                    if(sn.getTensanpham().toLowerCase().contains(newText.toLowerCase())){
+                        newSP.add(sn);
+                    }
+                }
+                SanPhamAdapter adaptern = new SanPhamAdapter(getContext(), newSP);
+                rc_main.setAdapter(adaptern);
+                return false;
+            }
+        });
+
+
         viewPager = view.findViewById(R.id.viewPager);
         sliderAdapter = new SliderAdapter(getContext(), images);
         viewPager.setAdapter(sliderAdapter);
@@ -57,13 +89,8 @@ public class Fragment_Main extends Fragment {
             }
         }, 1000);
 
-        ArrayList<SanPham> top10 = tkdao.getTop10();
-        if (!top10.isEmpty()) {
-            adapter = new SanPhamAdapter(getContext(), top10);
-            rc.setAdapter(adapter);
-        } else {
-            Toast.makeText(getContext(), "Null rồi", Toast.LENGTH_SHORT).show();
-        }
+        currentFragment = new fragment_Nike();
+        getChildFragmentManager().beginTransaction().replace(R.id.frame_main, currentFragment).commit();
 
         Button btn_banchay = view.findViewById(R.id.xuhuong);
         Button btn_nike = view.findViewById(R.id.nike);

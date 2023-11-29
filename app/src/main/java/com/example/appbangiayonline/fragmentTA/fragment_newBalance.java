@@ -27,7 +27,7 @@ public class fragment_newBalance extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_newbalance, container, false);
         RecyclerView rc = view.findViewById(R.id.rc_newBalance);
-        rc.setLayoutManager(new LinearLayoutManager(getContext()));
+        rc.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL,false));
         dao = new SanPhamDao(getContext());
         list = new ArrayList<>();
         list = dao.getListSanPham();

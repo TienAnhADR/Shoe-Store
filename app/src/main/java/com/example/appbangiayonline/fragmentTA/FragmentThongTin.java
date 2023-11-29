@@ -47,28 +47,28 @@ public class FragmentThongTin extends Fragment {
         TextView txt_hoten = view.findViewById(R.id.txt_hoten_nguoidung);
         txt_hoten.setText(dao.getThongTinKhachHang(sharedPreferences.getString("taikhoan", "")).getHoten());
 
-        Button capNhatThongtin = view.findViewById(R.id.thongtin_nguoidung);
+        TextView capNhatThongtin = view.findViewById(R.id.thongtin_nguoidung);
         capNhatThongtin.setOnClickListener(i -> {
             Intent intent = new Intent(requireActivity(), SuaThongTinActivity.class);
             startActivity(intent);
         });
 
-        Button dsHoaDon = view.findViewById(R.id.ds_hoadon_nguoidung);
+        TextView  dsHoaDon = view.findViewById(R.id.ds_hoadon_nguoidung);
         dsHoaDon.setOnClickListener(i -> {
             ((MainActivity) getActivity()).change_Fragment(new FragmentHoaDon(), "Danh sách hóa đơn");
         });
 
-        Button gioHang = view.findViewById(R.id.giohang_nguoidung);
+        TextView  gioHang = view.findViewById(R.id.giohang_nguoidung);
         gioHang.setOnClickListener(i -> {
             Intent intent = new Intent(requireActivity(), Activity_GioHang.class);
             startActivity(intent);
         });
-        Button doimk = view.findViewById(R.id.doimk_nguoidung);
+        TextView  doimk = view.findViewById(R.id.doimk_nguoidung);
         doimk.setOnClickListener(i -> {
             Intent intent = new Intent(requireActivity(), Activity_DoiMK.class);
             startActivity(intent);
         });
-        Button dangxuat = view.findViewById(R.id.dangxuat_nguoidung);
+        TextView  dangxuat = view.findViewById(R.id.dangxuat_nguoidung);
         dangxuat.setOnClickListener(i -> {
             getActivity().finish();
         });
