@@ -13,8 +13,9 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#6750A4"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            app:titleTextAppearance="@style/bold"
             android:fitsSystemWindows="true" />
 
         <FrameLayout
@@ -27,7 +28,8 @@
         <LinearLayout
             android:id="@+id/change_tab"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:background="@color/black"
             android:layout_alignParentBottom="true"
             android:orientation="horizontal">
 
@@ -36,10 +38,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="#2CCDFF"
                 android:drawableTop="@drawable/home"
-                android:padding="5sp"
-                android:text="Home"
+                android:padding="5dp"
+                android:backgroundTint="@color/black"
                 android:textColor="@color/white" />
 
             <Button
@@ -47,20 +48,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="#2CCDFF"
                 android:drawableTop="@drawable/shoes"
-                android:padding="5sp"
-                android:text="Shoes"
+                android:padding="5dp"
+                android:backgroundTint="@color/black"
                 android:textColor="@color/white" />
             <Button
                 android:id="@+id/btn_cart_fg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="#2CCDFF"
+                android:backgroundTint="@color/black"
                 android:drawableTop="@drawable/baseline_shopping_cart_24"
-                android:padding="5sp"
-                android:text="Cart"
+                android:padding="1sp"
                 android:textColor="@color/white" />
 
             <Button
@@ -68,10 +67,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="#2CCDFF"
+                android:backgroundTint="@color/black"
                 android:drawableTop="@drawable/user"
-                android:padding="5sp"
-                android:text="User"
+                android:padding="5dp"
                 android:textColor="@color/white" />
         </LinearLayout>
     </RelativeLayout>
@@ -82,6 +80,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:padding="0dp"
+        android:background="@color/white"
         app:headerLayout="@layout/head_layout"
         app:menu="@menu/menu" />
 

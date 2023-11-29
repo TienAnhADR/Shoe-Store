@@ -29,7 +29,7 @@ public class Fragment_ThongKeBanChay extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_thongkebanchay, container, false);
         RecyclerView rc = view.findViewById(R.id.rc_banchay);
-        rc.setLayoutManager(new LinearLayoutManager(getContext()));
+        rc.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL,false));
         tkdao = new ThongKeBanChayDao(getContext());
         ArrayList<SanPham> top10 = tkdao.getTop10();
         if (!top10.isEmpty()) {

@@ -24,8 +24,8 @@ public class FragmentThongKe extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_thongke, container, false);
-        EditText txtstart = view.findViewById(R.id.txtstart);
-        EditText txtend = view.findViewById(R.id.txtEnd);
+        TextView txtstart = view.findViewById(R.id.txtstart);
+        TextView txtend = view.findViewById(R.id.txtEnd);
         Button btnthongke = view.findViewById(R.id.btnthongke);
         TextView txtkq= view.findViewById(R.id.ketqua);
 

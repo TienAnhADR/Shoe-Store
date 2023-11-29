@@ -133,7 +133,7 @@ public class FragmentSanPham extends Fragment {
 
     private List<String> getHangDuyNhat() {
         hangDN = new ArrayList<>();
-        hangDN.add("");
+        hangDN.add("Tất cả sản phẩm");
         for (SanPham sanPham : list) {
             if (sanPham != null && !hangDN.contains(sanPham.getHang())) {
                 hangDN.add(sanPham.getHang());
