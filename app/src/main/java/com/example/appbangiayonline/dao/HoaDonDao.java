@@ -84,20 +84,6 @@ public class HoaDonDao {
         return -10;
     }
 
-    public boolean ThemHoaDon(int makh, int tongsl, int tongtien, String ngay, String gio) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("manv", 1);
-        values.put("makh", makh);
-        values.put("tongsl", tongsl);
-        values.put("tongtien", tongtien);
-        values.put("ngay", ngay);
-        values.put("gio", gio);
-        values.put("trangthai", 0);
-        long kt = db.insert("hoadon", null, values);
-        return (kt > 0);
-    }
-
     public boolean addHoaDon(int makh, int tongtien, String ngay, String gio) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();

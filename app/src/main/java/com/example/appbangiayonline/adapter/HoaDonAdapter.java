@@ -55,7 +55,6 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.Viewholder
         holder.ma.setText("Mã hóa đơn : " +Integer.toString(list.get(position).getMahoadon()));
         holder.tennv.setText("Tên nhân viên : " +list.get(position).getTennv());
         holder.tenkh.setText("Tên khách hàng : " +list.get(position).getTenkh());
-        holder.tongsl.setText("Tổng số lượng : " +Integer.toString(list.get(position).getTongsl()));
         holder.tongtien.setText("Tổng tiền : " +Integer.toString(list.get(position).getTongTien()));
         holder.ngay.setText("Ngày : " +list.get(position).getNgay());
         holder.gio.setText("Giờ : " +list.get(position).getGio());
@@ -119,7 +118,6 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.Viewholder
                     Toast.makeText(context, "Tai khoan nhanvien khong ton tai", Toast.LENGTH_SHORT).show();
                 }
 
-                //
             }
         });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -137,14 +135,13 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.Viewholder
     }
 
     public class Viewholder extends RecyclerView.ViewHolder {
-        TextView ma, tenkh, tennv, tongsl, tongtien, trangthai_texthd, ngay, gio;
+        TextView ma, tenkh, tennv, tongtien, trangthai_texthd, ngay, gio;
         Button btnxacnhan;
         public Viewholder(@NonNull View itemView) {
             super(itemView);
             ma = itemView.findViewById(R.id.txtma_Hoadon);
             tennv = itemView.findViewById(R.id.txttennhanvien_Hoadon);
             tenkh = itemView.findViewById(R.id.txttenkh_Hoadon);
-            tongsl= itemView.findViewById(R.id.txttongsl_Hoadon);
             tongtien= itemView.findViewById(R.id.txttongtien_Hoadon);
             ngay= itemView.findViewById(R.id.txtngay_Hoadon);
             gio= itemView.findViewById(R.id.txtgio_Hoadon);

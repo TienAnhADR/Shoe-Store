@@ -40,22 +40,18 @@ public class SizeAdapter extends RecyclerView.Adapter<SizeAdapter.Viewholder> {
     @Override
     public void onBindViewHolder(@NonNull SizeAdapter.Viewholder holder, int position) {
         CTSanPham ctSanPham = list.get(position);
-
         int kichco = list.get(position).getKichco();
+        int dem = sizeCountMap.getOrDefault(kichco, 0);
 
-        int count = getCountForSize(kichco);
-
-        if (count == 0) {
-            holder.kichco.setVisibility(View.VISIBLE);
+        if (dem == 0){
             holder.kichco.setText(String.valueOf(kichco));
         } else {
-            holder.kichco.setVisibility(View.INVISIBLE);
+            holder.kichco.setVisibility(View.GONE);
             ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(0, 0);
             holder.itemView.setLayoutParams(params);
         }
 
-        sizeCountMap.put(kichco, count + 1);
-
+        sizeCountMap.put(kichco, dem + 1);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

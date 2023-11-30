@@ -120,7 +120,7 @@ public class Activity_GioHang extends AppCompatActivity {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
         String gio = simpleDateFormat.format(gioDate);
 
-        Button button_thanhToan = findViewById(R.id.btn_thanhtoan_giohang);
+        TextView button_thanhToan = findViewById(R.id.btn_thanhtoan_giohang);
         button_thanhToan.setOnClickListener(view -> {
             if (listchk.size() != 0) {
 

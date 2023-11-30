@@ -38,7 +38,6 @@ public class FragmentThongKe extends Fragment {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                                //ngay, thang pai co 2 so
                                 String ngay ="";
                                 String thang ="";
                                 if(dayOfMonth < 10){

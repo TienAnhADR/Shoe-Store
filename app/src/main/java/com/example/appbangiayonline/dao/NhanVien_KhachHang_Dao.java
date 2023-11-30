@@ -118,7 +118,6 @@ public class NhanVien_KhachHang_Dao {
         return list;
     }
 
-    //Lay makh khachhang với đk trùng taikhoan khach hàng truyền vào(Lien quan đến hoaDon)
     public KhachHang getThongTinKhachHang(String taikhoan) {
         KhachHang khachHang = null;
         SQLiteDatabase db = helper.getReadableDatabase();
