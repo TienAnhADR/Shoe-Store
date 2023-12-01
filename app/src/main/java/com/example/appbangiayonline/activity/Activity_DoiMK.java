@@ -18,6 +18,7 @@ import com.example.appbangiayonline.dao.NhanVien_KhachHang_Dao;
 import com.example.appbangiayonline.model.KhachHang;
 import com.example.appbangiayonline.model.NhanVien;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class Activity_DoiMK extends AppCompatActivity {
     private String passWord,taikhoan;
@@ -30,6 +31,9 @@ public class Activity_DoiMK extends AppCompatActivity {
         TextInputEditText edtOldPass = findViewById(R.id.input_old_pass);
         TextInputEditText edtNewPass = findViewById(R.id.input_New_Pass);
         TextInputEditText edt_Re_typeNewPass = findViewById(R.id.input_retype_Pass);
+        TextInputLayout ipLayoutOld = findViewById(R.id.layout_user);
+        TextInputLayout ipLayoutnew = findViewById(R.id.layout_password);
+        TextInputLayout ipLayoutnew2 = findViewById(R.id.layout_re_type_pass);
         Button btnChangePass = findViewById(R.id.btn_change_pass);
         ImageView btnBack = findViewById(R.id.img_btnBack_DMK);
         ImageView btnEye = findViewById(R.id.imgEye);
@@ -53,11 +57,17 @@ public class Activity_DoiMK extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (eyePass){
+                    ipLayoutOld.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
+                    ipLayoutnew2.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
+                    ipLayoutOld.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
                     edtOldPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     edtNewPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     edt_Re_typeNewPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     eyePass = false;
                 } else {
+                    ipLayoutOld.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
+                    ipLayoutnew2.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
+                    ipLayoutOld.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
                     edtOldPass.setTransformationMethod(null);
                     edt_Re_typeNewPass.setTransformationMethod(null);
                     edtNewPass.setTransformationMethod(null);

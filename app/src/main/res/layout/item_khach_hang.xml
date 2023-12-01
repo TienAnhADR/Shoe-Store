@@ -69,7 +69,6 @@
                 android:src="@drawable/baseline_edit_24"
                 android:id="@+id/img_btn_update_KH"/>
 
-
         </LinearLayout>
 
     </LinearLayout>

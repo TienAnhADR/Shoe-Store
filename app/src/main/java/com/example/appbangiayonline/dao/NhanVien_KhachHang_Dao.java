@@ -181,6 +181,29 @@ public class NhanVien_KhachHang_Dao {
         values.put("matkhau",newPass);
         db.update("nhanvien",values,"taikhoan = ? ",new String[]{taiKhoan});
     }
-
+    public boolean xoaNhanVien(int id){
+        SQLiteDatabase db = helper.getWritableDatabase();
+        long check = db.delete("nhanvien","manv=?", new String[]{String.valueOf(id)});
+        return check>0;
+    }
+    public boolean updateNV(int id, String hoten, String sdt, String email, int chucvu){
+        if (!isEmailValid(email)) {
+            Toast.makeText(context, "Email sai định dạng!", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (!isNumberValid(sdt)) {
+            Toast.makeText(context, "Số điện thoại sai định dạng!", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            SQLiteDatabase db = helper.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put("hoten", hoten);
+            values.put("sdt", sdt);
+            values.put("email", email);
+            values.put("chucvu", chucvu);
+            db.update("nhanvien", values, "manv=?", new String[]{String.valueOf(id)});
+            db.close();
+            return true;
+        }
+    }
 }
 

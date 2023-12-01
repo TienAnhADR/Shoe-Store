@@ -38,6 +38,7 @@ public class FragmentKhachHang extends Fragment {
         View view = inflater.inflate(R.layout.fragment_nhan_vien_ta,container,false);
         recyclerView = view.findViewById(R.id.recylerV_NhanVien);
         floadAdd = view.findViewById(R.id.fload_btn_Add_NhanVien);
+        floadAdd.setVisibility(View.GONE);
         floadAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,6 +53,7 @@ public class FragmentKhachHang extends Fragment {
         recyclerView.setLayoutManager(manager);
         dao= new NhanVien_KhachHang_Dao(getContext());
         list = dao.getList_KH();
+
         KhachHangAdapter adapter = new KhachHangAdapter(getContext(),list);
         recyclerView.setAdapter(adapter);
     }

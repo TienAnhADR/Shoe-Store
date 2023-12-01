@@ -38,6 +38,8 @@ public class KhachHangAdapter extends RecyclerView.Adapter<KhachHangAdapter.View
         holder.txtSDT.setText("SĐT : "+kh.getSdt());
         holder.txtEmail.setText("Email : "+kh.getEmail());
         holder.txtDiaChi.setText("Địa chỉ :"+kh.getDiachi());
+        holder.btnSua.setVisibility(View.GONE);
+        holder.btnXoa.setVisibility(View.GONE);
     }
 
     @Override
@@ -54,8 +56,8 @@ public class KhachHangAdapter extends RecyclerView.Adapter<KhachHangAdapter.View
             txtSDT = itemView.findViewById(R.id.txtSDT_KH);
             txtTen = itemView.findViewById(R.id.txtTenKH);
             txtDiaChi = itemView.findViewById(R.id.txtDiaChi_KH);
-            btnSua = itemView.findViewById(R.id.img_btn_update_KH);
             btnXoa = itemView.findViewById(R.id.img_btn_delete_KH);
+            btnSua = itemView.findViewById(R.id.img_btn_update_KH);
         }
     }
 }

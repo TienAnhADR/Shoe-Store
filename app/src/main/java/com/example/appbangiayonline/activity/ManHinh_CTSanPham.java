@@ -168,6 +168,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_muangay);
         dialog.dismiss();
+        TextView txtspct = dialog.findViewById(R.id.txtspct);
         ImageView quaylai = dialog.findViewById(R.id.quaylai);
         themSL_CTSanPham = dialog.findViewById(R.id.themSoLuongMoi);
 
@@ -210,7 +211,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         FloatingActionButton fl = dialog.findViewById(R.id.flthemsanpham);
 
 
-        if(check == 2) fl.setVisibility(View.GONE); themSL_CTSanPham.setVisibility(View.GONE);
+        if(check == 2) fl.setVisibility(View.GONE); themSL_CTSanPham.setVisibility(View.GONE); rcctsanpham.setVisibility(View.GONE); txtspct.setVisibility(View.GONE);
 //        nhan vao item
         nhantenct = dialog.findViewById(R.id.tensanphamct);
         nhankichco = dialog.findViewById(R.id.kiccosanphamct);
