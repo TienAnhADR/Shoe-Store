@@ -85,15 +85,6 @@ public class CTSanPhamDao {
         return ctSanPham;
     }
 
-    public boolean kiemTraTonTaiTrongMactsp(int mactsanpham, String tenmausac, int kichco, int gia, int soluong) {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM ctsanpham WHERE mactsanpham = ? AND mausac = ? AND kichco = ? and gia = ? and soluong =?",
-                new String[]{String.valueOf(mactsanpham), tenmausac, String.valueOf(kichco), String.valueOf(gia), String.valueOf(soluong)});
-        boolean tonTai = cursor.moveToFirst();
-        cursor.close();
-        return tonTai;
-    }
-
     //Đây là khi xuất hoadon thì load lại số lượng ctsanpham
     public boolean capNhatSoLuongMoi(int mactsanpham, int soluong) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();

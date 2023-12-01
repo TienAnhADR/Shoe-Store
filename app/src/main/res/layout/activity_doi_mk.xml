@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/dangnhap"
+    android:background="@drawable/b"
     tools:context=".activity.Activity_DoiMK">
     <ImageView
         android:layout_width="match_parent"
@@ -13,16 +13,15 @@
     <ImageView
         android:id="@+id/img_btnBack_DMK"
         android:layout_width="40dp"
-        android:src="@drawable/baseline_keyboard_backspace_24"
+        android:src="@drawable/back"
         android:layout_margin="5dp"
-
         android:layout_height="40dp"/>
     <TextView
         android:id="@+id/text_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30sp"
-        android:layout_marginTop="30sp"
+        android:layout_marginLeft="90sp"
+        android:layout_marginTop="60sp"
         android:layout_marginRight="30sp"
         android:layout_marginBottom="20sp"
         android:text="Change Password"
@@ -50,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:background="@drawable/edittext_dangnhap"
+            android:background="@drawable/thay_doi_mk"
             android:padding="10sp"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -71,7 +70,7 @@
             android:layout_width="match_parent"
             android:inputType="textPassword"
             android:layout_height="wrap_content"
-            android:background="@drawable/edittext_dangnhap"
+            android:background="@drawable/thay_doi_mk"
             android:padding="10dp"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -90,7 +89,7 @@
             android:layout_width="match_parent"
             android:inputType="textPassword"
             android:layout_height="wrap_content"
-            android:background="@drawable/edittext_dangnhap"
+            android:background="@drawable/thay_doi_mk"
             android:padding="10dp"
             android:textColor="@color/black"
             android:textSize="20sp"
@@ -106,10 +105,10 @@
         android:layout_below="@id/layout_re_type_pass"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
-        android:text="Change password"
-        android:backgroundTint="#94AF7272"
+        android:text="Confirm"
+        android:backgroundTint="@color/black"
         android:textColor="@color/white"
-        android:textSize="26sp"
+        android:textSize="22sp"
         android:textStyle="bold" />
 
 

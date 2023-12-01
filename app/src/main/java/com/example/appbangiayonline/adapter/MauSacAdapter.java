@@ -21,7 +21,7 @@ public class MauSacAdapter extends RecyclerView.Adapter<MauSacAdapter.Viewholder
     private Context context;
     private final ArrayList<CTSanPham> list;
     private OnItemClickMauSize onItemClickMauSize;
-    private HashMap<String, Integer> mauCountMap = new HashMap<>();
+    private HashMap<String, Integer> maucount = new HashMap<>();
 
     public MauSacAdapter(Context context, ArrayList<CTSanPham> list, OnItemClickMauSize onItemClickMauSize) {
         this.context = context;
@@ -40,22 +40,16 @@ public class MauSacAdapter extends RecyclerView.Adapter<MauSacAdapter.Viewholder
         CTSanPham ctSanPham = list.get(position);
         holder.mau.setText(list.get(position).getTenmausac());
 
-
-        String tenmau = list.get(position).getTenmausac();
-
-        int count = mauCountMap.getOrDefault(tenmau, 0);
-
-
-        if (count == 0) {
+        String tenmau = ctSanPham.getTenmausac();
+        int dem = maucount.getOrDefault(tenmau, 0);
+        if (dem == 0){
             holder.mau.setText(tenmau);
-        } else {
-            holder.mau.setVisibility(View.INVISIBLE);
+        }else{
+            holder.mau.setVisibility(View.GONE);
             ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(0, 0);
             holder.itemView.setLayoutParams(params);
         }
-
-        mauCountMap.put(tenmau, count + 1);
-
+        maucount.put(tenmau, dem + 1);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

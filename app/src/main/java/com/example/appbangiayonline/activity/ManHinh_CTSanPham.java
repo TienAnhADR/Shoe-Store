@@ -63,7 +63,6 @@ import java.util.Set;
 
 public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickMauSize {
     String tenchung;
-    //nhan bundel
     TextView nhanten;
     ImageButton giohang;
     Button muaNgay;
@@ -77,20 +76,17 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
     RecyclerView rcmau;
     RecyclerView rckichco;
     RecyclerView rcctsanpham;
-    //    String tentrung = null;
     CTSanPham ctSanPham;
 
     // Biến lưu trữ dữ liệu được chọn từ RecyclerViews
-    String mausacDen;
-    int kiccoDen;
-    //    //nhan vao item
+
+    //nhan vao item
+    TextView nhantenct;
     TextView nhankichco;
     TextView nhanmausac;
     TextView nhantensanpham;
     TextView nhangia;
     TextView nhansiluong;
-    //them giohang
-    Button themGH;
     //lưu dữ được nhiều lần chọn
     private String selectedMauSac;
     private int selectedKichCo;
@@ -98,7 +94,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
 
     //cong tru
     int tongSoLuongSP = 1;
-    int tongGiaSP = 0;
+    int tongGiaSP ;
     //cong tru soluong tongtien
     ImageView imgCong;
     ImageView imgTru;
@@ -135,12 +131,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
             giohang.setVisibility(View.GONE);
             muaNgay.setText("Xem chi tiết");
         }
-//        SharedPreferences sharedPreferences = getSharedPreferences("admin", MODE_PRIVATE);
-//        //admin ko thể thêm giỏ hàng hay mua sp
-//        if (sharedPreferences.getInt("setting", 2) != 2) {
-//            giohang.setVisibility(View.INVISIBLE);
-//            muaNgay.setVisibility(View.INVISIBLE);
-//        }
+
         quaylai_rc_sanpham = findViewById(R.id.quaylai_rc_sanpham);
         giohang.setOnClickListener(view -> {
             themGioHang();
@@ -149,13 +140,11 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
             @Override
             public void onClick(View view) {
                 finish();
-
             }
         });
 
         Intent intent = getIntent();
 
-        // Bundle bundle = intent.getExtras();
         if (intent.hasExtra("obj_sanpham")) {
             SanPham sanPham = (SanPham) intent.getSerializableExtra("obj_sanpham");
             bitmap = ConvertImage.ByteToBitmap(sanPham.getImage());
@@ -164,14 +153,6 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
             img_ctsp = findViewById(R.id.anhSanpham_ctSanpham);
             img_ctsp.setImageBitmap(bitmap);
             nhanten.setText(tenchung);
-
-//            Bundle bundle = intent.getExtras();
-//            if (bundle != null) {
-//                tenchung = bundle.getString("tensanpham");
-//
-//                nhanten = findViewById(R.id.tensanpham_sanpham);
-//                nhanten.setText(tenchung);
-//            }
 
             muaNgay.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -231,6 +212,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
 
         if(check == 2) fl.setVisibility(View.GONE); themSL_CTSanPham.setVisibility(View.GONE);
 //        nhan vao item
+        nhantenct = dialog.findViewById(R.id.tensanphamct);
         nhankichco = dialog.findViewById(R.id.kiccosanphamct);
         nhanmausac = dialog.findViewById(R.id.mausacsanphamct);
         nhantensanpham = dialog.findViewById(R.id.tensanphamct);
@@ -250,7 +232,6 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                 themsanpham(tenchung);
             }
         });
-        //
 
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -259,9 +240,9 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         dialog.show();
     }
 
-    private void load(String tansanpham) {
+    private void load(String tenchung) {
         rcctsanpham.setLayoutManager(new LinearLayoutManager(ManHinh_CTSanPham.this, RecyclerView.HORIZONTAL, false));
-        list = dao.getListCTSanPham(tansanpham);
+        list = dao.getListCTSanPham(tenchung);
         adapter = new CTSanPhamAdapter(ManHinh_CTSanPham.this, list);
         rcctsanpham.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -275,6 +256,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
             @Override
             public void onItemClick(CTSanPham ctSanPham) {
                 nhankichco.setText(String.valueOf(ctSanPham.getKichco()));
+                nhantenct.setText(ctSanPham.getTensanpham());
                 //load lại số lượng, tổng giá về con số 0
                 muangay_soluong.setText("1");
                 muangay_tongtien.setText("0");
@@ -284,16 +266,16 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         });
         rckichco.setAdapter(kichCoAdapter);
         kichCoAdapter.notifyDataSetChanged();
-        // Khi dữ liệu đã được lấy xong, gọi phương thức onDataLoaded()
     }
 
-    private void loadDSMau(String tansanpham) {
+    private void loadDSMau(String tenchung) {
         rcmau.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL,false));
-        list = dao.getListDSMauSize(tansanpham);
+        list = dao.getListDSMauSize(tenchung);
         mauSacAdapter = new MauSacAdapter(ManHinh_CTSanPham.this, list, new OnItemClickMauSize() {
             @Override
             public void onItemClick(CTSanPham ctSanPham) {
                 nhanmausac.setText(ctSanPham.getTenmausac());
+                nhantenct.setText(ctSanPham.getTensanpham());
                 //load lại số lượng, tổng giá về con số 0
                 muangay_soluong.setText("1");
                 muangay_tongtien.setText("0");
@@ -307,22 +289,22 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         mauSacAdapter.notifyDataSetChanged();
     }
 
-    private void mauSize(String mausac, int kichCo) {
-        if (mausac != null && kichCo != 0) {
+    private void mauSize(String selectedMauSac, int selectedKichCo) {
+        if (selectedMauSac != null && selectedKichCo != 0) {
             ctSanPham = new CTSanPham();
-            ctSanPham = dao.getItemCTSanPham(mausac, kichCo);
+            ctSanPham = dao.getItemCTSanPham(selectedMauSac, selectedKichCo);
+            //Hiện thị thông tin sản phẩm khi click cả 2
             if (ctSanPham != null) {
                 laymactsp = ctSanPham.getMactsanpham();
-                nhanmausac.setText(mausac);
-                nhankichco.setText(Integer.toString(kichCo));
-                nhangia.setText(Integer.toString(ctSanPham.getGia()));
-                nhansiluong.setText(Integer.toString(ctSanPham.getSoluong()));
-                //CHÚ Ý NÈ: đây sẽ là chỗ cho nút mua ngay
+                nhanmausac.setText("Màu: "+ selectedMauSac);
+                nhankichco.setText("Kích cỡ: " + Integer.toString(selectedKichCo));
+                nhangia.setText("Giá: " + Integer.toString(ctSanPham.getGia()));
+                nhansiluong.setText("Số lượng: " + Integer.toString(ctSanPham.getSoluong()));
+                tongGiaSP = ctSanPham.getGia();
                 //CHÚ Ý NÈ: Cong tru va sotien, soluong
-
-                boolean kt = dao.kiemTraTonTaiTrongMactsp(ctSanPham.getMactsanpham(), mausac, kichCo, ctSanPham.getGia(), ctSanPham.getSoluong());
-                if (kt) {
                     if (imgCong != null) {
+                        tongSoLuongSP = 1;
+                        muangay_tongtien.setText(Integer.toString(tongGiaSP));
                         imgCong.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -330,55 +312,54 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                                     tongSoLuongSP++;
                                     tongGiaSP = ctSanPham.getGia() * tongSoLuongSP;
                                     muangay_soluong.setText(String.valueOf(tongSoLuongSP));
-                                    muangay_tongtien.setText(String.valueOf(tongGiaSP));
+                                    muangay_tongtien.setText("Tổng tiền: "+ String.valueOf(tongGiaSP));
+                                }else{
+                                    imgCong.setClickable(false);
+                                    imgTru.setClickable(false);
                                 }
                             }
                         });
-                    }else{
-                        imgCong.setClickable(false);
-                        imgTru.setClickable(false);
                     }
 
                     if (imgTru != null ) {
+                        tongSoLuongSP = 1;
+                        muangay_tongtien.setText(Integer.toString(tongGiaSP));
                         imgTru.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                if (tongSoLuongSP > 1 && ctSanPham != null) {
+                                if (tongSoLuongSP >= 1 && ctSanPham != null) {
                                     tongSoLuongSP--;
                                     tongGiaSP = ctSanPham.getGia() * tongSoLuongSP;
                                     muangay_soluong.setText(String.valueOf(tongSoLuongSP));
-                                    muangay_tongtien.setText(String.valueOf(tongGiaSP));
+                                    muangay_tongtien.setText("Tổng tiền: "+ String.valueOf(tongGiaSP));
+                                }else{
+                                    imgCong.setClickable(false);
+                                    imgTru.setClickable(false);
                                 }
                             }
                         });
-                    }else{
-                        imgCong.setClickable(false);
-                        imgTru.setClickable(false);
                     }
-                } else {
-                    Toast.makeText(this, "Khong ton tai", Toast.LENGTH_SHORT).show();
-                }
             } else {
-                nhangia.setText("0");
-                nhansiluong.setText("0");
+                nhangia.setText("Giá: " + "0");
+                nhansiluong.setText("Số lượng: " + "0");
             }
         } else {
-            nhangia.setText("0");
-            nhansiluong.setText("0");
+            nhangia.setText("Giá: " + "0");
+            nhansiluong.setText("Số lượng: " + "0");
         }
     }
 
 
     @Override
     public void onItemClick(CTSanPham ctSanPham) {
-        if (mausacDen != null && kiccoDen != 0) {
-            mauSize(mausacDen, kiccoDen);
+        if (selectedMauSac != null && selectedKichCo != 0) {
+            mauSize(selectedMauSac, selectedKichCo);
         } else {
 
         }
     }
 
-    private void themsanpham(String tensanpham) {
+    private void themsanpham(String tenchung) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
         View view = inflater.inflate(R.layout.item_ctsanpham_them, null);
@@ -389,7 +370,6 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         txtkichco = view.findViewById(R.id.kicco_ctsanpham_A);
         txtsoluong = view.findViewById(R.id.soluongsanpham_ctsanpham_A);
         txtgia = view.findViewById(R.id.giasanpham_ctsanpham_A);
-
 
         Button btnadd = view.findViewById(R.id.them_ctsanpham_A);
 
@@ -404,24 +384,21 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                         int size = Integer.parseInt(txtkichco.getText().toString());
                         int soluongg = Integer.parseInt(txtsoluong.getText().toString());
                         int giaa = Integer.parseInt(txtgia.getText().toString());
-                        boolean row = dao.ThemCTSanPham(tensanpham, mau, giaa, soluongg, size);
+                        boolean row = dao.ThemCTSanPham(tenchung, mau, giaa, soluongg, size);
                         if (row) {
                             Log.d(TAG, "Thêm thành công");
                             list.clear();
-                            list.addAll(dao.getListCTSanPham(tensanpham));
-                            load(tensanpham);
-                            loadDSKichCo(tensanpham);
-                            loadDSMau(tensanpham);
-
+                            list.addAll(dao.getListCTSanPham(tenchung));
+                            load(tenchung);
+                            loadDSKichCo(tenchung);
+                            loadDSMau(tenchung);
                             Toast.makeText(ManHinh_CTSanPham.this, "Them thanh cong", Toast.LENGTH_SHORT).show();
                         } else {
-
                             Toast.makeText(ManHinh_CTSanPham.this, "That bai", Toast.LENGTH_SHORT).show();
                         }
                     } catch (NumberFormatException e) {
                         Log.i(TAG, "Phai la so", e);
                     }
-
                 } else {
                     Toast.makeText(ManHinh_CTSanPham.this, "Them thanh cong", Toast.LENGTH_SHORT).show();
                 }
@@ -434,8 +411,6 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         ctSanPham = new CTSanPham();
         ctSanPham = dao.getItemCTSanPham(selectedMauSac, selectedKichCo);
         if(ctSanPham != null){
-            boolean kt = dao.kiemTraTonTaiTrongMactsp(ctSanPham.getMactsanpham(), selectedMauSac, selectedKichCo, ctSanPham.getGia(), ctSanPham.getSoluong());
-            if (kt) {
                 daohd = new HoaDonDao(this);
                 listhd = daohd.getDSHoaDon();
                 adapterhd = new HoaDonAdapter(this, listhd);
@@ -443,11 +418,10 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
 
                 if (xemConSoLuong(tongSoLuongSP)) {
                     laySoLuongMoi(tongSoLuongSP);
-                    //
+
                     SharedPreferences sharedPreferences = getSharedPreferences("admin", MODE_PRIVATE);
                     String username = sharedPreferences.getString("taikhoan", "");
                     if (!TextUtils.isEmpty(username)) {
-
                         KhachHang khachHang = dao_nv_kh.getThongTinKhachHang(username);
                         int makh = khachHang.getMakh();
                         if (makh != 0) {
@@ -460,23 +434,28 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                             SimpleDateFormat gioFormat = new SimpleDateFormat("HH:mm");
                             String gio = gioFormat.format(gioDate);
 
-                            boolean row = daohd.ThemHoaDon(makh, tongSoLuongSP, tongGiaSP, ngay, gio);
+                            boolean row = daohd.addHoaDon(makh, tongGiaSP, ngay, gio);
                             if (row) {
                                 listhd.clear();
                                 listhd.addAll(daohd.getDSHoaDon());
                                 adapterhd.notifyDataSetChanged();
-                                Toast.makeText(getApplicationContext(), "Dat hang thanh cong", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Đặt hàng thành công", Toast.LENGTH_SHORT).show();
                                 int mahd=daohd.mahd();
                                 //Cap nhat so luong moi trong sql ne
+
                                 boolean ktsoluongmoi = dao.capNhatSoLuongMoi(laymactsp, newslsanpham);
                                 if (ktsoluongmoi) {
+                                    list.clear();
+                                    list.addAll(dao.getListCTSanPham(tenchung));
+                                    adapter.notifyDataSetChanged();
+
                                     HoaDonCT_Dao daoCTHD = new HoaDonCT_Dao(this);
                                     boolean addCTHD = daoCTHD.themCTHD(mahd,laymactsp,tongSoLuongSP);
                                     if(addCTHD){
                                         list.clear();
                                         list.addAll(dao.getListCTSanPham(tenchung));
                                         adapter.notifyDataSetChanged();
-                                        Toast.makeText(this, "Cap nhat so luong thanh cong", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(this, "Cập nhật số lượng thành công", Toast.LENGTH_SHORT).show();
                                     }
                                 } else {
                                     Toast.makeText(this, "Cap nhat so luong that bai roi", Toast.LENGTH_SHORT).show();
@@ -491,15 +470,10 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                         Toast.makeText(getApplicationContext(), "Khong ton tai", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Het so luong roi", Snackbar.LENGTH_SHORT);
-                    snackbar.show();
-                    Toast.makeText(this, "Het so luong roi", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Sản phẩm này đã hết ạ", Toast.LENGTH_SHORT).show();
                 }
-            }else{
-                Toast.makeText(this, "Không tồn tại sản phẩm này", Toast.LENGTH_SHORT).show();
-            } 
         }else{
-            Toast.makeText(this, "null", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Không tồn tại sản phẩm này", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -522,7 +496,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         builder1.setTitle("Bạn có muốn thêm số lượng mới ?");
         EditText txtma = view1.findViewById(R.id.mactsanpham_them_sl);
         EditText txtsl = view1.findViewById(R.id.soluongthem_sl);
-        builder1.setPositiveButton("Them", new DialogInterface.OnClickListener() {
+        builder1.setPositiveButton("Thêm", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (!TextUtils.isEmpty(txtma.getText().toString()) && !TextUtils.isEmpty(txtsl.getText().toString())) {
@@ -535,7 +509,6 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                             dao.themSoLuongMoi(ma, slDuocCapNhat);
                             Toast.makeText(ManHinh_CTSanPham.this, "Thêm số lượng mới thành công", Toast.LENGTH_SHORT).show();
                             finish();
-
                         } else {
                             Toast.makeText(ManHinh_CTSanPham.this, "Số lượng không tồn tai", Toast.LENGTH_SHORT).show();
                         }
@@ -545,10 +518,9 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
                 }
             }
         });
-        builder1.setNegativeButton("Huy", new DialogInterface.OnClickListener() {
+        builder1.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-//                alertDialog.dismiss();
                 finish();
             }
         });
