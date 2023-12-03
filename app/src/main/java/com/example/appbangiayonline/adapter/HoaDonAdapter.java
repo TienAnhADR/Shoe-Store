@@ -52,22 +52,22 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.Viewholder
 
     @Override
     public void onBindViewHolder(@NonNull Viewholder holder, @SuppressLint("RecyclerView") int position) {
-        holder.ma.setText("Mã hóa đơn : " +Integer.toString(list.get(position).getMahoadon()));
-        holder.tennv.setText("Tên nhân viên : " +list.get(position).getTennv());
-        holder.tenkh.setText("Tên khách hàng : " +list.get(position).getTenkh());
-        holder.tongtien.setText("Tổng tiền : " +Integer.toString(list.get(position).getTongTien()));
-        holder.ngay.setText("Ngày : " +list.get(position).getNgay());
-        holder.gio.setText("Giờ : " +list.get(position).getGio());
+        holder.ma.setText("Mã hóa đơn : " + Integer.toString(list.get(position).getMahoadon()));
+        holder.tennv.setText("Tên nhân viên : " + list.get(position).getTennv());
+        holder.tenkh.setText("Tên khách hàng : " + list.get(position).getTenkh());
+        holder.tongtien.setText("Tổng tiền : " + Integer.toString(list.get(position).getTongTien()));
+        holder.ngay.setText("Ngày : " + list.get(position).getNgay());
+        holder.gio.setText("Giờ : " + list.get(position).getGio());
         holder.btnxacnhan.setText(Integer.toString(list.get(position).getTrangthai()));
 
         int mahd = list.get(position).getMahoadon();
         String trangthai = "";
-        if(list.get(position).getTrangthai() == 0){
-            trangthai ="Xac nhan";
+        if (list.get(position).getTrangthai() == 0) {
+            trangthai = "Xac nhan";
             holder.btnxacnhan.setVisibility(View.VISIBLE);
             holder.tennv.setVisibility(View.INVISIBLE);
             holder.tennv.setText("Tên nhân viên: " + list.get(position).getTennv());
-         }else{
+        } else {
             trangthai = "Da xac nhan";
             holder.tennv.setVisibility(View.VISIBLE);
             holder.btnxacnhan.setVisibility(View.GONE);
@@ -77,9 +77,9 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.Viewholder
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("admin", MODE_PRIVATE);
         int check = sharedPreferences.getInt("setting", 2);
-        if(check == 2){
+        if (check == 2) {
             holder.btnxacnhan.setVisibility(View.GONE);
-        }else{
+        } else {
             holder.btnxacnhan.setText("Xác nhận");
         }
         holder.btnxacnhan.setOnClickListener(new View.OnClickListener() {
@@ -124,7 +124,7 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.Viewholder
             @Override
             public void onClick(View v) {
                 int mahd2 = list.get(position).getMahoadon();
-                showDialog_CT_HoaDon(mahd,position);
+                showDialog_CT_HoaDon(mahd, position);
             }
         });
     }
@@ -137,21 +137,23 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.Viewholder
     public class Viewholder extends RecyclerView.ViewHolder {
         TextView ma, tenkh, tennv, tongtien, trangthai_texthd, ngay, gio;
         Button btnxacnhan;
+
         public Viewholder(@NonNull View itemView) {
             super(itemView);
             ma = itemView.findViewById(R.id.txtma_Hoadon);
             tennv = itemView.findViewById(R.id.txttennhanvien_Hoadon);
             tenkh = itemView.findViewById(R.id.txttenkh_Hoadon);
-            tongtien= itemView.findViewById(R.id.txttongtien_Hoadon);
-            ngay= itemView.findViewById(R.id.txtngay_Hoadon);
-            gio= itemView.findViewById(R.id.txtgio_Hoadon);
-            trangthai_texthd= itemView.findViewById(R.id.trangthai_text_hoadon);
+            tongtien = itemView.findViewById(R.id.txttongtien_Hoadon);
+            ngay = itemView.findViewById(R.id.txtngay_Hoadon);
+            gio = itemView.findViewById(R.id.txtgio_Hoadon);
+            trangthai_texthd = itemView.findViewById(R.id.trangthai_text_hoadon);
             btnxacnhan = itemView.findViewById(R.id.txttrangthai_Hoadon);
         }
     }
-    private void showDialog_CT_HoaDon(int mahd,int posison){
+
+    private void showDialog_CT_HoaDon(int mahd, int posison) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        LayoutInflater inflater  = ((Activity) context).getLayoutInflater();
+        LayoutInflater inflater = ((Activity) context).getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_ct_hoa_don, null);
         builder.setView(view);
         TextView txtHoadon = view.findViewById(R.id.txtMaHoaDonCT);
@@ -161,17 +163,17 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.Viewholder
         RecyclerView rcv = view.findViewById(R.id.recylerV_SP_hoaDonCT);
         HoaDonCT_Dao daoHDCT = new HoaDonCT_Dao(context);
         ArrayList<CTSanPham> listCTSP = daoHDCT.getListSP_CTHD(mahd);
-        txtHoadon.setText("Hóa đơn "+ (mahd));
-        txtTenNV.setText("Nhân viên: "+list.get(posison).getTennv());
-        txtTenKH.setText("Khách hàng: "+list.get(posison).getTenkh());
+        txtHoadon.setText("Hóa đơn " + (mahd));
+        txtTenNV.setText("Nhân viên: " + list.get(posison).getTennv());
+        txtTenKH.setText("Khách hàng: " + list.get(posison).getTenkh());
         int tongTien = 0;
-        for (CTSanPham x:listCTSP){
+        for (CTSanPham x : listCTSP) {
             tongTien += x.tinhTien_1_SP();
         }
-        txtTongTien.setText("Tổng thanh toán: "+tongTien+" VND");
+        txtTongTien.setText("Tổng thanh toán: " + tongTien + " VND");
         LinearLayoutManager manager = new LinearLayoutManager(context);
         rcv.setLayoutManager(manager);
-        HoaDonCT_Adapter adapter = new HoaDonCT_Adapter(context,listCTSP);
+        HoaDonCT_Adapter adapter = new HoaDonCT_Adapter(context, listCTSP);
         rcv.setAdapter(adapter);
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
