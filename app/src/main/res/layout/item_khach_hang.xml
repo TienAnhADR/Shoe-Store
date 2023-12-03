@@ -47,6 +47,13 @@
                 android:text="Địa chỉ"
                 android:textSize="18sp"
                 android:textColor="#808080"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtTrangthai_KH"
+                android:text="Trạng thái"
+                android:textSize="18sp"
+                android:textColor="#808080"/>
         </LinearLayout>
         <LinearLayout
 

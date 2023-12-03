@@ -40,6 +40,7 @@ public class KhachHangAdapter extends RecyclerView.Adapter<KhachHangAdapter.View
         holder.txtDiaChi.setText("Địa chỉ :"+kh.getDiachi());
         holder.btnSua.setVisibility(View.GONE);
         holder.btnXoa.setVisibility(View.GONE);
+        holder.txtTrangthai.setVisibility(View.GONE);
     }
 
     @Override
@@ -48,10 +49,11 @@ public class KhachHangAdapter extends RecyclerView.Adapter<KhachHangAdapter.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtTen,txtSDT,txtEmail,txtDiaChi;
+        TextView txtTen,txtSDT,txtEmail,txtDiaChi,txtTrangthai;
         ImageView btnSua,btnXoa;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            txtTrangthai = itemView.findViewById(R.id.txtTrangthai_KH);
             txtEmail = itemView.findViewById(R.id.txtEmail_KH);
             txtSDT = itemView.findViewById(R.id.txtSDT_KH);
             txtTen = itemView.findViewById(R.id.txtTenKH);

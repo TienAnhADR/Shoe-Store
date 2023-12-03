@@ -1,5 +1,7 @@
 package com.example.appbangiayonline.fragmentTA;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -51,6 +53,12 @@ public class FragmentNhanVien extends Fragment {
         recyclerView = view.findViewById(R.id.recylerV_NhanVien);
         floadAdd = view.findViewById(R.id.fload_btn_Add_NhanVien);
         setAdapter();
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("admin", MODE_PRIVATE);
+        String username = sharedPreferences.getString("taikhoan", "");
+        NhanVien nv2 = dao.getThongTinNhanVien(username);
+        if(nv2.getChucvu()==0){
+            floadAdd.setVisibility(View.GONE);
+        }
 
         floadAdd.setOnClickListener(new View.OnClickListener() {
             @Override

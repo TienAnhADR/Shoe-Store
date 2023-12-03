@@ -2,6 +2,7 @@ package com.example.appbangiayonline.adapter;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -49,7 +50,7 @@ public class NhanVienAdapter extends RecyclerView.Adapter<NhanVienAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         dao = new NhanVien_KhachHang_Dao(context);
         NhanVien kh = list.get(position);
 
@@ -58,22 +59,33 @@ public class NhanVienAdapter extends RecyclerView.Adapter<NhanVienAdapter.ViewHo
         holder.txtEmail.setText("Email : "+kh.getEmail());
         String chucVu = kh.getChucvu()==0 ? "Nhân viên" : "Admin";
         holder.txtDiaChi.setText("Chức vụ : "+ chucVu);
-        NhanVien_KhachHang_Dao dao = new NhanVien_KhachHang_Dao(context);
-        holder.btnXoa.setVisibility(View.GONE);
+        String trangThai = kh.getTrangthai() != 0 ? "Đã nghỉ":"Còn làm";
+
+
+        holder.txtTrangthai.setText("Trạng thái: "+trangThai);
         SharedPreferences sharedPreferences = context.getSharedPreferences("admin", MODE_PRIVATE);
         String username = sharedPreferences.getString("taikhoan", "");
         NhanVien nv2 = dao.getThongTinNhanVien(username);
         if(nv2.getChucvu()==0){
             holder.btnSua.setVisibility(View.GONE);
+            holder.btnXoa.setVisibility(View.GONE);
         }
 
         holder.btnXoa.setOnClickListener(new View.OnClickListener() {
+            int trangthai = 0;
             @Override
             public void onClick(View v) {
-                if(dao.xoaNhanVien(kh.getManv())){
+                if(kh.getTrangthai()==0){
+                    trangthai = 1;
+                }else {
+                    trangthai = 0;
+                }
+                if(dao.xoaNhanVien(kh.getManv(),trangthai)){
                     Toast.makeText(context, "Đã xóa nhân viên: "+kh.getHoten(), Toast.LENGTH_SHORT).show();
                     SharedPreferences sharedPreferences = context.getSharedPreferences("admin", MODE_PRIVATE);
                     String username = sharedPreferences.getString("taikhoan", "");
+                    kh.getTaikhoan();
+
                     if(kh.getTaikhoan().equals(username)){
                         Intent intent = new Intent(context, DangNhap.class);
                         context.startActivity(intent);
@@ -100,11 +112,12 @@ public class NhanVienAdapter extends RecyclerView.Adapter<NhanVienAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtTen,txtSDT,txtEmail,txtDiaChi;
+        TextView txtTen,txtSDT,txtEmail,txtDiaChi,txtTrangthai;
         ImageView btnSua,btnXoa;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            txtTrangthai = itemView.findViewById(R.id.txtTrangthai_KH);
             txtEmail = itemView.findViewById(R.id.txtEmail_KH);
             txtSDT = itemView.findViewById(R.id.txtSDT_KH);
             txtTen = itemView.findViewById(R.id.txtTenKH);
