@@ -59,6 +59,17 @@
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:text="Tổng tiền"
-        android:textSize="24sp" />
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10sp"
+        android:paddingTop="15sp"
+        android:paddingBottom="15sp"
+        android:text="Thanh toán"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
 </LinearLayout>

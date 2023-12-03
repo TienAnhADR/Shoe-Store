@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerLayout);
         setSupportActionBar(toolbar);
         SharedPreferences sharedPreferences = getSharedPreferences("admin", Context.MODE_PRIVATE);
-        check = sharedPreferences.getInt("setting",0);
+        check = sharedPreferences.getInt("setting", 0);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         Button btn_user = findViewById(R.id.btn_user_fg);
         Button cart = findViewById(R.id.btn_cart_fg);
         cart.setVisibility(View.GONE);
-        if (check==2) cart.setVisibility(View.VISIBLE);
+        if (check == 2) cart.setVisibility(View.VISIBLE);
         cart.setOnClickListener(view -> {
             Intent intent = new Intent(MainActivity.this, Activity_GioHang.class);
             startActivity(intent);
@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
                 change_Fragment(new FragmentKhachHang(), "Quản lí khách hàng");
             }
         });
-        if(check==2){
+        if (check == 2) {
             Menu menu = navigationView.getMenu();
             menu.findItem(R.id.mThongKe).setVisible(false);
             menu.findItem(R.id.mQLNhanVien).setVisible(false);

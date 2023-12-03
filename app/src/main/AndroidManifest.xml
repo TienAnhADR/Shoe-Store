@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -29,16 +32,26 @@
             android:exported="false" />
         <activity
             android:name=".activity.Activity_GioHang"
-            android:exported="false" />
+            android:exported="true"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="demozpdk" android:host="app" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".activity.DangKi"
             android:exported="false" />
         <activity
             android:name=".activity.MainActivity"
-            android:exported="false" /> <!-- doi ơ day tu welcome doi sang main -->
+            android:exported="false" />
         <activity
             android:name=".activity.DangNhap"
-            android:exported="true">
+            android:exported="true"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
