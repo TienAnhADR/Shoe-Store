@@ -17,6 +17,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -29,6 +30,8 @@ import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +53,7 @@ import com.example.appbangiayonline.model.HoaDon;
 import com.example.appbangiayonline.model.KhachHang;
 
 import com.example.appbangiayonline.model.SanPham;
+import com.example.appbangiayonline.zalo_pay.ZaloPay;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -60,9 +64,15 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import vn.zalopay.sdk.Environment;
+import vn.zalopay.sdk.ZaloPayError;
+import vn.zalopay.sdk.ZaloPaySDK;
+import vn.zalopay.sdk.listeners.PayOrderListener;
+
 
 public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickMauSize {
     String tenchung;
+
     TextView nhanten;
     ImageButton giohang;
     Button muaNgay;
@@ -94,7 +104,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
 
     //cong tru
     int tongSoLuongSP = 1;
-    int tongGiaSP ;
+    int tongGiaSP;
     //cong tru soluong tongtien
     ImageView imgCong;
     ImageView imgTru;
@@ -122,12 +132,17 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_man_hinh_ctsan_pham);
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        ZaloPaySDK.init(2553, Environment.SANDBOX);
+
         SharedPreferences sharedPreferences = getSharedPreferences("admin", Context.MODE_PRIVATE);
-        check = sharedPreferences.getInt("setting",0);
+        check = sharedPreferences.getInt("setting", 0);
 
         giohang = findViewById(R.id.giohang_sanpham);
         muaNgay = findViewById(R.id.muangay_sanpham);
-        if(check!=2){
+        if (check != 2) {
             giohang.setVisibility(View.GONE);
             muaNgay.setText("Xem chi tiết");
         }
@@ -146,6 +161,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         Intent intent = getIntent();
 
         if (intent.hasExtra("obj_sanpham")) {
+
             SanPham sanPham = (SanPham) intent.getSerializableExtra("obj_sanpham");
             bitmap = ConvertImage.ByteToBitmap(sanPham.getImage());
             tenchung = sanPham.getTensanpham();
@@ -167,7 +183,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_muangay);
-        dialog.dismiss();
+
         TextView txtspct = dialog.findViewById(R.id.txtspct);
         ImageView quaylai = dialog.findViewById(R.id.quaylai);
         themSL_CTSanPham = dialog.findViewById(R.id.themSoLuongMoi);
@@ -181,8 +197,10 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         //CHÚ Ý NÈ: Cong tru va sotien, soluong
         imgCong = dialog.findViewById(R.id.imgCong);
         imgTru = dialog.findViewById(R.id.imgTru);
+
         muangay_soluong = dialog.findViewById(R.id.tongsoluong_muangay);
         muangay_tongtien = dialog.findViewById(R.id.tongtien_muangay);
+
         quaylai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -192,7 +210,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
 
         //XacNhanMuaNgay
         btnxacnhanhoadon = dialog.findViewById(R.id.xacnhanhoadon);
-        if(check!=2){
+        if (check != 2) {
             btnxacnhanhoadon.setVisibility(View.GONE);
         }
         btnxacnhanhoadon.setOnClickListener(new View.OnClickListener() {
@@ -211,6 +229,12 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         FloatingActionButton fl = dialog.findViewById(R.id.flthemsanpham);
 
 
+// <<<<<<< nhanh_Quan
+//         if (check == 2) fl.setVisibility(View.GONE);
+//         themSL_CTSanPham.setVisibility(View.GONE);
+//         rcctsanpham.setVisibility(View.GONE);
+//         txtspct.setVisibility(View.GONE);
+// =======
         if(check == 2){
             fl.setVisibility(View.GONE);
             themSL_CTSanPham.setVisibility(View.GONE);
@@ -223,6 +247,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
             txtspct.setVisibility(View.VISIBLE);
         }
 
+// >>>>>>> master
 //        nhan vao item
         nhantenct = dialog.findViewById(R.id.tensanphamct);
         nhankichco = dialog.findViewById(R.id.kiccosanphamct);
@@ -252,6 +277,123 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         dialog.show();
     }
 
+    //zalo//
+    public void thanhToan(String giatien) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View v = LayoutInflater.from(this).inflate(R.layout.dialog_xacnhanmua, null);
+        builder.setView(v);
+
+        AlertDialog dialog = builder.create();
+        RadioButton rdbtn_ttnhanhang = v.findViewById(R.id.rdbtn_ttkhinhan);
+        RadioButton rdbtn_ttzalo = v.findViewById(R.id.rdbtn_ttzalo);
+        LinearLayout layout = v.findViewById(R.id.layout_zalo);
+        TextView code_donhang = v.findViewById(R.id.txt_code_donhang);
+        TextView tongtien = v.findViewById(R.id.txt_tongtien_thanhtoan);
+        Button xacnhan = v.findViewById(R.id.btn_xacnhan_thanhtoan);
+
+        rdbtn_ttnhanhang.setOnClickListener(view -> {
+            if (rdbtn_ttnhanhang.isChecked()) {
+                layout.setVisibility(View.GONE);
+            }
+        });
+
+        rdbtn_ttzalo.setOnClickListener(view -> {
+            if (rdbtn_ttzalo.isChecked()) {
+                layout.setVisibility(View.VISIBLE);
+            }
+        });
+        String code = ZaloPay.createHoadon(giatien);
+        code_donhang.setText(code);
+        tongtien.setText(giatien + " VND");
+
+        xacnhan.setOnClickListener(view -> {
+            if (!rdbtn_ttnhanhang.isChecked() && !rdbtn_ttzalo.isChecked()) {
+                Toast.makeText(this, "Bạn chưa chọn phương thức thanh toán!", Toast.LENGTH_SHORT).show();
+            } else {
+                if (rdbtn_ttnhanhang.isChecked()) {
+                    dialog.dismiss();
+                    Toast.makeText(this, "Thanh toán thành công", Toast.LENGTH_SHORT).show();
+                }
+                if (rdbtn_ttzalo.isChecked()) {
+                    ZaloPaySDK.getInstance().payOrder(ManHinh_CTSanPham.this, code_donhang.getText().toString().trim(), "ctsp://app", new PayOrderListener() {
+                        @Override
+                        public void onPaymentSucceeded(final String transactionId, final String transToken, final String appTransID) {
+                            SharedPreferences sharedPreferences = getSharedPreferences("admin", MODE_PRIVATE);
+                            String username = sharedPreferences.getString("taikhoan", "");
+
+                            if (!TextUtils.isEmpty(username)) {
+                                KhachHang khachHang = dao_nv_kh.getThongTinKhachHang(username);
+                                int makh = khachHang.getMakh();
+                                if (makh != 0) {
+                                    //lay ngay,thangg, nam
+                                    Date ngayDate = Calendar.getInstance().getTime();
+                                    SimpleDateFormat ngDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                                    String ngay = ngDateFormat.format(ngayDate);
+                                    //lay gio
+                                    Date gioDate = new Date();
+                                    SimpleDateFormat gioFormat = new SimpleDateFormat("HH:mm");
+                                    String gio = gioFormat.format(gioDate);
+
+                                    boolean row = daohd.addHoaDon(makh, tongGiaSP, ngay, gio);
+                                    if (row) {
+                                        listhd.clear();
+                                        listhd.addAll(daohd.getDSHoaDon());
+                                        adapterhd.notifyDataSetChanged();
+                                        int mahd = daohd.mahd();
+                                        //Cap nhat so luong moi trong sql ne
+
+                                        boolean ktsoluongmoi = dao.capNhatSoLuongMoi(laymactsp, newslsanpham);
+                                        if (ktsoluongmoi) {
+
+                                            list.clear();
+                                            list.addAll(dao.getListCTSanPham(tenchung));
+                                            adapter.notifyDataSetChanged();
+
+                                            HoaDonCT_Dao daoCTHD = new HoaDonCT_Dao(ManHinh_CTSanPham.this);
+                                            boolean addCTHD = daoCTHD.themCTHD(mahd, laymactsp, tongSoLuongSP);
+
+                                            if (addCTHD) {
+                                                list.clear();
+                                                list.addAll(dao.getListCTSanPham(tenchung));
+                                                adapter.notifyDataSetChanged();
+                                                Toast.makeText(ManHinh_CTSanPham.this, "Cập nhật số lượng thành công", Toast.LENGTH_SHORT).show();
+                                            }
+
+                                            Intent intent1 = new Intent(ManHinh_CTSanPham.this, MainActivity.class);
+                                            intent1.putExtra("gethoadon", ":D");
+                                            Toast.makeText(ManHinh_CTSanPham.this, "Thanh toán thành công!", Toast.LENGTH_SHORT).show();
+                                            dialog.dismiss();
+                                            startActivity(intent1);
+
+                                        } else {
+                                            Toast.makeText(ManHinh_CTSanPham.this, "Cap nhat so luong that bai roi", Toast.LENGTH_SHORT).show();
+                                        }
+
+                                    }
+                                } else {
+                                    Toast.makeText(ManHinh_CTSanPham.this, "Khong ton tai", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onPaymentCanceled(String zpTransToken, String appTransID) {
+                            Toast.makeText(ManHinh_CTSanPham.this, "Bạn đã hủy thanh toán!", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onPaymentError(ZaloPayError zaloPayError, String zpTransToken, String appTransID) {
+                            Toast.makeText(ManHinh_CTSanPham.this, "Lỗi thanh toán!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                }
+            }
+        });
+        dialog.show();
+    }
+
+    /////
     private void load(String tenchung) {
         rcctsanpham.setLayoutManager(new LinearLayoutManager(ManHinh_CTSanPham.this, RecyclerView.HORIZONTAL, false));
         list = dao.getListCTSanPham(tenchung);
@@ -281,7 +423,7 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
     }
 
     private void loadDSMau(String tenchung) {
-        rcmau.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL,false));
+        rcmau.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         list = dao.getListDSMauSize(tenchung);
         mauSacAdapter = new MauSacAdapter(ManHinh_CTSanPham.this, list, new OnItemClickMauSize() {
             @Override
@@ -308,49 +450,49 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
             //Hiện thị thông tin sản phẩm khi click cả 2
             if (ctSanPham != null) {
                 laymactsp = ctSanPham.getMactsanpham();
-                nhanmausac.setText("Màu: "+ selectedMauSac);
+                nhanmausac.setText("Màu: " + selectedMauSac);
                 nhankichco.setText("Kích cỡ: " + Integer.toString(selectedKichCo));
                 nhangia.setText("Giá: " + Integer.toString(ctSanPham.getGia()));
                 nhansiluong.setText("Số lượng: " + Integer.toString(ctSanPham.getSoluong()));
                 tongGiaSP = ctSanPham.getGia();
                 //CHÚ Ý NÈ: Cong tru va sotien, soluong
-                    if (imgCong != null) {
-                        tongSoLuongSP = 1;
-                        muangay_tongtien.setText(Integer.toString(tongGiaSP));
-                        imgCong.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                if (tongSoLuongSP >= 0 && ctSanPham != null) {
-                                    tongSoLuongSP++;
-                                    tongGiaSP = ctSanPham.getGia() * tongSoLuongSP;
-                                    muangay_soluong.setText(String.valueOf(tongSoLuongSP));
-                                    muangay_tongtien.setText("Tổng tiền: "+ String.valueOf(tongGiaSP));
-                                }else{
-                                    imgCong.setClickable(false);
-                                    imgTru.setClickable(false);
-                                }
+                if (imgCong != null) {
+                    tongSoLuongSP = 1;
+                    muangay_tongtien.setText(Integer.toString(tongGiaSP));
+                    imgCong.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if (tongSoLuongSP >= 0 && ctSanPham != null) {
+                                tongSoLuongSP++;
+                                tongGiaSP = ctSanPham.getGia() * tongSoLuongSP;
+                                muangay_soluong.setText(String.valueOf(tongSoLuongSP));
+                                muangay_tongtien.setText("Tổng tiền: " + String.valueOf(tongGiaSP));
+                            } else {
+                                imgCong.setClickable(false);
+                                imgTru.setClickable(false);
                             }
-                        });
-                    }
+                        }
+                    });
+                }
 
-                    if (imgTru != null ) {
-                        tongSoLuongSP = 1;
-                        muangay_tongtien.setText(Integer.toString(tongGiaSP));
-                        imgTru.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                if (tongSoLuongSP >= 1 && ctSanPham != null) {
-                                    tongSoLuongSP--;
-                                    tongGiaSP = ctSanPham.getGia() * tongSoLuongSP;
-                                    muangay_soluong.setText(String.valueOf(tongSoLuongSP));
-                                    muangay_tongtien.setText("Tổng tiền: "+ String.valueOf(tongGiaSP));
-                                }else{
-                                    imgCong.setClickable(false);
-                                    imgTru.setClickable(false);
-                                }
+                if (imgTru != null) {
+                    tongSoLuongSP = 1;
+                    muangay_tongtien.setText(Integer.toString(tongGiaSP));
+                    imgTru.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if (tongSoLuongSP >= 1 && ctSanPham != null) {
+                                tongSoLuongSP--;
+                                tongGiaSP = ctSanPham.getGia() * tongSoLuongSP;
+                                muangay_soluong.setText(String.valueOf(tongSoLuongSP));
+                                muangay_tongtien.setText("Tổng tiền: " + String.valueOf(tongGiaSP));
+                            } else {
+                                imgCong.setClickable(false);
+                                imgTru.setClickable(false);
                             }
-                        });
-                    }
+                        }
+                    });
+                }
             } else {
                 nhangia.setText("Giá: " + "0");
                 nhansiluong.setText("Số lượng: " + "0");
@@ -366,9 +508,10 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
     public void onItemClick(CTSanPham ctSanPham) {
         if (selectedMauSac != null && selectedKichCo != 0) {
             mauSize(selectedMauSac, selectedKichCo);
-        } else {
-
         }
+//        else {
+//
+//        }
     }
 
     private void themsanpham(String tenchung) {
@@ -420,73 +563,28 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
     }
 
     private void XacNhanMuaNgay(int tongSoLuongSP, int tongGiaSP) {
+
         ctSanPham = new CTSanPham();
         ctSanPham = dao.getItemCTSanPham(selectedMauSac, selectedKichCo);
-        if(ctSanPham != null){
-                daohd = new HoaDonDao(this);
-                listhd = daohd.getDSHoaDon();
-                adapterhd = new HoaDonAdapter(this, listhd);
-                dao_nv_kh = new NhanVien_KhachHang_Dao(this);
+        //qua bat luc nen phai use flag :<
 
-                if (xemConSoLuong(tongSoLuongSP)) {
-                    laySoLuongMoi(tongSoLuongSP);
 
-                    SharedPreferences sharedPreferences = getSharedPreferences("admin", MODE_PRIVATE);
-                    String username = sharedPreferences.getString("taikhoan", "");
-                    if (!TextUtils.isEmpty(username)) {
-                        KhachHang khachHang = dao_nv_kh.getThongTinKhachHang(username);
-                        int makh = khachHang.getMakh();
-                        if (makh != 0) {
-                            //lay ngay,thangg, nam
-                            Date ngayDate = Calendar.getInstance().getTime();
-                            SimpleDateFormat ngDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                            String ngay = ngDateFormat.format(ngayDate);
-                            //lay gio
-                            Date gioDate = new Date();
-                            SimpleDateFormat gioFormat = new SimpleDateFormat("HH:mm");
-                            String gio = gioFormat.format(gioDate);
+        if (ctSanPham != null) {
+            daohd = new HoaDonDao(this);
+            listhd = daohd.getDSHoaDon();
+            adapterhd = new HoaDonAdapter(this, listhd);
+            dao_nv_kh = new NhanVien_KhachHang_Dao(this);
 
-                            boolean row = daohd.addHoaDon(makh, tongGiaSP, ngay, gio);
-                            if (row) {
-                                listhd.clear();
-                                listhd.addAll(daohd.getDSHoaDon());
-                                adapterhd.notifyDataSetChanged();
-                                Toast.makeText(getApplicationContext(), "Đặt hàng thành công", Toast.LENGTH_SHORT).show();
-                                int mahd=daohd.mahd();
-                                //Cap nhat so luong moi trong sql ne
-
-                                boolean ktsoluongmoi = dao.capNhatSoLuongMoi(laymactsp, newslsanpham);
-                                if (ktsoluongmoi) {
-                                    list.clear();
-                                    list.addAll(dao.getListCTSanPham(tenchung));
-                                    adapter.notifyDataSetChanged();
-
-                                    HoaDonCT_Dao daoCTHD = new HoaDonCT_Dao(this);
-                                    boolean addCTHD = daoCTHD.themCTHD(mahd,laymactsp,tongSoLuongSP);
-                                    if(addCTHD){
-                                        list.clear();
-                                        list.addAll(dao.getListCTSanPham(tenchung));
-                                        adapter.notifyDataSetChanged();
-                                        Toast.makeText(this, "Cập nhật số lượng thành công", Toast.LENGTH_SHORT).show();
-                                    }
-                                } else {
-                                    Toast.makeText(this, "Cap nhat so luong that bai roi", Toast.LENGTH_SHORT).show();
-                                }
-                            } else {
-                                Toast.makeText(getApplicationContext(), "Dat hang that bai", Toast.LENGTH_SHORT).show();
-                            }
-                        } else {
-                            Toast.makeText(this, "Khong ton tai", Toast.LENGTH_SHORT).show();
-                        }
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Khong ton tai", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(this, "Sản phẩm này đã hết ạ", Toast.LENGTH_SHORT).show();
-                }
-        }else{
+            if (xemConSoLuong(tongSoLuongSP)) {
+                laySoLuongMoi(tongSoLuongSP);
+                thanhToan(String.valueOf(tongGiaSP));
+            } else {
+                Toast.makeText(this, "Sản phẩm này đã hết ạ", Toast.LENGTH_SHORT).show();
+            }
+        } else {
             Toast.makeText(this, "Không tồn tại sản phẩm này", Toast.LENGTH_SHORT).show();
         }
+
     }
 
     private boolean xemConSoLuong(int tongSoLuongSP) {
@@ -706,5 +804,11 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
             txt_giasp.setText(0 + "VNĐ");
             txt_slsp.setText("Kho: " + 0);
         }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        ZaloPaySDK.getInstance().onResult(intent);
     }
 }

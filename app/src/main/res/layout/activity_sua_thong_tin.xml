@@ -135,20 +135,11 @@
 
         <Button
             android:id="@+id/btn_suatk_nguoidung"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10sp"
-            android:layout_weight="1"
             android:background="@drawable/radius_"
             android:text="Cập nhật thông tin" />
 
-        <Button
-            android:id="@+id/btn_xoatk_nguoidung"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10sp"
-            android:layout_weight="1"
-            android:background="@drawable/radius_"
-            android:text="Xóa tài khoản" />
     </LinearLayout>
 </RelativeLayout>

@@ -123,7 +123,7 @@ public class Activity_GioHang extends AppCompatActivity {
                 makh = 1;
             }
         }
-//lay ngay thang
+        //lay ngay thang
         Date ngayDate = Calendar.getInstance().getTime();
         SimpleDateFormat ngDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String ngay = ngDateFormat.format(ngayDate);
@@ -146,31 +146,27 @@ public class Activity_GioHang extends AppCompatActivity {
 
                     AlertDialog.Builder alBuilder = new AlertDialog.Builder(this);
                     if (listchk.size() != 0) {
-                        alBuilder.setTitle("Thanh toán sản phẩm trong giỏ hàng!").setIcon(R.drawable.baseline_error_outline_24).setMessage("Bạn có chắc chắn muốn Thanh toán sản phẩm").setPositiveButton("Có", ((dialogInterface, i) -> {
-                            listchk.forEach(e -> {
-                                list.forEach(e1 -> {
-                                    if (e1.getMagiohang() == e) {
-                                        sl = e1.getSl_mua();
-                                        kichco = e1.getKichco();
-                                        mausac = e1.getMausac();
-                                    }
-                                });
-                                int masp = dao.getMaCTSP(e);
-//                                        daoHDCT.themCTHD(mahd, daoSP.getMaCTSP(masp, mausac, kichco), sl);
-//                                        dao.remove_data(e);
-                            });
+                        alBuilder
+                                .setTitle("Thanh toán sản phẩm trong giỏ hàng!")
+                                .setIcon(R.drawable.baseline_error_outline_24)
+                                .setMessage("Bạn có chắc chắn muốn Thanh toán sản phẩm")
+                                .setPositiveButton("Có", ((dialogInterface, i) -> {
+                                    listchk.forEach(e -> {
+                                        list.forEach(e1 -> {
+                                            if (e1.getMagiohang() == e) {
+                                                sl = e1.getSl_mua();
+                                                kichco = e1.getKichco();
+                                                mausac = e1.getMausac();
+                                            }
+                                        });
+                                        int masp = dao.getMaCTSP(e);
+                                        daoHDCT.themCTHD(mahd, daoSP.getMaCTSP(masp, mausac, kichco), sl);
+                                        dao.remove_data(e);
+                                    });
 
-                            listchk.clear();
-                            tongtien.setText("0 VNĐ");
-                            reload();
-
-
-//                                    Intent intent1 = new Intent(Activity_GioHang.this, MainActivity.class);
-//                                    intent1.putExtra("gethoadon", ":D");
-//                                    startActivity(intent1);
-                            thanhToan(String.valueOf(s));
-                        })).setNegativeButton("Không", ((dialogInterface, i) -> {
-                        }));
+                                    thanhToan(String.valueOf(s));
+                                })).setNegativeButton("Không", ((dialogInterface, i) -> {
+                                }));
                     }
                     alBuilder.show();
                 }
@@ -214,6 +210,7 @@ public class Activity_GioHang extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View v = LayoutInflater.from(this).inflate(R.layout.dialog_xacnhanmua, null);
         builder.setView(v);
+
         AlertDialog dialog = builder.create();
         RadioButton rdbtn_ttnhanhang = v.findViewById(R.id.rdbtn_ttkhinhan);
         RadioButton rdbtn_ttzalo = v.findViewById(R.id.rdbtn_ttzalo);
@@ -221,11 +218,13 @@ public class Activity_GioHang extends AppCompatActivity {
         TextView code_donhang = v.findViewById(R.id.txt_code_donhang);
         TextView tongtien = v.findViewById(R.id.txt_tongtien_thanhtoan);
         Button xacnhan = v.findViewById(R.id.btn_xacnhan_thanhtoan);
+
         rdbtn_ttnhanhang.setOnClickListener(view -> {
             if (rdbtn_ttnhanhang.isChecked()) {
                 layout.setVisibility(View.GONE);
             }
         });
+
         rdbtn_ttzalo.setOnClickListener(view -> {
             if (rdbtn_ttzalo.isChecked()) {
                 layout.setVisibility(View.VISIBLE);
@@ -244,18 +243,29 @@ public class Activity_GioHang extends AppCompatActivity {
                     Toast.makeText(this, "Thanh toán thành công", Toast.LENGTH_SHORT).show();
                 }
                 if (rdbtn_ttzalo.isChecked()) {
-                    ZaloPaySDK.getInstance().payOrder(Activity_GioHang.this, code_donhang.getText().toString().trim(), "demozpdk://app", new PayOrderListener() {
+                    ZaloPaySDK.getInstance().payOrder(Activity_GioHang.this, code_donhang.getText().toString().trim(), "giohang://app", new PayOrderListener() {
                         @Override
                         public void onPaymentSucceeded(final String transactionId, final String transToken, final String appTransID) {
+                            listchk.clear();
+                            tongtien.setText("0 VNĐ");
+                            reload();
+
+                            Intent intent1 = new Intent(Activity_GioHang.this, MainActivity.class);
+                            intent1.putExtra("gethoadon", ":D");
+                            Toast.makeText(Activity_GioHang.this, "Thanh toán thành công!", Toast.LENGTH_SHORT).show();
+
                             dialog.dismiss();
+                            startActivity(intent1);
                         }
 
                         @Override
                         public void onPaymentCanceled(String zpTransToken, String appTransID) {
+                            Toast.makeText(Activity_GioHang.this, "Bạn đã hủy thanh toán!", Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
                         public void onPaymentError(ZaloPayError zaloPayError, String zpTransToken, String appTransID) {
+                            Toast.makeText(Activity_GioHang.this, "Lỗi thanh toán!", Toast.LENGTH_SHORT).show();
                         }
                     });
 

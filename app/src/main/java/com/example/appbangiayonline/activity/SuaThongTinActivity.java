@@ -66,16 +66,6 @@ public class SuaThongTinActivity extends AppCompatActivity {
                 finish();
             }
         });
-        Button deleteIn4 = findViewById(R.id.btn_xoatk_nguoidung);
-        deleteIn4.setOnClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Xóa tài khoản!").setMessage("Bạn có chắn chắn muốn xóa tài khoản!").setIcon(R.drawable.baseline_error_outline_24).setPositiveButton("Có", (i, j) -> {
-                Intent intent = new Intent(SuaThongTinActivity.this, DangNhap.class);
-                dao.xoaTaiKhoan(khachHang.getMakh());
-                Toast.makeText(this, "Xóa tài khoản thành công!", Toast.LENGTH_SHORT).show();
-                startActivity(intent);
-            }).setNegativeButton("Không", (i, j) -> {
-            }).show();
-        });
+
     }
 }

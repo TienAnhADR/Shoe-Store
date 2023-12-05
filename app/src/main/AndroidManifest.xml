@@ -21,9 +21,23 @@
         <activity
             android:name=".activity.SuaThongTinActivity"
             android:exported="false" />
+
         <activity
             android:name=".activity.ManHinh_CTSanPham"
-            android:exported="false" />
+            android:exported="true"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="app"
+                    android:scheme="ctsp" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".activity.ThongKeActivity"
             android:exported="false" />
@@ -36,9 +50,13 @@
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="demozpdk" android:host="app" />
+
+                <data
+                    android:host="app"
+                    android:scheme="giohang" />
             </intent-filter>
         </activity>
 
@@ -47,11 +65,12 @@
             android:exported="false" />
         <activity
             android:name=".activity.MainActivity"
-            android:exported="false" />
+            android:exported="true"/>
+
         <activity
             android:name=".activity.DangNhap"
-            android:exported="true"
-            android:launchMode="singleTask">
+            android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
