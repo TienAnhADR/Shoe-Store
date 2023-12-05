@@ -33,7 +33,7 @@ public class NhanVien_KhachHang_Dao {
         if (cursor.getCount() != 0) {
             cursor.moveToFirst();
             do {
-                list.add(new NhanVien(cursor.getInt(0), cursor.getInt(6), cursor.getString(1), cursor.getString(4), cursor.getString(5)));
+                list.add(new NhanVien(cursor.getInt(0), cursor.getInt(6), cursor.getString(1), cursor.getString(4), cursor.getString(5),cursor.getInt(7),cursor.getString(2)));
             } while (cursor.moveToNext());
         }
         return list;
@@ -84,6 +84,7 @@ public class NhanVien_KhachHang_Dao {
             contentValues.put("sdt", sdt);
             contentValues.put("email", email);
             contentValues.put("chucvu", 0);
+            contentValues.put("trangthai",0);
             sql.insert("nhanvien", null, contentValues);
             sql.close();
             return 1;
@@ -141,9 +142,9 @@ public class NhanVien_KhachHang_Dao {
         NhanVien nhanVien = null;
         SQLiteDatabase db = helper.getReadableDatabase();
         try {
-            Cursor cursor = db.rawQuery("select manv, hoten, taikhoan, matkhau, sdt, email, chucvu from nhanvien where taikhoan = ?", new String[]{taikhoan});
+            Cursor cursor = db.rawQuery("select manv, hoten, taikhoan, matkhau, sdt, email, chucvu,trangthai from nhanvien where taikhoan = ?", new String[]{taikhoan});
             while (cursor.moveToNext()) {
-                nhanVien = new NhanVien(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getInt(6));
+                nhanVien = new NhanVien(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getInt(6),cursor.getInt(7));
             }
             cursor.close();
         } catch (Exception e) {
@@ -181,9 +182,11 @@ public class NhanVien_KhachHang_Dao {
         values.put("matkhau",newPass);
         db.update("nhanvien",values,"taikhoan = ? ",new String[]{taiKhoan});
     }
-    public boolean xoaNhanVien(int id){
+    public boolean xoaNhanVien(int id,int trangthai){
         SQLiteDatabase db = helper.getWritableDatabase();
-        long check = db.delete("nhanvien","manv=?", new String[]{String.valueOf(id)});
+        ContentValues  values = new ContentValues();
+        values.put("trangthai",trangthai);
+        long check = db.update("nhanvien",values,"manv=?", new String[]{String.valueOf(id)});
         return check>0;
     }
     public boolean updateNV(int id, String hoten, String sdt, String email, int chucvu){

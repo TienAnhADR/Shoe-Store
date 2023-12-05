@@ -34,12 +34,15 @@ public class DangNhap_DangKi_Dao {
         SQLiteDatabase sql = dbHelper.getReadableDatabase();
         Cursor cursor_nv = sql.rawQuery("SELECT * FROM nhanvien WHERE nhanvien.taikhoan='" + taikhoan + "' AND nhanvien.matkhau='" + matkhau + "'", null);
         Cursor cursor_kh = sql.rawQuery("SELECT * FROM khachhang WHERE khachhang.taikhoan='" + taikhoan + "' AND khachhang.matkhau='" + matkhau + "'", null);
-        if (cursor_nv.getCount() > 0) {
+        if (cursor_nv != null) {
             cursor_nv.moveToFirst();
-            list_nv.add(new NhanVien(cursor_nv.getInt(0), cursor_nv.getString(1), cursor_nv.getString(2), cursor_nv.getString(3), cursor_nv.getString(4), cursor_nv.getString(5), cursor_nv.getInt(6)));
+            list_nv.add(new NhanVien(cursor_nv.getInt(0), cursor_nv.getString(1), cursor_nv.getString(2), cursor_nv.getString(3), cursor_nv.getString(4), cursor_nv.getString(5), cursor_nv.getInt(6),cursor_nv.getInt(7)));
+            if(list_nv.get(0).getTrangthai()!=0){
+                return -100;
+            }
             //1 admin
             //0 nhan vien
-            if (list_nv.get(0).getChucvu() == 1) {
+            else if (list_nv.get(0).getChucvu() == 1) {
                 return 1;
             } else {
                 return 0;

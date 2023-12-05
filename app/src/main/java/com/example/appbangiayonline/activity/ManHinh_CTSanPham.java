@@ -229,10 +229,25 @@ public class ManHinh_CTSanPham extends AppCompatActivity implements OnItemClickM
         FloatingActionButton fl = dialog.findViewById(R.id.flthemsanpham);
 
 
-        if (check == 2) fl.setVisibility(View.GONE);
-        themSL_CTSanPham.setVisibility(View.GONE);
-        rcctsanpham.setVisibility(View.GONE);
-        txtspct.setVisibility(View.GONE);
+// <<<<<<< nhanh_Quan
+//         if (check == 2) fl.setVisibility(View.GONE);
+//         themSL_CTSanPham.setVisibility(View.GONE);
+//         rcctsanpham.setVisibility(View.GONE);
+//         txtspct.setVisibility(View.GONE);
+// =======
+        if(check == 2){
+            fl.setVisibility(View.GONE);
+            themSL_CTSanPham.setVisibility(View.GONE);
+            rcctsanpham.setVisibility(View.GONE);
+            txtspct.setVisibility(View.GONE);
+        } else {
+            fl.setVisibility(View.VISIBLE);
+            themSL_CTSanPham.setVisibility(View.VISIBLE);
+            rcctsanpham.setVisibility(View.VISIBLE);
+            txtspct.setVisibility(View.VISIBLE);
+        }
+
+// >>>>>>> master
 //        nhan vao item
         nhantenct = dialog.findViewById(R.id.tensanphamct);
         nhankichco = dialog.findViewById(R.id.kiccosanphamct);

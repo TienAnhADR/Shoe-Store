@@ -54,15 +54,15 @@ public class DBHelper extends SQLiteOpenHelper {
                 "matkhau text," +
                 "sdt text," +
                 "email text," +
-                "chucvu integer)";//1 la admin , 0 la nhanvien
+                "chucvu integer, trangthai integer)";//1 la admin , 0 la nhanvien
         sqLiteDatabase.execSQL(tbl_nhanvien);
 
         String insert_nhanvien = "insert into nhanvien" +
-                "(hoten,taikhoan,matkhau,sdt,email,chucvu) " +
+                "(hoten,taikhoan,matkhau,sdt,email,chucvu,trangthai) " +
                 "values " +
-                "('Nguyễn Tiến Anh','anhntph37315','ph37315','0882618529','anhntph37315@gmail.com',1)," +
-                "('Phạm Hoàng Yến','yenphph34781','ph34781','0358164951','yenphph34781@gmail.com',0)," +
-                "('Hoàng Quốc Quân','quanhqph33420','ph33420','0975460402','quanhqph33420@gmail.com',1)";
+                "('Nguyễn Tiến Anh','anhntph37315','ph37315','0882618529','anhntph37315@gmail.com',1,0)," +
+                "('Phạm Hoàng Yến','yenphph34781','ph34781','0358164951','yenphph34781@gmail.com',0,0)," +
+                "('Hoàng Quốc Quân','quanhqph33420','ph33420','0975460402','quanhqph33420@gmail.com',1,0)";
         sqLiteDatabase.execSQL(insert_nhanvien);
         //----------------------------
         //san pham
