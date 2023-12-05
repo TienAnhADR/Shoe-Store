@@ -144,16 +144,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY (mactsanpham) REFERENCES ctsanpham(mactsanpham))";
         sqLiteDatabase.execSQL(tbl_cthoadon);
 
-//        sqLiteDatabase.execSQL("insert into cthoadon" +
-//                "(mahd,mactsanpham,soluongmua) " +
-//                "values " +
-//                "(1,1,3)," +
-//                "(1,2,5)," +
-//                "(2,2,3)," +
-//                "(2,3,5)," +
-//                "(3,3,5)," +
-//                "(3,1,1)");
-//        //--------------------------------
    }
 
     @Override

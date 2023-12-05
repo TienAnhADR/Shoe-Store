@@ -2,6 +2,7 @@ package com.example.appbangiayonline.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.ColorSpace;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,9 +43,9 @@ public class MauSacAdapter extends RecyclerView.Adapter<MauSacAdapter.Viewholder
 
         String tenmau = ctSanPham.getTenmausac();
         int dem = maucount.getOrDefault(tenmau, 0);
-        if (dem == 0){
+        if (dem == 0) {
             holder.mau.setText(tenmau);
-        }else{
+        } else {
             holder.mau.setVisibility(View.GONE);
             ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(0, 0);
             holder.itemView.setLayoutParams(params);
@@ -65,6 +66,7 @@ public class MauSacAdapter extends RecyclerView.Adapter<MauSacAdapter.Viewholder
 
     public class Viewholder extends RecyclerView.ViewHolder {
         TextView mau;
+
         public Viewholder(@NonNull View itemView) {
             super(itemView);
             mau = itemView.findViewById(R.id.mausacsanpham_ctsanpham);

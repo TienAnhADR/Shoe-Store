@@ -2,6 +2,7 @@ package com.example.appbangiayonline.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -85,9 +86,18 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(intent);
 
                 } else if (R.id.mDangXuat == id) {
-                    Intent intent = new Intent(MainActivity.this, DangNhap.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setTitle("Đăng xuất tài khoản!")
+                            .setMessage("Bạn có chắc chắn muốn đăng xuất")
+                            .setIcon(R.drawable.baseline_error_outline_24)
+                            .setPositiveButton("Có", (i, j) -> {
+                                Intent intent = new Intent(MainActivity.this, DangNhap.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                            })
+                            .setNegativeButton("Không", (i, j) -> {
+                            }).show();
+
                 }
                 change_Fragment(fragment, item.getTitle().toString());
                 return false;

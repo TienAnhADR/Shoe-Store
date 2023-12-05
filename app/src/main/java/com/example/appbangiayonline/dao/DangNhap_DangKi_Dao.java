@@ -61,11 +61,12 @@ public class DangNhap_DangKi_Dao {
     public int dang_ki(String hoten, String taikhoan, String matkhau, String email, String sdt) {
         SQLiteDatabase sql = dbHelper.getWritableDatabase();
         Cursor cursor = sql.rawQuery("SELECT * FROM khachhang WHERE khachhang.taikhoan='" + taikhoan + "'", null);
-        if (cursor.getCount() > 0) {
+        Cursor cursor1 = sql.rawQuery("SELECT * FROM nhanvien WHERE nhanvien.taikhoan='" + taikhoan + "'", null);
+        if (cursor.getCount() > 0||cursor1.getCount()>0) {
             return 0;
-        } else if (CheckInformation.isEmailValid(email)) {
+        } else if (!CheckInformation.isEmailValid(email)) {
             Toast.makeText(context, "Email sai định dạng!", Toast.LENGTH_SHORT).show();
-        } else if (CheckInformation.isNumberValid(sdt)) {
+        } else if (!CheckInformation.isNumberValid(sdt)) {
             Toast.makeText(context, "Số điện thoại sai định dạng!", Toast.LENGTH_SHORT).show();
         } else {
             ContentValues contentValues = new ContentValues();
