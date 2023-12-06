@@ -62,7 +62,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 "values " +
                 "('Nguyễn Tiến Anh','anhntph37315','ph37315','0882618529','anhntph37315@gmail.com',1,0)," +
                 "('Phạm Hoàng Yến','yenphph34781','ph34781','0358164951','yenphph34781@gmail.com',0,0)," +
-                "('Hoàng Quốc Quân','quanhqph33420','ph33420','0975460402','quanhqph33420@gmail.com',1,0)";
+                "('Hoàng Quốc Quân','quanhqph33420','ph33420','0975460402','quanhqph33420@gmail.com',1,0)," +
+                "('Dương Hoàng Anh','anhdhph112233','ph112233','0885465102','anhdhph112233@gmail.com',0,0),"+
+                "('Phạm Nguyệt Hằng','hangpnph445566','ph445566','0895460222','hangpnph445566@gmail.com',0,1)";
         sqLiteDatabase.execSQL(insert_nhanvien);
         //----------------------------
         //san pham
@@ -144,7 +146,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY (mactsanpham) REFERENCES ctsanpham(mactsanpham))";
         sqLiteDatabase.execSQL(tbl_cthoadon);
 
-   }
+    }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
