@@ -38,9 +38,9 @@ public class DangKi extends AppCompatActivity {
         });
         btn_dangki.setOnClickListener(v -> {
             String hoten = input_hoten.getText().toString().trim();
-            String taikhoan = input_taikhoan.getText().toString().trim();
+            String taikhoan = input_taikhoan.getText().toString().trim().toLowerCase();
             String matkhau = input_matkhau.getText().toString().trim();
-            String email = input_email.getText().toString().trim();
+            String email = input_email.getText().toString().trim().toLowerCase();
             String sdt = input_sdt.getText().toString().trim();
 
             if (hoten.equals("") || taikhoan.equals("") || matkhau.equals("") || email.equals("") || sdt.equals("")) {

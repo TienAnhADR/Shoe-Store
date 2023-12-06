@@ -36,8 +36,8 @@ public class DangNhap_DangKi_Dao {
         Cursor cursor_kh = sql.rawQuery("SELECT * FROM khachhang WHERE khachhang.taikhoan='" + taikhoan + "' AND khachhang.matkhau='" + matkhau + "'", null);
         if (cursor_nv != null) {
             cursor_nv.moveToFirst();
-            list_nv.add(new NhanVien(cursor_nv.getInt(0), cursor_nv.getString(1), cursor_nv.getString(2), cursor_nv.getString(3), cursor_nv.getString(4), cursor_nv.getString(5), cursor_nv.getInt(6),cursor_nv.getInt(7)));
-            if(list_nv.get(0).getTrangthai()!=0){
+            list_nv.add(new NhanVien(cursor_nv.getInt(0), cursor_nv.getString(1), cursor_nv.getString(2), cursor_nv.getString(3), cursor_nv.getString(4), cursor_nv.getString(5), cursor_nv.getInt(6), cursor_nv.getInt(7)));
+            if (list_nv.get(0).getTrangthai() != 0) {
                 return -100;
             }
             //1 admin
@@ -65,7 +65,7 @@ public class DangNhap_DangKi_Dao {
         SQLiteDatabase sql = dbHelper.getWritableDatabase();
         Cursor cursor = sql.rawQuery("SELECT * FROM khachhang WHERE khachhang.taikhoan='" + taikhoan + "'", null);
         Cursor cursor1 = sql.rawQuery("SELECT * FROM nhanvien WHERE nhanvien.taikhoan='" + taikhoan + "'", null);
-        if (cursor.getCount() > 0||cursor1.getCount()>0) {
+        if (cursor.getCount() > 0 || cursor1.getCount() > 0) {
             return 0;
         } else if (!CheckInformation.isEmailValid(email)) {
             Toast.makeText(context, "Email sai định dạng!", Toast.LENGTH_SHORT).show();

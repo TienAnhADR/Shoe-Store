@@ -35,7 +35,7 @@ public class DangNhap extends AppCompatActivity {
 
         btn_login.setOnClickListener(view -> {
 
-            String taikhoan = input_taikhoan.getText().toString().trim();
+            String taikhoan = input_taikhoan.getText().toString().trim().toLowerCase();
             String matkhau = input_matkhau.getText().toString().trim();
             int check = dao.dang_nhap(taikhoan, matkhau);
 
