@@ -4,8 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="15dp"
     android:padding="10dp"
-    android:layout_margin="20dp"
-    android:background="#5EF8C5C5"
+    android:layout_margin="7dp"
+    android:background="#5EFFFFFF"
     android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"

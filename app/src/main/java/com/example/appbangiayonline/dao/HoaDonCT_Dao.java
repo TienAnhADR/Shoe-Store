@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.appbangiayonline.database.DBHelper;
 import com.example.appbangiayonline.model.CTSanPham;
 import com.example.appbangiayonline.model.HoaDon;
+import com.example.appbangiayonline.model.HoaDonCT;
 
 import java.util.ArrayList;
 
@@ -17,6 +18,18 @@ public class HoaDonCT_Dao {
 
     public HoaDonCT_Dao(Context context) {
         helper = new DBHelper(context);
+    }
+    public ArrayList<HoaDonCT> getListHDCT(int mahd){
+        ArrayList<HoaDonCT> list= new ArrayList<>();
+        SQLiteDatabase db = helper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM cthoadon WHERE mahd = ?",new String[]{String.valueOf(mahd)});
+        if(cursor.getCount()>0){
+            cursor.moveToFirst();
+            do {
+                list.add(new HoaDonCT(cursor.getInt(0),cursor.getInt(1),cursor.getInt(2)));
+            }while (cursor.moveToNext());
+        }
+        return list;
     }
 
     public ArrayList<CTSanPham> getListSP_CTHD(int maHoaDon){

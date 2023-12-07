@@ -3,96 +3,198 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="#F5F5F5"
     android:orientation="vertical"
     tools:context=".activity.ManHinh_CTSanPham">
-
-    <LinearLayout
-        android:id="@+id/toolbarCTSP"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="40dp">
-
-        <ImageView
-            android:id="@+id/quaylai_rc_sanpham"
-            android:layout_width="wrap_content"
+        android:background="#F5F5F5"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/back" />
+            android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/toolbarCTSP"
+                android:layout_width="match_parent"
+                android:layout_height="40dp">
 
-    </LinearLayout>
-    <!--    <ImageView-->
-    <!--        android:id="@+id/anh"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="200sp"-->
-    <!--        android:layout_below="@+id/quaylai_rc_sanpham"-->
-    <!--        android:background="@color/white"-->
-    <!--        android:layout_marginBottom="10sp"-->
-    <!--        android:scaleType="centerCrop"-->
-    <!--        android:src="@drawable/shose_item" />-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbarCTSP"
-        android:layout_margin="10dp"
-        android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/quaylai_rc_sanpham"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/back" />
 
-
+            </LinearLayout>
             <ImageView
+                android:layout_gravity="center"
                 android:id="@+id/anhSanpham_ctSanpham"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                android:layout_gravity="center_horizontal"
+                android:layout_width="100dp"
+                android:layout_height="100dp"/>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/img2"
-                android:scaleType="fitXY" />
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:id="@+id/tensanphamct"
+                    android:text="Tên sản phẩm : "/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:id="@+id/mausacsanphamct"
+                    android:textStyle="bold"
+                    android:text="Màu sắc : "/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:id="@+id/kiccosanphamct"
+                    android:text="Kích cỡ: "/>
 
-        <TextView
-            android:id="@+id/tensanpham_sanpham"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp"
-            android:text="Ten san pham: "
-            android:textSize="25sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:id="@+id/giasanphamct"
+                    android:textStyle="bold"
+                    android:text="Giá : "/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:id="@+id/soluongsanphamct"
+                    android:text="Số lượng : "/>
+            </LinearLayout>
+            <TextView
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="Màu sắc"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="#F5F5F5"
+                android:id="@+id/mausac_detail"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:padding="10dp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="Kích cỡ"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="#F9C6C9"
-        android:orientation="horizontal">
+            <androidx.recyclerview.widget.RecyclerView
+                android:padding="10dp"
+                android:id="@+id/kichco_detail"
+                android:background="#F5F5F5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <ImageButton
-            android:id="@+id/giohang_sanpham"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/black"
-            android:gravity="center"
-            android:padding="10sp"
-            android:src="@drawable/baseline_add_shopping_cart_24"
-            android:text="Gio hang"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/txtspct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:text="Sản phẩm chi tiết"/>
 
-        <Button
-            android:id="@+id/muangay_sanpham"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:backgroundTint="#F9C6C9"
-            android:padding="10sp"
-            android:text="Mua ngay"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcctsanpham_detail"
+                android:layout_width="match_parent"
+                android:padding="10dp"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    android:layout_marginRight="50dp"
+                    android:text="Số lượng :"/>
+                <ImageView
+                    android:id="@+id/imgTru"
+                    android:layout_width="wrap_content"
+                    android:src="@drawable/minus"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:gravity="center"
+                    android:id="@+id/tongsoluong_muangay"/>
+                <ImageView
+                    android:id="@+id/imgCong"
+                    android:layout_width="wrap_content"
+                    android:src="@drawable/plus"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:padding="10dp"
+                android:textStyle="bold"
+                android:text="Tong so tien"
+                android:id="@+id/tongtien_muangay"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="#F9C6C9"
+                android:orientation="horizontal">
+                <ImageButton
+                    android:id="@+id/giohang_sanpham"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/black"
+                    android:gravity="center"
+                    android:padding="10sp"
+                    android:src="@drawable/baseline_add_shopping_cart_24"
+                    android:text="Gio hang"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/muangay_sanpham"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:backgroundTint="#F9C6C9"
+                    android:padding="10sp"
+                    android:text="Mua ngay"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </RelativeLayout>

@@ -33,6 +33,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_margin="20sp"
+            android:src="@drawable/baseline_add_24"
             android:id="@+id/fl_shoes_tab2"/>
     </RelativeLayout>
 

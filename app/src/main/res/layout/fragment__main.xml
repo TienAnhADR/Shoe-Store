@@ -31,53 +31,6 @@
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
                 android:layout_height="200dp" />
-
-            <LinearLayout
-                android:id="@+id/change_tab"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/xuhuong"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="6dp"
-                    android:backgroundTint="@color/black"
-                    android:padding="1dp"
-                    android:text="Bán chạy"
-                    android:textColor="@color/white"
-                    android:textSize="12sp" />
-
-                <Button
-                    android:id="@+id/nike"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="6dp"
-                    android:backgroundTint="@color/black"
-                    android:padding="1dp"
-                    android:text="Nike"
-                    android:textColor="@color/white"
-                    android:textSize="12sp" />
-
-                <Button
-                    android:id="@+id/newbalance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="6dp"
-                    android:backgroundTint="@color/black"
-                    android:padding="1dp"
-                    android:text="New balance"
-                    android:textColor="@color/white"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <FrameLayout
-                android:id="@+id/frame_main"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"></FrameLayout>
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

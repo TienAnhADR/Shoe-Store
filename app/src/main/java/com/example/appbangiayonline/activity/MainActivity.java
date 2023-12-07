@@ -60,7 +60,10 @@ public class MainActivity extends AppCompatActivity {
         } else {
             change_Fragment(new Fragment_Main(), "Trang chủ");
         }
-
+        if(check==2){
+            navigationView.setVisibility(View.GONE);
+            actionBar.setDisplayHomeAsUpEnabled(false);
+        }
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

@@ -24,11 +24,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.appbangiayonline.R;
 import com.example.appbangiayonline.activity.DangNhap;
 import com.example.appbangiayonline.activity.MainActivity;
+import com.example.appbangiayonline.dao.CTSanPhamDao;
 import com.example.appbangiayonline.dao.HoaDonCT_Dao;
 import com.example.appbangiayonline.dao.HoaDonDao;
 import com.example.appbangiayonline.dao.NhanVien_KhachHang_Dao;
 import com.example.appbangiayonline.model.CTSanPham;
 import com.example.appbangiayonline.model.HoaDon;
+import com.example.appbangiayonline.model.HoaDonCT;
 import com.example.appbangiayonline.model.KhachHang;
 import com.example.appbangiayonline.model.NhanVien;
 
@@ -37,6 +39,7 @@ import java.util.ArrayList;
 public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.Viewholder> {
     private Context context;
     private final ArrayList<HoaDon> list;
+    private ArrayList<CTSanPham> listCTSP;
     NhanVien_KhachHang_Dao dao_nv_kh;
 
     public HoaDonAdapter(Context context, ArrayList<HoaDon> list) {
@@ -100,6 +103,14 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.Viewholder
                             boolean kt = dao.thayDoiTrangThaiHoaDon(mahd, manv);
 
                             if (kt) {
+                                HoaDonCT_Dao daoHDCT = new HoaDonCT_Dao(context);
+                                CTSanPhamDao daoCTSP = new CTSanPhamDao(context);
+                                ArrayList<HoaDonCT> listhdct = daoHDCT.getListHDCT(mahd);
+                                for (HoaDonCT x : listhdct){
+                                    int slOld = daoCTSP.getSL2(x.getMactsp());
+                                    daoCTSP.capNhatSoLuongMoi(x.getMactsp(),(slOld - x.getSolm()));
+                                }
+
                                 list.clear();
                                 list.addAll(dao.getDSHoaDon());
                                 notifyDataSetChanged();
@@ -162,7 +173,7 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.Viewholder
         TextView txtTongTien = view.findViewById(R.id.txtTongTien_hoaDonCT);
         RecyclerView rcv = view.findViewById(R.id.recylerV_SP_hoaDonCT);
         HoaDonCT_Dao daoHDCT = new HoaDonCT_Dao(context);
-        ArrayList<CTSanPham> listCTSP = daoHDCT.getListSP_CTHD(mahd);
+        listCTSP = daoHDCT.getListSP_CTHD(mahd);
         txtHoadon.setText("Hóa đơn " + (mahd));
         txtTenNV.setText("Nhân viên: " + list.get(posison).getTennv());
         txtTenKH.setText("Khách hàng: " + list.get(posison).getTenkh());
