@@ -76,10 +76,10 @@ public class DBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(tbl_sanpham);
 
         ArrayList<SanPham> list = new ArrayList<>();
-        list.add(new SanPham(1, "Sản phẩm 1", "Nike", "Còn hàng", ConvertImage.ImageToByte(context, R.drawable.slider1)));
-        list.add(new SanPham(2, "Sản phẩm 2", "New balance", "Còn hàng", ConvertImage.ImageToByte(context, R.drawable.slider2)));
-        list.add(new SanPham(3, "Sản phẩm 3", "New balance", "Còn hàng", ConvertImage.ImageToByte(context, R.drawable.slider3)));
-        list.add(new SanPham(4, "Sản phẩm 4", "New balance", "Còn hàng", ConvertImage.ImageToByte(context, R.drawable.slider4)));
+        list.add(new SanPham(1, " Air Jordan 3 Retro UNC", "Nike", "Còn hàng", ConvertImage.ImageToByte(context, R.drawable.slider1)));
+        list.add(new SanPham(2, "New Balance 576", "New balance", "Còn hàng", ConvertImage.ImageToByte(context, R.drawable.slider2)));
+        list.add(new SanPham(3, ", Air Jordan 1 x Dior High OG Grey", "Nike", "Còn hàng", ConvertImage.ImageToByte(context, R.drawable.slider3)));
+        list.add(new SanPham(4, "New Balance 1200", "New balance", "Còn hàng", ConvertImage.ImageToByte(context, R.drawable.slider4)));
         list.forEach(e -> {
             ContentValues contentValues = new ContentValues();
             contentValues.put("tensanpham", e.getTensanpham());

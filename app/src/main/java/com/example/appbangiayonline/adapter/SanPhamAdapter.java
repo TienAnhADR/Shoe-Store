@@ -56,10 +56,10 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.Viewhold
         SanPham sp1 = list.get(position);
         Bitmap bitmap = ConvertImage.ByteToBitmap(sp1.getImage());
 
-        holder.ma.setText("Ma san pham: " + sp1.getMasanpham());
-        holder.ten.setText("Ten san pham: " + sp1.getTensanpham());
+        holder.ma.setText("Sản phẩm: " + sp1.getMasanpham());
+        holder.ten.setText("" + sp1.getTensanpham());
         holder.hang.setText("Hãng : " + sp1.getHang());
-        holder.trangthai.setText("Trang thai: " + sp1.getTrangthai());
+        holder.trangthai.setText("Trạng thái: " + sp1.getTrangthai());
         holder.img_sanpham.setImageBitmap(bitmap);
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("admin", Context.MODE_PRIVATE);
