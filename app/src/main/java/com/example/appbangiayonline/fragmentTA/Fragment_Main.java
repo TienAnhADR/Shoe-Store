@@ -22,15 +22,12 @@ import com.example.appbangiayonline.adapter.HoaDonAdapter;
 import com.example.appbangiayonline.adapter.SanPhamAdapter;
 import com.example.appbangiayonline.adapter.SliderAdapter;
 import com.example.appbangiayonline.dao.SanPhamDao;
-import com.example.appbangiayonline.dao.ThongKeBanChayDao;
 import com.example.appbangiayonline.model.SanPham;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Fragment_Main extends Fragment {
-
-    private Fragment currentFragment;
 
     ViewPager viewPager;
     SliderAdapter sliderAdapter;
@@ -88,30 +85,6 @@ public class Fragment_Main extends Fragment {
                 handler.postDelayed(this, 1000);
             }
         }, 1000);
-
-        currentFragment = new fragment_Nike();
-        getChildFragmentManager().beginTransaction().replace(R.id.frame_main, currentFragment).commit();
-
-        Button btn_banchay = view.findViewById(R.id.xuhuong);
-        Button btn_nike = view.findViewById(R.id.nike);
-        Button btn_newbalance = view.findViewById(R.id.newbalance);
-
-        btn_banchay.setOnClickListener(buttonView -> {
-            change_Fragment(new Fragment_ThongKeBanChay());
-        });
-        btn_nike.setOnClickListener(buttonView -> {
-            change_Fragment(new fragment_Nike());
-
-        });
-        btn_newbalance.setOnClickListener(buttonView -> {
-            change_Fragment(new fragment_newBalance());
-        });
-
         return view;
-    }
-
-    void change_Fragment(Fragment fragment) {
-        FragmentManager manager = requireActivity().getSupportFragmentManager();
-        manager.beginTransaction().replace(R.id.frame_main, fragment).commit();
     }
 }

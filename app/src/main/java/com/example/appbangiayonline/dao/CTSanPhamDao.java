@@ -19,6 +19,19 @@ public class CTSanPhamDao {
     public CTSanPhamDao(Context context) {
         dbHelper = new DBHelper(context);
     }
+    public ArrayList<CTSanPham> getDSCTSP(String tensp){
+        ArrayList<CTSanPham> list = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        //int mactsanpham, String tensanpham, String tenmausac, int kichco, int gia, int soluong
+        Cursor cursor = db.rawQuery("select ctsp.mactsanpham, sp.tensanpham, ctsp.mausac, ctsp.kichco, ctsp.gia, ctsp.soluong from sanpham sp, ctsanpham ctsp where ctsp.masanpham = sp.masanpham and sp.tensanpham = ?",new String[]{tensp});
+        if(cursor.getCount()>0){
+            cursor.moveToFirst();
+            do {
+                list.add(new CTSanPham(cursor.getInt(0),cursor.getString(1),cursor.getString(2),cursor.getInt(3),cursor.getInt(4),cursor.getInt(5)));
+            }while (cursor.moveToNext());
+        }
+        return list;
+    }
 
     public ArrayList<CTSanPham> getListCTSanPham(String tensanpham) {
         ArrayList<CTSanPham> list = new ArrayList<>();
@@ -52,25 +65,22 @@ public class CTSanPhamDao {
         }
         return list;
     }
-
-    public boolean ThemCTSanPham(String tensanpham, String tenmausac, int kichco, int gia, int soluong) {
+    public boolean addCTSP(int masp, String mausac,int size,int gia,int soluong){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select masanpham from sanpham where tensanpham = ?", new String[]{tensanpham});
-        if (cursor.moveToFirst()) {
-            int masanpham = cursor.getInt(0);
+        Cursor cursor1 = db.rawQuery("select * from ctsanpham where masanpham = ? and mausac = ? and kichco = ?",new String[]{String.valueOf(masp),mausac,String.valueOf(size)});
+        if(cursor1.getCount()>0){
+            return false;
+        }else {
             ContentValues values = new ContentValues();
-            values.put("masanpham", masanpham);
-            values.put("mausac", tenmausac);
+            values.put("masanpham", masp);
+            values.put("mausac", mausac);
             values.put("gia", gia);
             values.put("soluong", soluong);
-            values.put("kichco", kichco);
+            values.put("kichco", size);
             long kt = db.insert("ctsanpham", null, values);
-            return (kt > 0);
+            return kt>0;
         }
-        cursor.close();
-        return false;
     }
-
     public CTSanPham getItemCTSanPham(String mausac, int kichco) {
         CTSanPham ctSanPham = null;
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -84,6 +94,14 @@ public class CTSanPhamDao {
         }
         return ctSanPham;
     }
+    public boolean updateGiaAndSL(int mactsp,int gia,int soluong){
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("soluong", soluong);
+        values.put("gia",gia);
+        long kt = sqLiteDatabase.update("ctsanpham", values, "mactsanpham = ?", new String[]{String.valueOf(mactsp)});
+        return (kt > 0);
+    }
 
     //Đây là khi xuất hoadon thì load lại số lượng ctsanpham
     public boolean capNhatSoLuongMoi(int mactsanpham, int soluong) {
@@ -93,70 +111,17 @@ public class CTSanPhamDao {
         long kt = sqLiteDatabase.update("ctsanpham", values, "mactsanpham =?", new String[]{String.valueOf(mactsanpham)});
         return (kt > 0);
     }
-
-    //Thêm số lượng mới rồi cập nhật lại số luong (cũ + mới)
-    public boolean themSoLuongMoi(int mactsanpham, int soluong) {
-        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("soluong", soluong);
-        long kt = sqLiteDatabase.update("ctsanpham", values, "mactsanpham = ?", new String[]{String.valueOf(mactsanpham)});
-        return (kt > 0);
-    }
-
-    //Lay so lượng hiện tại từ sql
-    public int getSL(int mactsanpham) {
+    public int getSL2(int mactsp){
         int sl = 0;
         SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
-        try {
-            Cursor cursor = sqLiteDatabase.rawQuery("select soluong from ctsanpham where mactsanpham = ?", new String[]{String.valueOf(mactsanpham)});
-            while (cursor.moveToNext()) {
-                sl = cursor.getInt(0);
-            }
-        } catch (Exception e) {
-            Log.i(TAG, "getSL", e);
+        Cursor cursor = sqLiteDatabase.rawQuery("select soluong from ctsanpham where mactsanpham = ?", new String[]{String.valueOf(mactsp)});
+        if (cursor.getCount()>0){
+            cursor.moveToFirst();
+            sl = cursor.getInt(0);
         }
         return sl;
     }
-
-    //-------------------------
-    public ArrayList<CTSanPham> getList(String tensanpham) {
-        ArrayList<CTSanPham> list = new ArrayList<>();
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select ctsp.mactsanpham, sp.tensanpham,sp.hinhanh, ctsp.mausac, ctsp.kichco, ctsp.gia, ctsp.soluong from sanpham sp, ctsanpham ctsp where ctsp.masanpham = sp.masanpham and sp.tensanpham = ?", new String[]{tensanpham});
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
-                list.add(new CTSanPham(
-                        cursor.getInt(0),
-                        cursor.getString(1),
-                        cursor.getBlob(2),
-                        cursor.getString(3),
-                        cursor.getInt(4),
-                        cursor.getInt(5),
-                        cursor.getInt(6)
-                ));
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        return list;
-    }
-
-    public CTSanPham getItemctSP_config(String mausac, int kichco) {
-        CTSanPham ctSanPham = null;
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        try {
-            Cursor cursor = db.rawQuery("select ctsp.gia, ctsp.soluong from ctsanpham ctsp where mausac = ? AND kichco = ?", new String[]{mausac, String.valueOf(kichco)});
-            if (cursor.getCount() > 0) {
-                cursor.moveToFirst();
-                ctSanPham = new CTSanPham(cursor.getInt(0), cursor.getInt(1));
-            }
-        } catch (Exception e) {
-            Log.i(TAG, "loi", e);
-        }
-        return ctSanPham;
-    }
-
-
+    //-----------------------
     public CTSanPham getItemCTSanPham_config(String tensp, String mausac, int kichco) {
         CTSanPham ctSanPham = null;
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -193,5 +158,20 @@ public class CTSanPhamDao {
         }
         return -1;
 
+    }
+    //
+    public ArrayList<CTSanPham> getList() {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        ArrayList<CTSanPham> list = new ArrayList<>();
+        try{
+            Cursor cursor = db.rawQuery("select ctsanpham", null);
+            while (cursor.moveToNext()){
+                //int mactsanpham, String tensanpham, String tenmausac, int kichco, int gia, int soluong
+                list.add(new CTSanPham(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getInt(3), cursor.getInt(4), cursor.getInt(5)));
+            }
+        }catch (Exception e){
+            Log.i(TAG, "loi", e);
+        }
+        return list;
     }
 }

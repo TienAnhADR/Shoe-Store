@@ -50,18 +50,20 @@ public class ConvertImage {
 
         return byteArrayOutputStream.toByteArray();
     }
-
     public static byte[] ImageDrawableToByte(ImageView imageView) {
-        try {
-            Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-            byte[] result = byteArrayOutputStream.toByteArray();
-            byteArrayOutputStream.close();
-            return result;
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (imageView.getDrawable() != null) {
+            try {
+                Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                byte[] result = byteArrayOutputStream.toByteArray();
+                byteArrayOutputStream.close();
+                return result;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }
+
 }

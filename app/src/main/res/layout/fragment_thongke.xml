@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="@drawable/thong_ke"
+    android:background="#E4E4E4"
     android:layout_height="match_parent">
 
     <TextView
@@ -16,9 +16,8 @@
         android:textSize="30sp"/>
     <TextView
         android:id="@+id/txtstart"
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
         android:textSize="25sp"
         android:text="Chọn ngày bắt đầu"/>
 
@@ -32,9 +31,8 @@
         android:textSize="30sp"/>
     <TextView
         android:id="@+id/txtEnd"
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
         android:textSize="25sp"
         android:text="Chọn ngày kết thúc"/>
 
@@ -52,5 +50,6 @@
     <TextView
         android:id="@+id/ketqua"
         android:layout_width="wrap_content"
+        android:textSize="20dp"
         android:layout_height="wrap_content"/>
 </LinearLayout>

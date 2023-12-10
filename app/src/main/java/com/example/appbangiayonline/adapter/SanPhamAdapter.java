@@ -23,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appbangiayonline.R;
+import com.example.appbangiayonline.activity.ActivityShowCTSP;
 import com.example.appbangiayonline.activity.ManHinh_CTSanPham;
 import com.example.appbangiayonline.convert.ConvertImage;
 import com.example.appbangiayonline.dao.SanPhamDao;
@@ -80,7 +81,7 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.Viewhold
                         context.startActivity(intent);
                     }
                 } else {
-                    Intent intent = new Intent(context, ManHinh_CTSanPham.class);
+                    Intent intent = new Intent(context, ActivityShowCTSP.class);
                     intent.putExtra("obj_sanpham", sp1);
                     holder.itemView.setClickable(true);
                     Toast.makeText(context, "Sản phẩm đang ở trạng thái còn hàng", Toast.LENGTH_SHORT).show();
@@ -96,8 +97,6 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.Viewhold
             }
         });
     }
-
-
     @Override
     public int getItemCount() {
         return list.size();

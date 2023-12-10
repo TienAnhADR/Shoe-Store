@@ -44,6 +44,8 @@ import vn.zalopay.sdk.ZaloPaySDK;
 import vn.zalopay.sdk.listeners.PayOrderListener;
 
 public class Activity_GioHang extends AppCompatActivity {
+    HoaDonDao dao2;
+    CTSanPhamDao daoSP;
     Giohang_Dao dao;
     RecyclerView recyclerView;
     adapter_giohang adap;
@@ -56,6 +58,7 @@ public class Activity_GioHang extends AppCompatActivity {
     int id_kh, makh, sl, kichco;
     String mausac;
     HoaDonCT_Dao daoHDCT;
+    boolean checksl = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -123,56 +126,25 @@ public class Activity_GioHang extends AppCompatActivity {
                 makh = 1;
             }
         }
-        //lay ngay thang
-        Date ngayDate = Calendar.getInstance().getTime();
-        SimpleDateFormat ngDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        String ngay = ngDateFormat.format(ngayDate);
-        //lay gio
-        Date gioDate = new Date();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
-        String gio = simpleDateFormat.format(gioDate);
+
         TextView button_thanhToan = findViewById(R.id.btn_thanhtoan_giohang);
         button_thanhToan.setOnClickListener(view -> {
-
-            if (listchk.size() != 0) {
-                HoaDonDao dao2 = new HoaDonDao(this);
-                boolean check = dao2.addHoaDon(makh, s, ngay, gio);
-                CTSanPhamDao daoSP = new CTSanPhamDao(this);
-
-                if (check) {
-
-                    listhd = dao2.getDSHoaDon();
-                    int mahd = dao2.mahd();
-
-                    AlertDialog.Builder alBuilder = new AlertDialog.Builder(this);
-                    if (listchk.size() != 0) {
+            //
+                            AlertDialog.Builder alBuilder = new AlertDialog.Builder(this);
                         alBuilder
                                 .setTitle("Thanh toán sản phẩm trong giỏ hàng!")
                                 .setIcon(R.drawable.baseline_error_outline_24)
                                 .setMessage("Bạn có chắc chắn muốn Thanh toán sản phẩm")
                                 .setPositiveButton("Có", ((dialogInterface, i) -> {
-                                    listchk.forEach(e -> {
-                                        list.forEach(e1 -> {
-                                            if (e1.getMagiohang() == e) {
-                                                sl = e1.getSl_mua();
-                                                kichco = e1.getKichco();
-                                                mausac = e1.getMausac();
-                                            }
-                                        });
-                                        int masp = dao.getMaCTSP(e);
-                                        daoHDCT.themCTHD(mahd, daoSP.getMaCTSP(masp, mausac, kichco), sl);
-                                        dao.remove_data(e);
-                                    });
-
                                     thanhToan(String.valueOf(s));
                                 })).setNegativeButton("Không", ((dialogInterface, i) -> {
                                 }));
-                    }
-                    alBuilder.show();
-                }
-            } else {
-                Toast.makeText(this, "Bạn chưa chọn sản phẩm nào :(", Toast.LENGTH_SHORT).show();
-            }
+
+                        alBuilder.show();
+
+            //
+
+
         });
     }
 
@@ -181,19 +153,14 @@ public class Activity_GioHang extends AppCompatActivity {
         adap = new adapter_giohang(list, this);
         recyclerView.setAdapter(adap);
     }
-
-
     public void add_chck(int i) {
         listchk.add(i);
         reload_tongtien();
     }
-
-
     public void rm_chck(int i) {
         listchk.remove(listchk.indexOf(i));
         reload_tongtien();
     }
-
     public void reload_tongtien() {
         s = 0;
         listchk.forEach(e -> {
@@ -218,7 +185,9 @@ public class Activity_GioHang extends AppCompatActivity {
         TextView code_donhang = v.findViewById(R.id.txt_code_donhang);
         TextView tongtien = v.findViewById(R.id.txt_tongtien_thanhtoan);
         Button xacnhan = v.findViewById(R.id.btn_xacnhan_thanhtoan);
-
+        dao2 = new HoaDonDao(this);
+//        boolean check = dao2.addHoaDon(makh, s, ngay, gio);
+        daoSP = new CTSanPhamDao(this);
         rdbtn_ttnhanhang.setOnClickListener(view -> {
             if (rdbtn_ttnhanhang.isChecked()) {
                 layout.setVisibility(View.GONE);
@@ -238,7 +207,68 @@ public class Activity_GioHang extends AppCompatActivity {
             if (!rdbtn_ttnhanhang.isChecked() && !rdbtn_ttzalo.isChecked()) {
                 Toast.makeText(this, "Bạn chưa chọn phương thức thanh toán!", Toast.LENGTH_SHORT).show();
             } else {
+
                 if (rdbtn_ttnhanhang.isChecked()) {
+                    //lay ngay thang
+                    Date ngayDate = Calendar.getInstance().getTime();
+                    SimpleDateFormat ngDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                    String ngay = ngDateFormat.format(ngayDate);
+                    //lay gio
+                    Date gioDate = new Date();
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+                    String gio = simpleDateFormat.format(gioDate);
+                    if (listchk.size() != 0) {
+                        boolean check = dao2.addHoaDon(makh, s, ngay, gio);
+                        if (check) {
+
+                            listhd = dao2.getDSHoaDon();
+                            int mahd = dao2.mahd();
+
+//                            AlertDialog.Builder alBuilder = new AlertDialog.Builder(this);
+                            if (listchk.size() != 0) {
+//                        alBuilder
+//                                .setTitle("Thanh toán sản phẩm trong giỏ hàng!")
+//                                .setIcon(R.drawable.baseline_error_outline_24)
+//                                .setMessage("Bạn có chắc chắn muốn Thanh toán sản phẩm")
+//                                .setPositiveButton("Có", ((dialogInterface, i) -> {
+
+
+                                for(int i=0;i<listchk.size();i++){
+                                    for(GioHang g:list){
+                                        if(g.getSl_mua()<=0) checksl = true;
+                                    }
+                                }
+                                if(checksl){
+                                    Toast.makeText(this, "số lượng phải lớn hơn 0 ", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    listchk.forEach(e -> {
+                                        list.forEach(e1 -> {
+                                            if (e1.getMagiohang() == e) {
+                                                sl = e1.getSl_mua();
+                                                if (sl<=0){
+                                                    Toast.makeText(this, "số lượng phải lớn hơn 0", Toast.LENGTH_SHORT).show();
+                                                }
+                                                kichco = e1.getKichco();
+                                                mausac = e1.getMausac();
+                                            }
+                                        });
+                                        int masp = dao.getMaCTSP(e);
+                                        daoHDCT.themCTHD(mahd, daoSP.getMaCTSP(masp, mausac, kichco), sl);
+                                        dao.remove_data(e);
+                                    });
+                                }
+
+
+
+
+//                                })).setNegativeButton("Không", ((dialogInterface, i) -> {
+//                                }));
+                            }
+//                        alBuilder.show();
+                        }
+                    } else {
+                        Toast.makeText(this, "Bạn chưa chọn sản phẩm nào :(", Toast.LENGTH_SHORT).show();
+                    }
                     dialog.dismiss();
                     Toast.makeText(this, "Thanh toán thành công", Toast.LENGTH_SHORT).show();
                 }
@@ -246,6 +276,60 @@ public class Activity_GioHang extends AppCompatActivity {
                     ZaloPaySDK.getInstance().payOrder(Activity_GioHang.this, code_donhang.getText().toString().trim(), "giohang://app", new PayOrderListener() {
                         @Override
                         public void onPaymentSucceeded(final String transactionId, final String transToken, final String appTransID) {
+                            //
+                            //lay ngay thang
+                            Date ngayDate = Calendar.getInstance().getTime();
+                            SimpleDateFormat ngDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                            String ngay = ngDateFormat.format(ngayDate);
+                            //lay gio
+                            Date gioDate = new Date();
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+                            String gio = simpleDateFormat.format(gioDate);
+                            if (listchk.size() != 0) {
+//                                HoaDonDao dao2 = new HoaDonDao(this);
+                                boolean check = dao2.addHoaDon(makh, s, ngay, gio);
+//                                CTSanPhamDao daoSP = new CTSanPhamDao(this);
+
+                                if (check) {
+
+                                    listhd = dao2.getDSHoaDon();
+                                    int mahd = dao2.mahd();
+
+//                                    AlertDialog.Builder alBuilder = new AlertDialog.Builder(this);
+                                    if (listchk.size() != 0) {
+//                        alBuilder
+//                                .setTitle("Thanh toán sản phẩm trong giỏ hàng!")
+//                                .setIcon(R.drawable.baseline_error_outline_24)
+//                                .setMessage("Bạn có chắc chắn muốn Thanh toán sản phẩm")
+//                                .setPositiveButton("Có", ((dialogInterface, i) -> {
+                                        boolean checksl = false;
+                                        for(int i=0;i<listchk.size();i++){
+                                            for(GioHang g:list){
+                                                if(g.getSl_mua()<=0) checksl = true;
+                                            }
+                                        }
+
+                                        listchk.forEach(e -> {
+                                            list.forEach(e1 -> {
+                                                if (e1.getMagiohang() == e) {
+                                                    sl = e1.getSl_mua();
+                                                    kichco = e1.getKichco();
+                                                    mausac = e1.getMausac();
+                                                }
+                                            });
+                                            int masp = dao.getMaCTSP(e);
+                                            daoHDCT.themCTHD(mahd, daoSP.getMaCTSP(masp, mausac, kichco), sl);
+                                            dao.remove_data(e);
+                                        });
+
+
+//                                })).setNegativeButton("Không", ((dialogInterface, i) -> {
+//                                }));
+                                    }
+//                        alBuilder.show();
+                                }
+                            }
+                            //
                             listchk.clear();
                             tongtien.setText("0 VNĐ");
                             reload();
