@@ -40,7 +40,7 @@ public class HoaDonDao {
                     "nhanvien nv, khachhang kh " +
                     "where hd.makh = kh.makh and " +
                     "hd.manv = nv.manv ", null);
-// public HoaDon(int mahoadon, int makh, String tenkh, String tennv, int tongsl, int tongTien, int trangthai) {
+
             while (cursor.moveToNext()) {
                 list.add(new HoaDon(
                         cursor.getInt(0),
@@ -74,11 +74,10 @@ public class HoaDonDao {
         return list;
     }
 
-    public int mahd(){
-        ArrayList<HoaDon> list = new ArrayList<>();
+    public int mahd() {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select mahd from hoadon",null);
-        if (cursor!=null&&cursor.moveToLast()){
+        Cursor cursor = db.rawQuery("select mahd from hoadon", null);
+        if (cursor != null && cursor.moveToLast()) {
             return cursor.getInt(0);
         }
         return -10;

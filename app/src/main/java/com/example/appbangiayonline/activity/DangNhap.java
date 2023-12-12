@@ -42,10 +42,9 @@ public class DangNhap extends AppCompatActivity {
             if (taikhoan.equals("") || matkhau.equals("")) {
                 Toast.makeText(this, "Thông tin tài khoản mật khẩu trống!", Toast.LENGTH_SHORT).show();
                 //1 admin,2 khachhang,0 nhanvien
-            }else if (check == -100) {
+            } else if (check == -100) {
                 Toast.makeText(this, "Tài khoản của bạn đã thôi việc vui lòng tìm admin để mở ", Toast.LENGTH_SHORT).show();
-            }
-            else if (check == 1 || check == 2 || check == 0) {
+            } else if (check == 1 || check == 2 || check == 0) {
                 SharedPreferences.Editor sharedPreferences = getSharedPreferences("admin", Context.MODE_PRIVATE).edit();
                 Intent intent = new Intent(DangNhap.this, MainActivity.class);
 

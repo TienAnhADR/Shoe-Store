@@ -72,7 +72,7 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.Viewholder
             holder.tennv.setText("Tên nhân viên: " + list.get(position).getTennv());
         } else {
             trangthai = "Da xac nhan";
-            holder.tennv.setVisibility(View.VISIBLE);
+            holder.tennv.setVisibility(View.GONE);
             holder.btnxacnhan.setVisibility(View.GONE);
             holder.tennv.setText("Tên nhân viên: " + list.get(position).getTennv());
         }
@@ -85,51 +85,48 @@ public class HoaDonAdapter extends RecyclerView.Adapter<HoaDonAdapter.Viewholder
         } else {
             holder.btnxacnhan.setText("Xác nhận");
         }
-        holder.btnxacnhan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                HoaDonDao dao = new HoaDonDao(context);
-                SharedPreferences sharedPreferences = context.getSharedPreferences("admin", MODE_PRIVATE);
-                String taikhoan = sharedPreferences.getString("taikhoan", "");
+        holder.btnxacnhan.setOnClickListener(view -> {
+            HoaDonDao dao = new HoaDonDao(context);
+            SharedPreferences sharedPreferences1 = context.getSharedPreferences("admin", MODE_PRIVATE);
+            String taikhoan = sharedPreferences1.getString("taikhoan", "");
 
-                if (!TextUtils.isEmpty(taikhoan)) {
-                    dao_nv_kh = new NhanVien_KhachHang_Dao(context);
-                    NhanVien nhanVien = dao_nv_kh.getThongTinNhanVien(taikhoan);
+            if (!TextUtils.isEmpty(taikhoan)) {
+                dao_nv_kh = new NhanVien_KhachHang_Dao(context);
+                NhanVien nhanVien = dao_nv_kh.getThongTinNhanVien(taikhoan);
 
-                    if (nhanVien != null) {
-                        int manv = nhanVien.getManv();
+                if (nhanVien != null) {
+                    int manv = nhanVien.getManv();
 
-                        if (manv != 0) {
-                            boolean kt = dao.thayDoiTrangThaiHoaDon(mahd, manv);
+                    if (manv != 0) {
+                        boolean kt = dao.thayDoiTrangThaiHoaDon(mahd, manv);
 
-                            if (kt) {
-                                HoaDonCT_Dao daoHDCT = new HoaDonCT_Dao(context);
-                                CTSanPhamDao daoCTSP = new CTSanPhamDao(context);
-                                ArrayList<HoaDonCT> listhdct = daoHDCT.getListHDCT(mahd);
-                                for (HoaDonCT x : listhdct){
-                                    int slOld = daoCTSP.getSL2(x.getMactsp());
-                                    daoCTSP.capNhatSoLuongMoi(x.getMactsp(),(slOld - x.getSolm()));
-                                }
-
-                                list.clear();
-                                list.addAll(dao.getDSHoaDon());
-                                notifyDataSetChanged();
-                                Toast.makeText(context, "Xac nhan thanh cong", Toast.LENGTH_SHORT).show();
-
-                            } else {
-                                Toast.makeText(context, "Xac nhan that bai", Toast.LENGTH_SHORT).show();
+                        if (kt) {
+                            HoaDonCT_Dao daoHDCT = new HoaDonCT_Dao(context);
+                            CTSanPhamDao daoCTSP = new CTSanPhamDao(context);
+                            ArrayList<HoaDonCT> listhdct = daoHDCT.getListHDCT(mahd);
+                            for (HoaDonCT x : listhdct) {
+                                int slOld = daoCTSP.getSL2(x.getMactsp());
+                                daoCTSP.capNhatSoLuongMoi(x.getMactsp(), (slOld - x.getSolm()));
                             }
+
+                            list.clear();
+                            list.addAll(dao.getDSHoaDon());
+                            notifyDataSetChanged();
+                            Toast.makeText(context, "Xac nhan thanh cong", Toast.LENGTH_SHORT).show();
+
                         } else {
-                            Toast.makeText(context, "Manv khong ton tai", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Xac nhan that bai", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(context, "Thong tin nhanvien khong ton tai", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Manv khong ton tai", Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(context, "Tai khoan nhanvien khong ton tai", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Thong tin nhanvien khong ton tai", Toast.LENGTH_SHORT).show();
                 }
-
+            } else {
+                Toast.makeText(context, "Tai khoan nhanvien khong ton tai", Toast.LENGTH_SHORT).show();
             }
+
         });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

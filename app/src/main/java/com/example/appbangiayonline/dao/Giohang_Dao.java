@@ -103,4 +103,13 @@ public class Giohang_Dao {
         sql.insert("giohang", null, contentValues);
         sql.close();
     }
+
+    public boolean checkGioHang(String mausac, int kichco) {
+        SQLiteDatabase sql = helper.getWritableDatabase();
+        Cursor cursor = sql.rawQuery("select mactsanpham from c where mausac=? and kichco=?", new String[]{mausac, String.valueOf(kichco)});
+        if (cursor.getCount() > 0) {
+            return true;
+        }
+        return false;
+    }
 }

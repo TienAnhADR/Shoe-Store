@@ -133,7 +133,7 @@
                     android:textStyle="bold"
                     android:textSize="20dp"
                     android:gravity="center"
-                    android:id="@+id/tongsoluong_muangay"/>
+                    android:id="@+id/txt_soluong_ctsp"/>
                 <ImageView
                     android:id="@+id/imgCong"
                     android:layout_width="wrap_content"
@@ -146,7 +146,7 @@
                 android:textSize="18dp"
                 android:textStyle="bold"
                 android:text="Tong so tien"
-                android:id="@+id/tongtien_muangay"/>
+                android:id="@+id/tongtien_ctsp"/>
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

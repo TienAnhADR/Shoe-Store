@@ -1,8 +1,12 @@
 package com.example.appbangiayonline.zalo_pay.Helper;
 
 import android.annotation.SuppressLint;
+
+//import com.zlpdemo.merchantDemo.Helper.HMac.HMacUtil;
 import com.example.appbangiayonline.zalo_pay.Helper.HMac.HMacUtil;
+
 import org.jetbrains.annotations.NotNull;
+
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
@@ -15,7 +19,7 @@ public class Helpers {
     @NotNull
     @SuppressLint("DefaultLocale")
     public static String getAppTransId() {
-        if (transIdDefault >= 1000000) {
+        if (transIdDefault >= 100000) {
             transIdDefault = 1;
         }
 

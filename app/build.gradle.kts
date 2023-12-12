@@ -19,7 +19,10 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
@@ -40,8 +43,15 @@ dependencies {
     //-----------------------
 
     implementation("com.google.android.material:material:1.1.0")
-    implementation(fileTree(mapOf("dir" to "D:\\zaloPay", "include" to listOf("*.aar", "*.jar"))))
+    implementation(
+        fileTree(
+            mapOf(
+                "dir" to "D:\\zaloPay",
+                "include" to listOf("*.aar", "*.jar")
+            )
+        )
+    )
+    implementation(files("D:\\zaloPay\\zpdk-release-v3.1.aar"))
     implementation("com.squareup.okhttp3:okhttp:4.6.0")
     implementation("commons-codec:commons-codec:1.14")
-    implementation(files("D:\\zaloPay\\zpdk-release-v3.1.aar"))
 }

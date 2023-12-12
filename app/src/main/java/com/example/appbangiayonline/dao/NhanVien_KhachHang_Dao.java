@@ -124,13 +124,10 @@ public class NhanVien_KhachHang_Dao {
         SQLiteDatabase db = helper.getReadableDatabase();
         try {
             Cursor cursor = db.rawQuery("SELECT makh,hoten, taikhoan, matkhau, sdt,email, diachi FROM khachhang WHERE taikhoan = ?", new String[]{taikhoan});
-            // while (cursor.moveToNext()) {
-            //1 tai khoan khong can movetonext
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 khachHang = new KhachHang(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6));
             }
-            //  }
             cursor.close();
         } catch (Exception e) {
             Log.i(TAG, "loi", e);

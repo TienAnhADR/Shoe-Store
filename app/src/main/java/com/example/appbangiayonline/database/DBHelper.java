@@ -101,7 +101,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         String ct_sp = "insert into ctsanpham(masanpham,mausac,kichco,gia,soluong) values" +
                 "(1,'Màu xanh',34,50000,15)," +
-                "(2,'Màu tím',35,14000,11)," +
+                "(2,'Màu tím',35,14000,15)," +
                 "(3,'Màu vàng',30,11000,10)," +
                 "(4,'Màu xanh',33,5000,11)," +
                 "(1,'Màu hồng',30,17000,11)," +

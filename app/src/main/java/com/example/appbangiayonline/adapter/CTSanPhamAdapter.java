@@ -30,8 +30,9 @@ public class CTSanPhamAdapter extends RecyclerView.Adapter<CTSanPhamAdapter.View
         this.context = context;
         this.list = list;
     }
+
     CTSanPham ctsp;
-    int gia,soluong,mactsp;
+    int gia, soluong, mactsp;
     CTSanPhamDao dao;
 
     @NonNull
@@ -44,11 +45,11 @@ public class CTSanPhamAdapter extends RecyclerView.Adapter<CTSanPhamAdapter.View
     public void onBindViewHolder(@NonNull CTSanPhamAdapter.Viewholder holder, @SuppressLint("RecyclerView") int position) {
         ctsp = list.get(position);
         holder.ma.setText("Mã chi tiết sản phẩm : " + Integer.toString(list.get(position).getMactsanpham()));
-        holder.tensp.setText("Tên sản phẩm : " +list.get(position).getTensanpham());
-        holder.tenmau.setText("Màu : " +list.get(position).getTenmausac());
-        holder.kichco.setText("Kích cỡ : " +Integer.toString(list.get(position).getKichco()));
-        holder.soluong.setText("Số lượng : " +Integer.toString(list.get(position).getSoluong()));
-        holder.gia.setText("Giá sản phẩm : " +Integer.toString(list.get(position).getGia()));
+        holder.tensp.setText("Tên sản phẩm : " + list.get(position).getTensanpham());
+        holder.tenmau.setText("Màu : " + list.get(position).getTenmausac());
+        holder.kichco.setText("Kích cỡ : " + Integer.toString(list.get(position).getKichco()));
+        holder.soluong.setText("Số lượng : " + Integer.toString(list.get(position).getSoluong()));
+        holder.gia.setText("Giá sản phẩm : " + Integer.toString(list.get(position).getGia()));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,12 +58,11 @@ public class CTSanPhamAdapter extends RecyclerView.Adapter<CTSanPhamAdapter.View
                 gia = ctsp.getGia();
                 soluong = ctsp.getSoluong();
                 mactsp = ctsp.getMactsanpham();
-                themSL(mactsp,gia,soluong);
+                themSL(mactsp, gia, soluong);
 
             }
         });
     }
-
 
 
     @Override
@@ -72,6 +72,7 @@ public class CTSanPhamAdapter extends RecyclerView.Adapter<CTSanPhamAdapter.View
 
     public class Viewholder extends RecyclerView.ViewHolder {
         TextView ma, tensp, tenmau, kichco, soluong, gia;
+
         public Viewholder(@NonNull View itemView) {
             super(itemView);
             ma = itemView.findViewById(R.id.mactsanpham_ctsanpham);
@@ -82,9 +83,10 @@ public class CTSanPhamAdapter extends RecyclerView.Adapter<CTSanPhamAdapter.View
             gia = itemView.findViewById(R.id.giasanpham_ctsanpham);
         }
     }
-    private void themSL(int mactsp,int gia,int soluong){
+
+    private void themSL(int mactsp, int gia, int soluong) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        LayoutInflater inflater = ((Activity)context).getLayoutInflater();
+        LayoutInflater inflater = ((Activity) context).getLayoutInflater();
         View view = inflater.inflate(R.layout.them_sl_ctsanpham, null);
         builder.setView(view);
 
@@ -93,50 +95,38 @@ public class CTSanPhamAdapter extends RecyclerView.Adapter<CTSanPhamAdapter.View
         Button btnUpdate = view.findViewById(R.id.btnUpdate);
         Button btnHuy = view.findViewById(R.id.btnHuy);
 
-        txtSoluong.setText(soluong+"");
-        txtGia.setText(gia+"");
+        txtSoluong.setText(soluong + "");
+        txtGia.setText(gia + "");
         dao = new CTSanPhamDao(context);
         Dialog dialog = builder.create();
         dialog.show();
         btnUpdate.setOnClickListener(new View.OnClickListener() {
-            int check = 0,gia2 = 0, soluong2 = 0;
+            int check = 0, gia2 = 0, soluong2 = 0;
+
             @Override
             public void onClick(View v) {
-
-
-                if(txtGia.getText().toString().trim().equals("")||txtSoluong.getText().toString().trim().equals("")){
+                if (txtGia.getText().toString().trim().equals("") || txtSoluong.getText().toString().trim().equals("")) {
                     check++;
-                    Toast.makeText(context, "Khong de trong du lieu", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Chưa nhập đủ thông tin!", Toast.LENGTH_SHORT).show();
                 }
-                if (check==0){
+                if (check == 0) {
                     gia2 = Integer.parseInt(txtGia.getText().toString());
                     soluong2 = Integer.parseInt(txtSoluong.getText().toString());
-                    if(gia2 < 1 || soluong2 < 1){
-                        Toast.makeText(context, "khong duoc nho hon 1", Toast.LENGTH_SHORT).show();
-                    }else {
-                        boolean check = dao.updateGiaAndSL(mactsp,gia2,soluong2);
-                        if(check){
-                            Toast.makeText(context, "Cap nhat thanh cong", Toast.LENGTH_SHORT).show();
-                            list.clear();
-                            list.addAll(dao.getDSCTSP(ctsp.getTensanpham()));
-                            notifyDataSetChanged();
-                            dialog.dismiss();
 
-
-                        }else {
-                            Toast.makeText(context, "Cap nhat that bai", Toast.LENGTH_SHORT).show();
-                        }
+                    boolean check = dao.updateGiaAndSL(mactsp, gia2, soluong2);
+                    if (check) {
+                        Toast.makeText(context, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+                        list.clear();
+                        list.addAll(dao.getDSCTSP(ctsp.getTensanpham()));
+                        notifyDataSetChanged();
+                        dialog.dismiss();
+                    } else {
+                        Toast.makeText(context, "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
                     }
                 }
-
             }
         });
 
-        btnHuy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
+        btnHuy.setOnClickListener(v -> dialog.dismiss());
     }
 }
